@@ -1,0 +1,45 @@
+/*-----------------------------------------------------------------------------------
+
+    Theme Name: Canvas
+
+-----------------------------------------------------------------------------------*/
+
+
+// Initialize
+@import "variables/variables.scss";
+@import "mixins/mixins";
+
+
+// Core CSS
+@import "core/typography";
+@import "core/helpers";
+@import "core/layouts";
+
+
+// Content Blocks
+@import "contents/topbar";
+@import "contents/header";
+@import "contents/sliders";
+@import "contents/pagetitle";
+@import "contents/content";
+@import "contents/portfolio";
+@import "contents/blog";
+@import "contents/shop";
+@import "contents/events";
+
+
+// Shortcodes
+@import "shortcodes/shortcodes.scss";
+
+
+// Footer
+//@import "footer/_footer.scss";
+
+
+// Widgets
+@import "widgets/widgets.scss";
+
+
+// Extras
+@import "extras/extras";
+
