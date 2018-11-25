@@ -11,17 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js');
+mix.js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/style.scss', 'public/css')
+    .sass('resources/sass/responsive.scss', 'public/css/libs')
+    .sourceMaps();
 
-mix.sass('resources/sass/style.scss', 'public/css')
-    .sass('resources/sass/responsive.scss', 'public/css/libs');
 
-
-mix.styles([
-    'resources/libs/bootstrap/bootstrap.css'
-], 'public/css/bootstrap.css');
-
-mix.styles([
-    'resources/animate.css',
-    'resources/libs/magnific-popup/magnific-popup.css'
-], 'public/css/libs.css');

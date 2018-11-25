@@ -3,7 +3,6 @@
 /public/storage
 /public/images
 /public/include
-/public/css/rs-plugin/demos
 /storage/*.key
 /vendor
 /.idea
