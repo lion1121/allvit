@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/shop', function () {
+    return view('front.shop');
+});

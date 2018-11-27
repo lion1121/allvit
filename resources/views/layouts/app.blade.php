@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{asset('css/libs/magnific-popup/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('css/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('css/radio-checkbox.css')}}">
     <link rel="stylesheet" href="{{asset('libs/font-icons/font-icons.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lt IE 9]>
@@ -152,7 +153,7 @@
                 <!-- Logo
                 ============================================= -->
                 <div id="logo">
-                    <a href="index.html" class="standard-logo" data-dark-logo="images/logo-dark.png"><img src="images/logo.png" alt="Canvas Logo"></a>
+                    <a href="{{url('/')}}" class="standard-logo" data-dark-logo="images/logo-dark.png"><img src="images/logo.png" alt="Canvas Logo"></a>
                     <a href="index.html" class="retina-logo" data-dark-logo="images/logo-dark@2x.png"><img src="images/logo@2x.png" alt="Canvas Logo"></a>
                 </div><!-- #logo end -->
 

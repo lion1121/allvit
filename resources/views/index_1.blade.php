@@ -1125,7 +1125,7 @@
                                         <li><a href="shop-3-right-sidebar.html">
                                                 <div>Right Sidebar</div>
                                             </a></li>
-                                        <li><a href="shop-3-left-sidebar.html">
+                                        <li><a href="front/shop.blade.php">
                                                 <div>Left Sidebar</div>
                                             </a></li>
                                     </ul>
