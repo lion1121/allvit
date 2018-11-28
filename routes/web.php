@@ -17,3 +17,8 @@ Route::get('/', function () {
 Route::get('/shop', function () {
     return view('front.shop');
 });
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
