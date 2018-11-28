@@ -20,6 +20,10 @@ class CategoryTableSeeder extends Seeder
             [
                 'name' => 'Креатин',
                 'description' => str_random(10),
+            ],
+            [
+                'name' => 'BCAA',
+                'description' => str_random(10),
             ]
         ]);
     }
