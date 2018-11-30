@@ -133,7 +133,7 @@
                                             <i class="icon-gplus"></i>
                                             <i class="icon-gplus"></i>
                                         </a>
-                                        <a href="#" class="social-icon si-colored si-facebook">
+                                        <a href="{{ url('auth/facebook') }}" class="social-icon si-colored si-facebook">
                                             <i class="icon-facebook"></i>
                                             <i class="icon-facebook"></i>
                                         </a>

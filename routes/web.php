@@ -36,3 +36,7 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//Facebook, Google auth routes
+Route::get('auth/{provider}', 'Auth\loginController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\loginController@handleProviderCallback');
