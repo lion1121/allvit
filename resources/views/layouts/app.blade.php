@@ -4,6 +4,7 @@
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="SemiColonWeb" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Stylesheets
     ============================================= -->
@@ -89,24 +90,41 @@
                 <!-- Top Links
                 ============================================= -->
                 <div class="top-links">
+                    @guest
                     <ul>
                         <li><a href="#">Ваш аккаунт</a>
                             <div class="top-link-section">
-                                <form id="top-login" role="form">
+                                <form id="top-login" role="form" method="POST" action="{{ route('login') }}">
+                                    @csrf
                                     <div class="input-group" id="top-login-username">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="icon-user"></i></div>
                                         </div>
-                                        <input type="email" class="form-control" placeholder="Email адрес" required="">
+                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email адрес" name="email" value="{{ old('email') }}" required autofocus>
+                                        @if ($errors->has('email'))
+                                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                        @endif
                                     </div>
                                     <div class="input-group" id="top-login-password">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="icon-key"></i></div>
                                         </div>
-                                        <input type="password" class="form-control" placeholder="Пароль" required="">
+                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"  placeholder="Пароль" name="password" required>
+                                        @if ($errors->has('password'))
+                                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                        @endif
                                     </div>
                                     <p class="m-0"><a href="#" >Забыли пароль?</a> </p>
                                     <button class="btn btn-danger btn-block" type="submit">Войти</button>
+                                    @if (Illuminate\Support\Facades\Route::has('password.request'))
+                                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                                            {{ __('Forgot Your Password?') }}
+                                        </a>
+                                    @endif
                                 </form>
                                 <div class="text-center">
                                     <p class="mt-2 mb-2">вход через</p>
@@ -125,13 +143,32 @@
                                         </a>
                                     </div>
                                     <div>
-                                        <p class="m-0">Нет учетной записиси? <a href="#">Зарегестрироватся</a></p>
+                                        @if (Illuminate\Support\Facades\Route::has('register'))
+                                            <p class="m-0">Нет учетной записиси? <a class="nav-link" href="{{ route('register') }}">регистрация</a></p>
+
+                                        @endif
                                     </div>
 
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    @else
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Illuminate\Support\Facades\Auth::user()->name }} <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    @endguest
                 </div><!-- .top-links end -->
 
             </div>
