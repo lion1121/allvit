@@ -128,18 +128,14 @@
                                 </form>
                                 <div class="text-center">
                                     <p class="mt-2 mb-2">вход через</p>
-                                    <div class="social_btn_group d-flex flex-row justify-content-between">
-                                        <a href="#" class="social-icon si-colored si-gplus">
+                                    <div class="social_btn_group d-flex flex-row justify-content-around">
+                                        <a href="{{ url('auth/google') }}" class="social-icon si-colored si-gplus">
                                             <i class="icon-gplus"></i>
                                             <i class="icon-gplus"></i>
                                         </a>
                                         <a href="{{ url('auth/facebook') }}" class="social-icon si-colored si-facebook">
                                             <i class="icon-facebook"></i>
                                             <i class="icon-facebook"></i>
-                                        </a>
-                                        <a href="#" class="social-icon si-colored si-twitter">
-                                            <i class="icon-twitter"></i>
-                                            <i class="icon-twitter"></i>
                                         </a>
                                     </div>
                                     <div>
