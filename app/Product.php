@@ -13,7 +13,7 @@ class Product extends Model
 
     public function properties()
     {
-        return $this->belongsToMany('App\Property', 'product_property', 'product_id', 'property_id')->withPivot('value');
+        return $this->hasMany('App\Property');
     }
 
 }

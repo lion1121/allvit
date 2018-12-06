@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePropertiesTable extends Migration
+class CreateTableProperties extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,11 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->integer('product_id')->unsigned()->index();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->string('slug');
+            $table->string('key');
+            $table->string('value');
             $table->timestamps();
         });
     }
