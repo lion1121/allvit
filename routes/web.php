@@ -40,3 +40,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Facebook, Google auth routes
 Route::get('auth/{provider}', 'Auth\loginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\loginController@handleProviderCallback');
+
+//Custom voyager pages
+Route::get('/admin/promocode','Voyager\PromocodeController@promocode');
