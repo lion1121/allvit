@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class PromocodeController extends Controller
 {
     //
-    public function promocode()
+    public function index()
     {
         return view('vendor/voyager/promocode');
     }
