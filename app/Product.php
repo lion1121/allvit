@@ -15,5 +15,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Property');
     }
+    public function promocode()
+    {
+        return $this->belongsToMany('App\Promocode');
+    }
 
 }
