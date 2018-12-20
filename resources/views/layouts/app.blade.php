@@ -72,7 +72,7 @@
 <!-- Document Wrapper
 ============================================= -->
 <div id="wrapper" class="clearfix">
-
+    <example-component></example-component>
     <!-- Top Bar
     ============================================= -->
     <div id="top-bar" class="d-none d-md-block">
@@ -654,6 +654,7 @@
 
 <!-- External JavaScripts
 ============================================= -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{asset('js/libs/plugins.js')}}"></script>
 

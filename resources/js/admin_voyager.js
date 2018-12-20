@@ -5,9 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
 
-window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -17,13 +15,7 @@ window.Vue = require('vue');
  * Eg. ./components/addPromocodeComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('example-component', require('./custom_voyager/addPromocodeComponent.vue'));
-
-// const files = require.context('./', true, /\.vue$/i)
-
-// files.keys().map(key => {
-//     return Vue.component(_.last(key.split('/')).split('.')[0], files(key))
-// })
+Vue.component('add-promocode-component', require('./custom_voyager/addPromocodeComponent.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,5 +24,5 @@ Vue.component('example-component', require('./custom_voyager/addPromocodeCompone
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#admin_app'
 });

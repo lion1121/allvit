@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.7.5
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Дек 19 2018 г., 14:59
--- Версия сервера: 5.7.24-0ubuntu0.18.04.1
--- Версия PHP: 7.2.11-4+ubuntu18.04.1+deb.sury.org+1
+-- Время создания: Дек 20 2018 г., 19:58
+-- Версия сервера: 5.7.19-0ubuntu0.16.04.1
+-- Версия PHP: 7.1.10-1+ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -640,7 +640,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`, `provider_id`, `provider`) VALUES
-(5, 1, 'admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$EjL9I.cE3pdH8d6clqYCl.IxwEOGTbYek8xW9uTlYYmyrB/UsFzx2', 'HNFIImXXPBanR5kdqVbNWZNfxI7h40HR6iGHAiKL6Do6E6QOzKmMw69CA40Z', NULL, '2018-12-18 12:53:07', '2018-12-18 12:53:07', NULL, NULL);
+(5, 1, 'admin', 'admin@admin.com', 'users/December2018/8mNNIKF9R5QSIFLwzbTB.png', NULL, '$2y$10$EjL9I.cE3pdH8d6clqYCl.IxwEOGTbYek8xW9uTlYYmyrB/UsFzx2', 'JMvOlxACxI35dRqJ89EE8V5QhMpmrUhnD30MNjr1As4HLBE76YOgLQk7J7Yy', '{\"locale\":\"ru\"}', '2018-12-18 12:53:07', '2018-12-20 19:28:56', NULL, NULL);
 
 -- --------------------------------------------------------
 
