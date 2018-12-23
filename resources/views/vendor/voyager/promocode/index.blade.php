@@ -16,20 +16,31 @@
                     <button class="btn btn-default">Найти:</button>
                 </div>
             </form>
-            <table class="table table-bordered table-danger">
+            <table class="table table-bordered table-hover table-danger">
                 <thead>
                 <th>Имя</th>
+                <th>Кол-во</th>
+                <th>Статус</th>
                 <th>С</th>
                 <th>По</th>
-                <th>Статус</th>
+                <th>Операция</th>
                 </thead>
                 <tbody>
+                @foreach($promocodes as $promocode)
+
                 <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
+                    <td>{{$promocode->name}}</td>
+                    <td>{{$promocode->quantity}}</td>
+                    @if($promocode->status === 0)
+                    <td>Неактивен</td>
+                        @else
+                        <td>Активен</td>
+                    @endif
+                    <td>{{$promocode->started_at}}</td>
+                    <td>{{$promocode->finished_at}}</td>
+                    <td><button class="btn btn-danger">Удалить</button><button class="btn btn-info" style="margin-left: 20px">Редактировать</button></td>
                 </tr>
+                 @endforeach
                 </tbody>
             </table>
         </div>

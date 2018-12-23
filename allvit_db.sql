@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.5
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Дек 20 2018 г., 19:58
--- Версия сервера: 5.7.19-0ubuntu0.16.04.1
--- Версия PHP: 7.1.10-1+ubuntu16.04.1+deb.sury.org+1
+-- Время создания: Дек 23 2018 г., 21:32
+-- Версия сервера: 5.7.24-0ubuntu0.18.04.1
+-- Версия PHP: 7.2.11-4+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -57,15 +57,9 @@ CREATE TABLE `category_product` (
 --
 
 INSERT INTO `category_product` (`id`, `prod_category_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, NULL),
-(2, 1, 2, NULL, NULL),
-(3, 1, 3, NULL, NULL),
 (4, 2, 4, NULL, NULL),
 (5, 2, 5, NULL, NULL),
-(6, 2, 6, NULL, NULL),
-(7, 3, 7, NULL, NULL),
-(8, 3, 8, NULL, NULL),
-(9, 3, 9, NULL, NULL);
+(6, 2, 6, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -267,7 +261,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (28, '2018_11_25_133707_create_prod_categories_table', 1),
 (29, '2018_11_25_142242_create_category_product_table', 1),
 (30, '2018_11_30_111513_add_facebook_id_to_users_table', 1),
-(31, '2018_12_06_155659_create_table_properties', 1);
+(31, '2018_12_06_155659_create_table_properties', 1),
+(34, '2018_12_20_081950_create_table_promocode', 2),
+(39, '2018_12_23_175141_create_prod_category_promocode_table', 3);
 
 -- --------------------------------------------------------
 
@@ -477,12 +473,56 @@ CREATE TABLE `prod_categories` (
 --
 
 INSERT INTO `prod_categories` (`id`, `name`, `slug`, `parent_id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Протеин', 'protein', NULL, 'ETtDQGUF2Z', NULL, NULL),
 (2, 'Сывороточный Протеин', 'sivorotkfa  protein', NULL, 'QJemAt1sb0', NULL, NULL),
-(3, 'Креатин', 'creatin', NULL, 'apJrFByAki', NULL, NULL),
 (4, 'BCAA', 'bcaa', NULL, 'DU5omZSPK6', NULL, NULL),
 (5, 'топ 50', 'top', NULL, 'mfFPGYAAEO', NULL, NULL),
-(6, 'Цели', 'goals', NULL, 'S3ty3GeHbE', NULL, NULL);
+(6, 'Цели', 'goals', NULL, 'S3ty3GeHbE', NULL, NULL),
+(7, 'Протеин', 'protein', NULL, 'sdfsdf', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `prod_category_promocodes`
+--
+
+CREATE TABLE `prod_category_promocodes` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `prod_category_id` int(10) UNSIGNED NOT NULL,
+  `promocode_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `prod_category_promocodes`
+--
+
+INSERT INTO `prod_category_promocodes` (`id`, `prod_category_id`, `promocode_id`) VALUES
+(10, 4, 47),
+(11, 7, 47),
+(12, 2, 47);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `promocodes`
+--
+
+CREATE TABLE `promocodes` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `quantity` int(11) NOT NULL,
+  `percent` int(11) DEFAULT NULL,
+  `summ` int(11) DEFAULT NULL,
+  `started_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `finished_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `promocodes`
+--
+
+INSERT INTO `promocodes` (`id`, `name`, `status`, `quantity`, `percent`, `summ`, `started_at`, `finished_at`) VALUES
+(47, 'PROMO1', 0, 1000, NULL, NULL, '2018-12-23 00:00:00', '2018-12-31 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -640,7 +680,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`, `provider_id`, `provider`) VALUES
-(5, 1, 'admin', 'admin@admin.com', 'users/December2018/8mNNIKF9R5QSIFLwzbTB.png', NULL, '$2y$10$EjL9I.cE3pdH8d6clqYCl.IxwEOGTbYek8xW9uTlYYmyrB/UsFzx2', 'JMvOlxACxI35dRqJ89EE8V5QhMpmrUhnD30MNjr1As4HLBE76YOgLQk7J7Yy', '{\"locale\":\"ru\"}', '2018-12-18 12:53:07', '2018-12-20 19:28:56', NULL, NULL);
+(5, 1, 'admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$EjL9I.cE3pdH8d6clqYCl.IxwEOGTbYek8xW9uTlYYmyrB/UsFzx2', 'qObWQk2SgFIn45LNWnYkTvBVKawrrburD8jGB5xDYAkjTpRzSMIIwX4GrFSY', NULL, '2018-12-18 12:53:07', '2018-12-18 12:53:07', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -758,6 +798,21 @@ ALTER TABLE `prod_categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `prod_category_promocodes`
+--
+ALTER TABLE `prod_category_promocodes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prod_category_promocodes_prod_category_id_foreign` (`prod_category_id`),
+  ADD KEY `prod_category_promocodes_promocode_id_foreign` (`promocode_id`);
+
+--
+-- Индексы таблицы `promocodes`
+--
+ALTER TABLE `promocodes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `promocodes_name_unique` (`name`);
+
+--
 -- Индексы таблицы `properties`
 --
 ALTER TABLE `properties`
@@ -815,7 +870,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT для таблицы `category_product`
 --
 ALTER TABLE `category_product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `data_rows`
@@ -845,7 +900,7 @@ ALTER TABLE `menu_items`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT для таблицы `pages`
@@ -875,7 +930,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT для таблицы `prod_categories`
 --
 ALTER TABLE `prod_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT для таблицы `prod_category_promocodes`
+--
+ALTER TABLE `prod_category_promocodes`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT для таблицы `promocodes`
+--
+ALTER TABLE `promocodes`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT для таблицы `properties`
@@ -942,6 +1009,13 @@ ALTER TABLE `menu_items`
 ALTER TABLE `permission_role`
   ADD CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `permission_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `prod_category_promocodes`
+--
+ALTER TABLE `prod_category_promocodes`
+  ADD CONSTRAINT `prod_category_promocodes_prod_category_id_foreign` FOREIGN KEY (`prod_category_id`) REFERENCES `prod_categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `prod_category_promocodes_promocode_id_foreign` FOREIGN KEY (`promocode_id`) REFERENCES `promocodes` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `properties`

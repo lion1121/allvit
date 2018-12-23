@@ -13,7 +13,8 @@ class ProdCategory extends Model
         'slug',
         'parent_id',
         'name',
-        'description'
+        'description','promocode_id','prod_category_id'
+
     ];
     public function products()
     {
@@ -21,6 +22,6 @@ class ProdCategory extends Model
     }
     public function promocode()
     {
-        return $this->belongsToMany('App\Promocode');
+        return $this->belongsToMany('App\Promocode','prod_category_promocodes','promocode_id','prod_category_id');
     }
 }

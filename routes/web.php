@@ -24,6 +24,8 @@ Route::get('/shop', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+    //Custom voyager pages
+    Route::get('promocode','Voyager\PromocodeController@index');
 });
 
 //Auth::routes();
@@ -41,5 +43,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('auth/{provider}', 'Auth\loginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\loginController@handleProviderCallback');
 
-//Custom voyager pages
-Route::get('/admin/promocode','Voyager\PromocodeController@index');
+////Custom voyager pages
+//Route::get('/admin/promocode','Voyager\PromocodeController@index');
+
+//Ajax routes
+Route::group(['prefix' => 'ajax'], function(){
+   Route::post('getCategories', 'ProdCategoryController@getCategories');
+   Route::get('getProduct/{name}', 'ProductController@getProductByName');
+   Route::post('addPromocode', 'Voyager\PromocodeController@store');
+});
+//Route::post('/ajax/getCategories', 'ProdCategoryController@getCategories');

@@ -17,7 +17,7 @@ window.Vue = require('vue');
  * Eg. ./components/addPromocodeComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('example-component', require('./custom_voyager/addPromocodeComponent.vue'));
+Vue.component('example-component', require('./custom_voyager/Promocode/addPromocodeComponent.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
 

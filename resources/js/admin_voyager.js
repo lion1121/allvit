@@ -15,7 +15,7 @@
  * Eg. ./components/addPromocodeComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('add-promocode-component', require('./custom_voyager/addPromocodeComponent.vue'));
+Vue.component('add-promocode-component', require('./custom_voyager/Promocode/addPromocodeComponent.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

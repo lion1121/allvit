@@ -18,8 +18,10 @@ class CreateTablePromocode extends Migration
             $table->string('name')->unique();
             $table->boolean('status')->default(false);
             $table->integer('quantity');
-            $table->timestamps('started');
-            $table->timestamps('finished');
+            $table->integer('percent')->nullable();
+            $table->integer('summ')->nullable();
+            $table->timestamp('started_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('finished_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
