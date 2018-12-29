@@ -8,11 +8,19 @@ use Illuminate\Support\Facades\DB;
 class ProdCategoryController extends Controller
 {
     //
-    public function getCategories(Request $request)
+    public function getAllCategories(Request $request)
     {
-               $category = DB::table('prod_categories')->where('name', $request->body)
-                   ->orWhere('name','like', '%' . $request->body . '%')->get();
-               echo json_encode($category);
+        $category = DB::table('prod_categories')->where('name', $request->body)
+            ->orWhere('name', 'like', '%' . $request->category . '%')->get();
+        echo json_encode($category);
+
+    }
+
+    public function getCategoryByPromocodeId(Request $request)
+    {
+        $category = DB::table('prod_categories')->where('name', $request->body)
+            ->orWhere('name', 'like', '%' . $request->category . '%')->get();
+        echo json_encode($category);
 
     }
 }

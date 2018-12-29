@@ -44,7 +44,7 @@
                 clearTimeout(this.debounce);
                 this.debounce = setTimeout(() => {
                     console.log(this.tags);
-                    axios.post('/ajax/getCategories', {body: this.tag}).then(response => {
+                    axios.post('/ajax/getAllCategories', {category: this.tag}).then(response => {
                         this.autocompleteItems = response.data.map(a => {
                             return {
                                 text: a.name,

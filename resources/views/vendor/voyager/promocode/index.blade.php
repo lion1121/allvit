@@ -38,7 +38,9 @@
                     @endif
                     <td>{{$promocode->started_at}}</td>
                     <td>{{$promocode->finished_at}}</td>
-                    <td><button class="btn btn-danger">Удалить</button><button class="btn btn-info" style="margin-left: 20px">Редактировать</button></td>
+                    <td><button class="btn btn-danger">Удалить</button>
+                        <a class="btn btn-info" style="margin-left: 20px" href="{{route('promocode.edit',['id'=>$promocode->id])}}">Редактировать</a>
+                    </td>
                 </tr>
                  @endforeach
                 </tbody>

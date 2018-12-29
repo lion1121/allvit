@@ -19,6 +19,6 @@ class Promocode extends Model
     }
     public function prodCategories()
     {
-        return $this->belongsToMany('App\ProdCategory','prod_category_promocodes','prod_category_id', 'promocode_id');
+        return $this->belongsToMany('App\ProdCategory','prod_category_promocodes','promocode_id', 'prod_category_id');
     }
 }

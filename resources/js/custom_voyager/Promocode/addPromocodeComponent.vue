@@ -27,7 +27,7 @@
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" v-model="promoRadioSum" @click="radioSumActive" checked>
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" v-model="promoRadioSum" @click="radioSumActive" :checked="promoRadioSum">
                 <label class="form-check-label" for="exampleRadios2">
                     Сумма в гривне
                 </label>
@@ -41,6 +41,9 @@
         <div class="form-group col-xs-12">
             <label for="started">Действует с: <input id="started" type="date" class="form-control" v-model="form.started"></label>
             <label for="finished">по:<input id="finished" type="date" class="form-control" v-model="form.finished"></label>
+        </div>
+        <div class="form-group col-xs-12">
+            <label for="status">Активировать промокод <input type="checkbox" id="status" v-model="form.status"></label>
         </div>
         <div class="form-group">
             <div class="promo_categories_wrapper d-inline-block">
@@ -71,6 +74,30 @@
 
     export default {
         mounted() {
+            //get ajax request. If url has id - return promocode
+            let url = window.location.href;
+            if(url.includes('admin/promocodes/edit')){
+                let urlArray = url.split('/');
+                this.promoId = urlArray[urlArray.length - 1];
+            }
+
+            if(this.promoId !== null){
+                axios.post('/ajax/getCategories', {id: this.promoId}).then(response => {
+                    this.form.name = response.data.name;
+                    this.form.quantity = response.data.quantity;
+                    this.form.started = response.data.started_at.split(' ')[0];
+                    this.form.finished = response.data.finished_at.split(' ')[0];
+                    this.form.status = response.data.status;
+                    if(response.data.summ !== ''){
+                        this.promoRadioSum = true;
+                        this.promoRadioPercent = true;
+                        this.form.sumValue = response.data.summ
+                    } else {
+                        this.promoRadioPersent = true;
+                    }
+                    console.log(response.data);
+                }).catch(() => console.warn('Something went wrong. Categories not loaded'));
+            }
 
         },
         data() {
@@ -80,15 +107,17 @@
                 errors:false,
                 success:false,
                 errorsMessages:[],
+                promoId:null,
                 form: {
                     name:'',
                     quantity:0,
-                    persentValue:'',
-                    sumValue:'',
+                    persentValue:null,
+                    sumValue:null,
                     started:'',
                     finished:'',
                     categories:{},
                     products:{},
+                    status:false,
                 }
             }
         },

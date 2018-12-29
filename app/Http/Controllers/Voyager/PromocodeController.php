@@ -58,6 +58,8 @@ class PromocodeController extends Controller
                 $input['started_at'] = date('Y.m.d', strtotime($request->started) );
                 $input['finished_at'] = date('Y.m.d', strtotime($request->finished) );
                 $input['summ'] = $request->summValue;
+                $input['percent'] = $request->persentValue;
+                $input['status'] = $request->status;
                 $promocode = Promocode::create($input);
 
                 $promocodeId = $promocode->id;
@@ -92,6 +94,7 @@ class PromocodeController extends Controller
     public function edit($id)
     {
         //
+        return view('vendor.voyager.promocode.edit');
     }
 
     /**
@@ -115,5 +118,16 @@ class PromocodeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getProdCategories(Request $request)
+    {
+        $promocode = Promocode::findOrFail($request->id);
+
+        return response()->json($promocode);
     }
 }

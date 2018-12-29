@@ -25,7 +25,8 @@ Route::get('/shop', function () {
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
     //Custom voyager pages
-    Route::get('promocode','Voyager\PromocodeController@index');
+    Route::get('promocodes','Voyager\PromocodeController@index');
+    Route::get('promocodes/edit/{id}','Voyager\PromocodeController@edit')->name('promocode.edit');
 });
 
 //Auth::routes();
@@ -48,8 +49,9 @@ Route::get('auth/{provider}/callback', 'Auth\loginController@handleProviderCallb
 
 //Ajax routes
 Route::group(['prefix' => 'ajax'], function(){
-   Route::post('getCategories', 'ProdCategoryController@getCategories');
+   Route::post('getAllCategories', 'ProdCategoryController@getAllCategories');
    Route::get('getProduct/{name}', 'ProductController@getProductByName');
    Route::post('addPromocode', 'Voyager\PromocodeController@store');
+   Route::post('getCategories', 'Voyager\PromocodeController@getProdCategories');
 });
 //Route::post('/ajax/getCategories', 'ProdCategoryController@getCategories');
