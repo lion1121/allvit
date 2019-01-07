@@ -13,6 +13,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Helpers\Parsers\Parser;
 
 Route::get('/', function () {
     return view('home');
@@ -21,12 +22,19 @@ Route::get('/shop', function () {
     return view('front.shop');
 });
 
-
+Route::get('/array', function () {
+    $parser = new \App\Helpers\Parsers\XmlParser('../public/temp_import_xml/import.xml');
+    $parser->read();
+    $parser->parse();
+    $test = count($parser->xmlData->Каталог->Товары);
+//    dd($test);
+    $parser->writeProducts();
+});
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
     //Custom voyager pages
-    Route::get('promocodes','Voyager\PromocodeController@index');
-    Route::get('promocodes/edit/{id}','Voyager\PromocodeController@edit')->name('promocode.edit');
+    Route::get('promocodes', 'Voyager\PromocodeController@index');
+    Route::get('promocodes/edit/{id}', 'Voyager\PromocodeController@edit')->name('promocode.edit');
 });
 
 //Auth::routes();
@@ -48,10 +56,10 @@ Route::get('auth/{provider}/callback', 'Auth\loginController@handleProviderCallb
 //Route::get('/admin/promocode','Voyager\PromocodeController@index');
 
 //Ajax routes
-Route::group(['prefix' => 'ajax'], function(){
-   Route::post('getAllCategories', 'ProdCategoryController@getAllCategories');
-   Route::get('getProduct/{name}', 'ProductController@getProductByName');
-   Route::post('addPromocode', 'Voyager\PromocodeController@store');
-   Route::post('getCategories', 'Voyager\PromocodeController@getProdCategories');
+Route::group(['prefix' => 'ajax'], function () {
+    Route::post('getAllCategories', 'ProdCategoryController@getAllCategories');
+    Route::get('getProduct/{name}', 'ProductController@getProductByName');
+    Route::post('addPromocode', 'Voyager\PromocodeController@store');
+    Route::post('getCategories', 'Voyager\PromocodeController@getProdCategories');
 });
 //Route::post('/ajax/getCategories', 'ProdCategoryController@getCategories');
