@@ -12,6 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Helpers\Parsers\Parser;
 
@@ -30,6 +31,13 @@ Route::get('/array', function () {
 //    dd($test);
     $parser->writeProducts();
 });
+
+Route::get('/test', function () {
+    $product = DB::table('products')->whereJsonContains('attributes->Вкус',['Апельсин (Orange)'])->get();
+    dd($product);
+});
+
+
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
     //Custom voyager pages

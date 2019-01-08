@@ -37,7 +37,7 @@ class AddColumnsToProdusts extends Migration
             $table->integer('discount_price')->after('price')->nullable();
             $table->string('currency')->nullable();
             $table->string('outer_code')->nullable();
-            $table->json('attributes');
+            $table->json('attributes')->nullable();
         });
     }
 

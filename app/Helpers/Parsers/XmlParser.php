@@ -9,7 +9,6 @@
 namespace App\Helpers\Parsers;
 
 
-
 use App\Product;
 use Illuminate\Support\Facades\DB;
 
@@ -74,13 +73,13 @@ class XmlParser implements Parser
                         $product['vendor_code'] = (string)$val;
                         break;
                     case $key === 'Ингредиенты':
-                        $product['ingredients'] = json_encode((array)$val);
+                        $product['ingredients'] = json_encode(explode(',', trim($val)));
                         break;
                     case $key === 'КоличествоПорций':
                         $product['portions_count'] = (integer)$val;
                         break;
                     case $key === 'ПоставленнаяЦель':
-                        $product['goals'] = json_encode((string)$val);
+                        $product['goals'] = json_encode(explode(',', trim($val)));
                         break;
                     case $key === 'Наличие':
                         $product['availability'] = (integer)$val;
@@ -140,11 +139,21 @@ class XmlParser implements Parser
                         $product['status'] = (integer)$val;
                         break;
                     case $key === 'ХарактеристикиТовара':
-                        foreach ($val->ХарактеристикаТовара as $element) {
-                            $newArray[] = (array)$element;
+                        $newArray = '';
+                        $block = [];
+
+//                        foreach ($val->ХарактеристикаТовара as $element) {
+                            $tempValues =  explode(',', trim($val->ХарактеристикаТовара->Значение));
+                            $block[(string)$val->ХарактеристикаТовара->Наименование] =  array_map(array($this, 'trimElement'), $tempValues);
+                            $block['quantity'] =  explode(',', trim($val->ХарактеристикаТовара->Количество));
+                            $newArray .= json_encode($block);
+//                        }
+                        if($newArray !== '') {
+                            $product['attributes'] = $newArray;
+                        } else {
+                            $product['attributes'] = null;
                         }
-                        $product['attributes'] = json_encode($newArray);
-                        $newArray = [];
+                        $newArray = '';
                         break;
                     default:
                         $product['slug'] = '';
@@ -154,6 +163,11 @@ class XmlParser implements Parser
             $this->products[] = $product;
             $product = [];
         }
+    }
+
+    protected function trimElement($n)
+    {
+        return trim($n);
     }
 
     public function writeProducts()
