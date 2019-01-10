@@ -11,12 +11,14 @@ namespace App\Helpers\Parsers;
 
 use App\Product;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Integer;
 
 class XmlParser implements Parser
 {
     protected $products = [];
     protected $xmlFile;
-    public $xmlData;
+    protected $xmlData;
+    protected $availableAttributes = ['Вкус','Размер','Цвет'];
 
     public function __construct($xmlFile)
     {
@@ -27,7 +29,7 @@ class XmlParser implements Parser
     {
         // TODO: Implement read() method.
         if (!file_exists($this->xmlFile)) {
-            throw new \Exception('File not found!');
+            throw new \Exception('File not found! Path to file has to be correct!');
         }
         try {
             $xmlString = file_get_contents($this->xmlFile);
@@ -39,6 +41,7 @@ class XmlParser implements Parser
         return $this->xmlData;
 
     }
+
 
     public function parse()
     {
@@ -73,13 +76,15 @@ class XmlParser implements Parser
                         $product['vendor_code'] = (string)$val;
                         break;
                     case $key === 'Ингредиенты':
-                        $product['ingredients'] = json_encode(explode(',', trim($val)));
+                        $tempIngerients = explode(',', $val);
+                        $product['ingredients'] =  count($tempIngerients) > 1 ? json_encode(array_map(array($this, 'trimStrElement'), $tempIngerients)) : null;
                         break;
                     case $key === 'КоличествоПорций':
                         $product['portions_count'] = (integer)$val;
                         break;
                     case $key === 'ПоставленнаяЦель':
-                        $product['goals'] = json_encode(explode(',', trim($val)));
+                        $tempGoals = explode(',', $val);
+                        $product['goals'] = count($tempGoals) > 1 ? json_encode(array_map(array($this, 'trimStrElement'), $tempGoals)) : null;;
                         break;
                     case $key === 'Наличие':
                         $product['availability'] = (integer)$val;
@@ -141,14 +146,13 @@ class XmlParser implements Parser
                     case $key === 'ХарактеристикиТовара':
                         $newArray = '';
                         $block = [];
+                        $tempValues = explode(',', trim($val->ХарактеристикаТовара->Значение));
+                        $tempQuantity = explode(',', $val->ХарактеристикаТовара->Количество);
+                        $block[(string)$val->ХарактеристикаТовара->Наименование] = array_map(array($this, 'trimStrElement'), $tempValues);
+                        $block['quantity'] =  array_map(array($this, 'trimIntElement'), $tempQuantity);
 
-//                        foreach ($val->ХарактеристикаТовара as $element) {
-                            $tempValues =  explode(',', trim($val->ХарактеристикаТовара->Значение));
-                            $block[(string)$val->ХарактеристикаТовара->Наименование] =  array_map(array($this, 'trimElement'), $tempValues);
-                            $block['quantity'] =  explode(',', trim($val->ХарактеристикаТовара->Количество));
+                        if(in_array(array_keys($block)[0], $this->availableAttributes)) {
                             $newArray .= json_encode($block);
-//                        }
-                        if($newArray !== '') {
                             $product['attributes'] = $newArray;
                         } else {
                             $product['attributes'] = null;
@@ -165,19 +169,40 @@ class XmlParser implements Parser
         }
     }
 
-    protected function trimElement($n)
+
+    /**
+     * Callback function
+     * @param $n
+     * @return string
+     */
+    protected function trimStrElement($n) :string
     {
         return trim($n);
     }
 
+    /**
+     * Callback function
+     * @param $n
+     * @return int
+     */
+    protected function trimIntElement($n)
+    {
+        return (integer) trim($n);
+    }
+
+    public function writeCategories()
+    {
+
+    }
+
+    /**
+     * Update table if was changed and insert if not exists
+     */
     public function writeProducts()
     {
-        $newProduct = new Product();
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Product::query()->truncate();
         foreach ($this->products as $product) {
-            $newProduct::create($product);
+
+            Product::updateOrCreate(['inner_id' => $product['inner_id']], $product);
         }
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

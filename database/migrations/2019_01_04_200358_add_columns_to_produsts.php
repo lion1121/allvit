@@ -22,9 +22,9 @@ class AddColumnsToProdusts extends Migration
             $table->string('packing')->after('weight');
             $table->string('barcode')->after('vendor')->nullable();
             $table->string('vendor_code')->after('vendor')->nullable();
-            $table->json('ingredients');
+            $table->json('ingredients')->nullable();
             $table->integer('portions_count')->after('packing')->nullable();
-            $table->json('goals');
+            $table->json('goals')->nullable();
             $table->integer('availability')->index()->after('full_name');
             $table->integer('present')->nullable();
             $table->integer('free_delivery')->nullable();

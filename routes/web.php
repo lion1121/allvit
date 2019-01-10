@@ -27,7 +27,7 @@ Route::get('/array', function () {
     $parser = new \App\Helpers\Parsers\XmlParser('../public/temp_import_xml/import.xml');
     $parser->read();
     $parser->parse();
-    $test = count($parser->xmlData->Каталог->Товары);
+//    $test = count($parser->xmlData->Каталог->Товары);
 //    dd($test);
     $parser->writeProducts();
 });
