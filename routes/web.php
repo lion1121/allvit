@@ -27,9 +27,8 @@ Route::get('/array', function () {
     $parser = new \App\Helpers\Parsers\XmlParser('../public/temp_import_xml/import.xml');
     $parser->read();
     $parser->parse();
-//    $test = count($parser->xmlData->Каталог->Товары);
-//    dd($test);
     $parser->writeProducts();
+//    dd($parser->categories);
 });
 
 Route::get('/test', function () {
@@ -44,6 +43,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('promocodes', 'Voyager\PromocodeController@index');
     Route::get('promocodes/edit/{id}', 'Voyager\PromocodeController@edit')->name('promocode.edit');
 });
+
+Route::get('admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
+
 
 //Auth::routes();
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -70,4 +72,3 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('addPromocode', 'Voyager\PromocodeController@store');
     Route::post('getCategories', 'Voyager\PromocodeController@getProdCategories');
 });
-//Route::post('/ajax/getCategories', 'ProdCategoryController@getCategories');

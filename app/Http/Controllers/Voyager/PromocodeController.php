@@ -64,6 +64,7 @@ class PromocodeController extends Controller
 
                 $promocodeId = $promocode->id;
                 $lastPromocode = Promocode::findOrFail($promocodeId);
+
                 //Clear array from non important values
                 foreach ($request->categories as $category){
                     $lastPromocode->prodCategories()->attach(['promocode_id' => $promocodeId], ['prod_category_id' => $category['id']]);

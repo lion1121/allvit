@@ -9,16 +9,21 @@
 namespace App\Helpers\Parsers;
 
 
+use App\ProdCategory;
 use App\Product;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Integer;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class XmlParser implements Parser
 {
+    use RecursiveAddCategory;
+
     protected $products = [];
+    public $categories = [];
     protected $xmlFile;
     protected $xmlData;
-    protected $availableAttributes = ['Вкус','Размер','Цвет'];
+    protected $availableAttributes = ['Вкус', 'Размер', 'Цвет'];
 
     public function __construct($xmlFile)
     {
@@ -29,6 +34,9 @@ class XmlParser implements Parser
     {
         // TODO: Implement read() method.
         if (!file_exists($this->xmlFile)) {
+            $log = new Logger('parserLogger');
+            $log->pushHandler(new StreamHandler(storage_path() . '/logs/parser_logs.log', Logger::INFO));
+            $log->addAlert('Parser error: Source not found. Check url or login password!');
             throw new \Exception('File not found! Path to file has to be correct!');
         }
         try {
@@ -36,8 +44,9 @@ class XmlParser implements Parser
             $this->xmlData = simplexml_load_string($xmlString, "SimpleXMLElement", LIBXML_NOCDATA);
 
         } catch (\Exception $e) {
-            echo 'Throw new custom exeption: ', $e->getMessage();
+            echo 'Throw new custom exception: ', $e->getMessage();
         }
+
         return $this->xmlData;
 
     }
@@ -46,9 +55,15 @@ class XmlParser implements Parser
     public function parse()
     {
         // TODO: Implement parse() method.
+
+        foreach ($this->xmlData->Классификатор->ГруппыСайта->ГруппаСайта as $categoryElement) {
+
+            $this->addCategory($categoryElement);
+        }
+
         $product = [];
-        foreach ($this->xmlData->Каталог->Товары->Товар as $element) {
-            foreach ($element as $key => $val) {
+        foreach ($this->xmlData->Каталог->Товары->Товар as $productElement) {
+            foreach ($productElement as $key => $val) {
 
                 switch ($key) {
                     case $key === 'Ид':
@@ -77,7 +92,7 @@ class XmlParser implements Parser
                         break;
                     case $key === 'Ингредиенты':
                         $tempIngerients = explode(',', $val);
-                        $product['ingredients'] =  count($tempIngerients) > 1 ? json_encode(array_map(array($this, 'trimStrElement'), $tempIngerients)) : null;
+                        $product['ingredients'] = count($tempIngerients) > 1 ? json_encode(array_map(array($this, 'trimStrElement'), $tempIngerients)) : null;
                         break;
                     case $key === 'КоличествоПорций':
                         $product['portions_count'] = (integer)$val;
@@ -149,9 +164,10 @@ class XmlParser implements Parser
                         $tempValues = explode(',', trim($val->ХарактеристикаТовара->Значение));
                         $tempQuantity = explode(',', $val->ХарактеристикаТовара->Количество);
                         $block[(string)$val->ХарактеристикаТовара->Наименование] = array_map(array($this, 'trimStrElement'), $tempValues);
-                        $block['quantity'] =  array_map(array($this, 'trimIntElement'), $tempQuantity);
+                        $block['quantity'] = array_map(array($this, 'trimIntElement'), $tempQuantity);
 
-                        if(in_array(array_keys($block)[0], $this->availableAttributes)) {
+                        //Check if values not present in availableAttributes write null
+                        if (in_array(array_keys($block)[0], $this->availableAttributes)) {
                             $newArray .= json_encode($block);
                             $product['attributes'] = $newArray;
                         } else {
@@ -159,14 +175,25 @@ class XmlParser implements Parser
                         }
                         $newArray = '';
                         break;
+                    case $key === 'ГруппыСайта':
+                        $categories = (array)$val;
+//                        dd($categories['Ид']);
+//                        foreach ($categories as $category) {
+                        if (isset($categories['Ид'])) {
+                            $product['categories'] = ProdCategory::where('inner_id', $categories['Ид'])->first()->id;
+                        }
+
+//                        }
+                        break;
                     default:
-                        $product['slug'] = '';
                         break;
                 }
             }
             $this->products[] = $product;
             $product = [];
         }
+
+
     }
 
 
@@ -175,7 +202,7 @@ class XmlParser implements Parser
      * @param $n
      * @return string
      */
-    protected function trimStrElement($n) :string
+    protected function trimStrElement($n): string
     {
         return trim($n);
     }
@@ -187,7 +214,7 @@ class XmlParser implements Parser
      */
     protected function trimIntElement($n)
     {
-        return (integer) trim($n);
+        return (integer)trim($n);
     }
 
     public function writeCategories()
@@ -201,8 +228,14 @@ class XmlParser implements Parser
     public function writeProducts()
     {
         foreach ($this->products as $product) {
+            $product = Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
+            $product_id = $product->id;
+//            dd($product['categories']);
+//            foreach ($product['categories'] as $category) {
 
-            Product::updateOrCreate(['inner_id' => $product['inner_id']], $product);
+            DB::table('category_product')->insert(['product_id' => $product_id, 'prod_category_id' => $product['categories']]);
+//            }
         }
+
     }
 }
