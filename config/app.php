@@ -160,7 +160,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
@@ -177,6 +176,16 @@ return [
          * Custom Service Providers
          */
         \App\Providers\XmlParserServiceProvider::class,
+
+        /*
+        * Протокол обмена информацией с 1С
+        */
+        Mavsan\LaProtocol\Providers\ProtocolProvider::class,
+
+        /*
+         * работа с zip архивами
+         */
+        Chumper\Zipper\ZipperServiceProvider::class,
 
     ],
 
@@ -228,6 +237,11 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'XmlParser' => App\Facades\XmlParser::class,
+
+        /*
+         * Работа с zip архивами
+         */
+        'Zipper' => Chumper\Zipper\Zipper::class,
     ],
 
 ];
