@@ -279,8 +279,8 @@ class CatalogController extends BaseController
     {
         $folderName = session('inputFolderName');
         if (is_null($folderName)) {
-//            $folderName = date('Y-m-d_H:i');
-            $folderName = 'temp';
+            $folderName = date('Y-m-d_H-i');
+//            $folderName = 'temp';
             session(['inputFolderName' => $folderName]) ;
             $fullPath = storage_path('1cExchange').'/'.$folderName.'/';
 
