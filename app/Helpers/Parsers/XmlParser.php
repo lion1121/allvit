@@ -34,10 +34,10 @@ class XmlParser implements Parser
     {
         // TODO: Implement read() method.
         if (!file_exists($this->xmlFile)) {
-            $log = new Logger('parserLogger');
-            $log->pushHandler(new StreamHandler(storage_path() . '/logs/parser_logs.log', Logger::INFO));
-            $log->addAlert('Parser error: Source not found. Check url or login password!');
-            throw new \Exception('File not found! Path to file has to be correct!');
+//            $log = new Logger('parserLogger');
+//            $log->pushHandler(new StreamHandler(storage_path() . '/logs/parser_logs.log', Logger::INFO));
+//            $log->addAlert('Parser error: Source not found. Check url or login password!');
+            throw new Exception('File not found! Path to file has to be correct!');
         }
         try {
             $xmlString = file_get_contents($this->xmlFile);
@@ -56,10 +56,13 @@ class XmlParser implements Parser
     {
         // TODO: Implement parse() method.
 
-        foreach ($this->xmlData->Классификатор->ГруппыСайта->ГруппаСайта as $categoryElement) {
+        if (isset($this->xmlData->Классификатор->ГруппыСайта->ГруппаСайта)) {
+            foreach ($this->xmlData->Классификатор->ГруппыСайта->ГруппаСайта as $categoryElement) {
 
-            $this->addCategory($categoryElement);
+                $this->addCategory($categoryElement);
+            }
         }
+
 
         $product = [];
         foreach ($this->xmlData->Каталог->Товары->Товар as $productElement) {
@@ -176,13 +179,15 @@ class XmlParser implements Parser
                         $newArray = '';
                         break;
                     case $key === 'ГруппыСайта':
-                        $categories = (array)$val;
-//                        dd($categories['Ид']);
+                        if ((string) $val === ''){
+                            $product['categories'] = (array) 6;
+                        } else {
+                            $categories = (array)$val;
 //                        foreach ($categories as $category) {
-                        if (isset($categories['Ид'])) {
-                            $product['categories'] = ProdCategory::where('inner_id', $categories['Ид'])->first()->id;
+                            if (isset($categories['Ид'])) {
+                                $product['categories'] = ProdCategory::where('inner_id', $categories['Ид'])->first()->id;
+                            }
                         }
-
 //                        }
                         break;
                     default:
@@ -228,14 +233,13 @@ class XmlParser implements Parser
     public function writeProducts()
     {
         foreach ($this->products as $product) {
-            $product = Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
-            $product_id = $product->id;
-//            dd($product['categories']);
-//            foreach ($product['categories'] as $category) {
-
-            DB::table('category_product')->insert(['product_id' => $product_id, 'prod_category_id' => $product['categories']]);
-//            }
+            $tempProduct = Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
+            $product_id = $tempProduct->id;
+            foreach ($product['categories'] as $category) {
+                $lastProduct = Product::findOrFail($product_id);
+                //Synchronize pivot table (category_product)
+                $lastProduct->categories()->sync([$product_id => $category]);
+            }
         }
-
     }
 }

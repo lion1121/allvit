@@ -5,6 +5,7 @@
 /public/include
 /public/css/rs-plugin
 /storage/*.key
+/storage/1cExchange/*
 /vendor
 /.idea
 /.vscode
