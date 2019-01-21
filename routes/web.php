@@ -16,24 +16,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Helpers\Parsers\Parser;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'AppController@index');
 Route::get('/shop', function () {
     return view('front.shop');
 });
 
-Route::get('/array', function () {
-    $parser = new \App\Helpers\Parsers\XmlParser('../public/temp_import_xml/import.xml');
-    $parser->read();
-    $parser->parse();
-    $parser->writeProducts();
-//    dd($parser->categories);
-});
 
 Route::get('/test', function () {
-    $product = DB::table('products')->whereJsonContains('attributes->Вкус',['Апельсин (Orange)'])->get();
-    dd($product);
+//    $product = DB::table('products')->whereJsonContains('attributes->Вкус',['Green Apple Envy'])->get();
+
+    $product = App\ProdCategory::findOrfail(6)->products()->WhereJsonContains('attributes->Вкус',['Banana','Chocolate'])->get();
+
+    dump($product);
 });
 
 

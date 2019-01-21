@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/style.scss', 'public/css')
-    .sass('resources/sass/responsive.scss', 'public/css/libs')
+    .sass('resources/sass/responsive.scss', 'public/css')
     .js('resources/js/admin_voyager.js','public/js')
     .sourceMaps();
 

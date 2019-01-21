@@ -36,7 +36,7 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Mavsan\\": "app/Helpers/packages/mavsan/laravel-1c-protocol/src"
+            "Mavsan\\": "app/Helpers/Packages/mavsan/laravel-1c-protocol/src"
         }
     },
     "autoload-dev": {
