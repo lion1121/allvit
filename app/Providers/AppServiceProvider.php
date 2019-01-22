@@ -24,5 +24,12 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        view()->composer('front.elements.navbar', function($view){
+            //get all parent categories with their subcategories
+            $categories = \App\ProdCategory::where('parent_id', null)->with('subcategories')->get();
+
+            //attach the categories to the view.
+            $view->with(compact('categories'));
+        });
     }
 }

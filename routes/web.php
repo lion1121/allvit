@@ -14,12 +14,10 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use App\Helpers\Parsers\Parser;
 
 Route::get('/', 'AppController@index');
-Route::get('/shop', function () {
-    return view('front.shop');
-});
+Route::get('/shop/{category?}/{subcategory?}/{subsubcategory?}', 'ProdCategoryController@show')->name('category');
+Route::get('/shop/{category?}/{subcategory?}/{subsubcategory?}/{product}', 'ShopController@show')->name('product');
 
 
 Route::get('/test', function () {
@@ -29,6 +27,7 @@ Route::get('/test', function () {
 
     dump($product);
 });
+
 
 
 Route::group(['prefix' => 'admin'], function () {

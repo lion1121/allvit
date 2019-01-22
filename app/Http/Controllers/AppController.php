@@ -11,7 +11,6 @@ class AppController extends Controller
     public function index()
     {
         $products = Product::all()->random(4);
-//        dd($products);
         return view('home', compact('products'));
     }
 }

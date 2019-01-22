@@ -51,4 +51,16 @@ class Product extends Model
         return $this->belongsToMany('App\Promocode');
     }
 
+    public function getUrl()
+    {
+        $url = $this->slug;
+
+        $category = $this;
+
+        while ($category = $category->parent) {
+            $url = $category->slug.'/'.$url;
+        }
+
+        return $url->toArray();
+    }
 }

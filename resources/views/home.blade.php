@@ -262,7 +262,7 @@
                             <div id="shop" class="shop clearfix">
                                 @if(isset($products))
                                     @foreach($products as $product)
-                                        @include('components.shop.product_box',[$product,$product])
+                                        @include('front.shop.elements.product_box',[$product,$product])
                                     @endforeach
                                 @endif
                             </div>
@@ -275,7 +275,7 @@
 
                                 @if(isset($products))
                                     @foreach($products as $product)
-                                        @include('components.shop.product_box',[$product,$product])
+                                        @include('front.shop.elements.product_box',[$product,$product])
                                     @endforeach
                                 @endif
 
@@ -289,7 +289,7 @@
 
                                 @if(isset($products))
                                     @foreach($products as $product)
-                                        @include('components.shop.product_box',[$product,$product])
+                                        @include('front.shop.elements.product_box',[$product,$product])
                                     @endforeach
                                 @endif
                             </div>
