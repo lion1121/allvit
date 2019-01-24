@@ -54,14 +54,14 @@ class Product extends Model
 
     public function getUrl()
     {
-        $url = Product::with('categories')->find($this->id)->categories()->first()->getUrl() . '/' . $this->slug;
+        $url = $this->load('categories')->categories()->first()->getUrl() . '/' . $this->slug;
         return $url;
 
     }
 
     public function getCategoryUrl()
     {
-        $url = Product::with('categories')->find($this->id)->categories()->first()->getUrl();
+        $url = $this->load('categories')->categories()->first()->getUrl();
         return $url;
     }
 

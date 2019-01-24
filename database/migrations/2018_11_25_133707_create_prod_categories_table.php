@@ -19,6 +19,7 @@ class CreateProdCategoriesTable extends Migration
             $table->string('slug')->nullable();
             $table->integer('parent_id')->nullable();
             $table->text('description');
+            $table->index('slug');
             $table->timestamps();
         });
     }
