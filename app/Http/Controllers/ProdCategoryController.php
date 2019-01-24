@@ -15,10 +15,9 @@ class ProdCategoryController extends Controller
         //Get last category from URL
         $urlCategory = end($request->route()->parameters);
         $categoryId = ProdCategory::where('slug', $urlCategory)->first()->id;
-        $breadcrambs = ProdCategory::findOrFail($categoryId)->getUrl();
-//        dd($breadcrambs);
-        $products = ProdCategory::findOrFail($categoryId)->products()->paginate(12);
-        return view('front.shop.shop', compact('products','breadcrambs'));
+        $category = ProdCategory::findOrFail($categoryId);
+        $products = $category->products()->paginate(12);
+        return view('front.shop.shop', compact('products','category'));
     }
 
     public function getAllCategories(Request $request)
@@ -26,7 +25,6 @@ class ProdCategoryController extends Controller
         $category = DB::table('prod_categories')->where('name', $request->body)
             ->orWhere('name', 'like', '%' . $request->category . '%')->get();
         echo json_encode($category);
-
     }
 
     public function getCategoryByPromocodeId(Request $request)
@@ -34,7 +32,6 @@ class ProdCategoryController extends Controller
         $category = DB::table('prod_categories')->where('name', $request->body)
             ->orWhere('name', 'like', '%' . $request->category . '%')->get();
         echo json_encode($category);
-
     }
 
 }

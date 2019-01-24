@@ -1,0 +1,1 @@
+{{ Breadcrumbs::render('category', $category) }}

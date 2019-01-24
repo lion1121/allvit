@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'AppController@index');
+Route::get('/', 'AppController@index')->name('home');
+Route::get('/shop/product/{category?}/{subcategory?}/{subsubcategory?}/{product?}', 'ShopController@show')->name('product');
 Route::get('/shop/{category?}/{subcategory?}/{subsubcategory?}', 'ProdCategoryController@show')->name('category');
-Route::get('/shop/{category?}/{subcategory?}/{subsubcategory?}/{product}', 'ShopController@show')->name('product');
-
+Route::get('/shop/cart','CrartController@index')->name('cart');
 
 Route::get('/test', function () {
 //    $product = DB::table('products')->whereJsonContains('attributes->Вкус',['Green Apple Envy'])->get();

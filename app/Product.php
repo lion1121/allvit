@@ -46,6 +46,7 @@ class Product extends Model
     {
         return $this->hasMany('App\Property');
     }
+
     public function promocode()
     {
         return $this->belongsToMany('App\Promocode');
@@ -53,14 +54,24 @@ class Product extends Model
 
     public function getUrl()
     {
-        $url = $this->slug;
+        $url = Product::with('categories')->find($this->id)->categories()->first()->getUrl() . '/' . $this->slug;
+        return $url;
 
-        $category = $this;
+    }
 
-        while ($category = $category->parent) {
-            $url = $category->slug.'/'.$url;
-        }
+    public function getCategoryUrl()
+    {
+        $url = Product::with('categories')->find($this->id)->categories()->first()->getUrl();
+        return $url;
+    }
 
-        return $url->toArray();
+    public function getCategoryNameAttribute()
+    {
+        return $this->categories()->first()->name . ' ' . $this->name;
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\ProdCategory', 'parent_id', 'id');
     }
 }

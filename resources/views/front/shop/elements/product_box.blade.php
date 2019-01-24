@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="product-desc">
-        <div class="product-title"><h3><a href="#">{{$product->name}}</a>
+        <div class="product-title"><h3><a href="{{route('product')}}/{{$product->getUrl()}}">{{$product->name}}</a>
             </h3>
         </div>
         <div class="product-price">

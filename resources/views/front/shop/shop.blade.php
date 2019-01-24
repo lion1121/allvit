@@ -6,23 +6,25 @@
     <section id="page-title">
 
         <div class="container clearfix">
-            <h1>Shop</h1>
+            <h1>{{$category->name}}</h1>
             <span>Start Buying your Favourite Theme</span>
             <div class="row">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                {{--<ol class="breadcrumb">--}}
+                    {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
 
-                @foreach($breadcrambs as $item)
+                {{--@foreach($breadcrambs as $item)--}}
 
-                        <li class="breadcrumb-item active" aria-current="page">{{$item}}</li>
+                        {{--<li class="breadcrumb-item active" aria-current="page">{{$item}}</li>--}}
 
-                @endforeach
-                </ol>
+                {{--@endforeach--}}
+                {{--@endforeach--}}
+                {{--</ol>--}}
             </div>
             {{--<ol class="breadcrumb">--}}
                 {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
                 {{--<li class="breadcrumb-item active" aria-current="page">Shop</li>--}}
             {{--</ol>--}}
+           @include('front.elements.breadcrumbs',[$category,$category])
         </div>
 
     </section><!-- #page-title end -->

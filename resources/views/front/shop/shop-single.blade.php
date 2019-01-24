@@ -6,12 +6,13 @@
 <section id="page-title">
 
     <div class="container clearfix">
-        <h1>Shop</h1>
+        <h1>{{$product->category_name}}</h1>
         <span>Start Buying your Favourite Theme</span>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Shop</li>
-        </ol>
+        {{--<ol class="breadcrumb">--}}
+            {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
+            {{--<li class="breadcrumb-item active" aria-current="page">Shop</li>--}}
+        {{--</ol>--}}
+        {{ Breadcrumbs::render('product', $product) }}
     </div>
 
 </section><!-- #page-title end -->
@@ -36,9 +37,11 @@
                                 <div class="fslider" data-pagi="false" data-arrows="false" data-thumbs="true">
                                     <div class="flexslider">
                                         <div class="slider-wrap" data-lightbox="gallery">
+                                            @if($product->image)
                                             <div class="slide" data-thumb="images/shop/thumbs/dress/3.jpg"><a href="images/shop/dress/3.jpg" title="Pink Printed Dress - Front View" data-lightbox="gallery-item"><img src="images/shop/dress/3.jpg" alt="Pink Printed Dress"></a></div>
                                             <div class="slide" data-thumb="images/shop/thumbs/dress/3-1.jpg"><a href="images/shop/dress/3-1.jpg" title="Pink Printed Dress - Side View" data-lightbox="gallery-item"><img src="images/shop/dress/3-1.jpg" alt="Pink Printed Dress"></a></div>
                                             <div class="slide" data-thumb="images/shop/thumbs/dress/3-2.jpg"><a href="images/shop/dress/3-2.jpg" title="Pink Printed Dress - Back View" data-lightbox="gallery-item"><img src="images/shop/dress/3-2.jpg" alt="Pink Printed Dress"></a></div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -82,11 +85,12 @@
 
                             <!-- Product Single - Short Description
                             ============================================= -->
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero velit id eaque ex quae laboriosam nulla optio doloribus! Perspiciatis, libero, neque, perferendis at nisi optio dolor!</p>
-                            <p>Perspiciatis ad eveniet ea quasi debitis quos laborum eum reprehenderit eaque explicabo assumenda rem modi.</p>
+                            {{--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero velit id eaque ex quae laboriosam nulla optio doloribus! Perspiciatis, libero, neque, perferendis at nisi optio dolor!</p>--}}
+                            {{--<p>Perspiciatis ad eveniet ea quasi debitis quos laborum eum reprehenderit eaque explicabo assumenda rem modi.</p>--}}
+                            {{$product->full_name}}, ({{$product->weight}} гр.)
                             <ul class="iconlist">
-                                <li><i class="icon-caret-right"></i> Dynamic Color Options</li>
-                                <li><i class="icon-caret-right"></i> Lots of Size Options</li>
+                                <li><i class="icon-caret-right"></i> Производитель: {{$product->vendor}}</li>
+                                <li><i class="icon-caret-right"></i> Фасовка:</li>
                                 <li><i class="icon-caret-right"></i> 30-Day Return Policy</li>
                             </ul><!-- Product Single - Short Description End -->
 
@@ -94,8 +98,8 @@
                             ============================================= -->
                             <div class="card product-meta">
                                 <div class="card-body">
-                                    <span itemprop="productID" class="sku_wrapper">SKU: <span class="sku">8465415</span></span>
-                                    <span class="posted_in">Category: <a href="#" rel="tag">Dress</a>.</span>
+                                    <span itemprop="productID" class="sku_wrapper">КОД: <span class="sku">{{$product->vendor_code}}</span></span>
+                                    <span class="posted_in">Катерория: <a href="{{route('category')}}/{{$product->getCategoryUrl()}}" rel="tag">{{$product->categories()->first()->name}}</a>.</span>
                                     <span class="tagged_as">Tags: <a href="#" rel="tag">Pink</a>, <a href="#" rel="tag">Short</a>, <a href="#" rel="tag">Dress</a>, <a href="#" rel="tag">Printed</a>.</span>
                                 </div>
                             </div><!-- Product Single - Meta End -->
@@ -139,9 +143,9 @@
                             <div class="tabs clearfix nobottommargin" id="tab-1">
 
                                 <ul class="tab-nav clearfix">
-                                    <li><a href="#tabs-1"><i class="icon-align-justify2"></i><span class="d-none d-md-inline-block"> Description</span></a></li>
-                                    <li><a href="#tabs-2"><i class="icon-info-sign"></i><span class="d-none d-md-inline-block"> Additional Information</span></a></li>
-                                    <li><a href="#tabs-3"><i class="icon-star3"></i><span class="d-none d-md-inline-block"> Reviews (2)</span></a></li>
+                                    <li><a href="#tabs-1"><i class="icon-align-justify2"></i><span class="d-none d-md-inline-block"> Описание</span></a></li>
+                                    <li><a href="#tabs-2"><i class="icon-info-sign"></i><span class="d-none d-md-inline-block"> Дополнительная информация</span></a></li>
+                                    <li><a href="#tabs-3"><i class="icon-star3"></i><span class="d-none d-md-inline-block"> Отзывы (2)</span></a></li>
                                 </ul>
 
                                 <div class="tab-container">
@@ -198,7 +202,7 @@
                                                         <div class="comment-meta">
                                                             <div class="comment-author vcard">
 																		<span class="comment-avatar clearfix">
-																		<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' height='60' width='60' /></span>
+																		<img alt='' src='https://via.placeholder.com/150' height='60' width='60' /></span>
                                                             </div>
                                                         </div>
 
@@ -225,7 +229,7 @@
                                                         <div class="comment-meta">
                                                             <div class="comment-author vcard">
 																		<span class="comment-avatar clearfix">
-																		<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' height='60' width='60' /></span>
+																		<img alt='' src='' height='60' width='60' /></span>
                                                             </div>
                                                         </div>
 
@@ -326,7 +330,7 @@
                             <div class="line"></div>
 
                             <div class="col_one_third nobottommargin">
-                                <a href="#" title="Brand Logo" class="d-none d-md-block"><img class="image_fade" src="images/shop/brand2.jpg" alt="Brand Logo"></a>
+                                <a href="#" title="Brand Logo" class="d-none d-md-block"><img class="image_fade" src="" alt="Brand Logo"></a>
                             </div>
 
                             <div class="col_two_third col_last nobottommargin">
@@ -398,8 +402,8 @@
                         <div class="oc-item">
                             <div class="product iproduct clearfix">
                                 <div class="product-image">
-                                    <a href="#"><img src="images/shop/dress/1.jpg" alt="Checked Short Dress"></a>
-                                    <a href="#"><img src="images/shop/dress/1-1.jpg" alt="Checked Short Dress"></a>
+                                    <a href="#"><img src="" alt="Checked Short Dress"></a>
+                                    <a href="#"><img src="" alt="Checked Short Dress"></a>
                                     <div class="sale-flash">50% Off*</div>
                                     <div class="product-overlay">
                                         <a href="#" class="add-to-cart"><i class="icon-shopping-cart"></i><span> Add to Cart</span></a>
@@ -423,8 +427,8 @@
                         <div class="oc-item">
                             <div class="product iproduct clearfix">
                                 <div class="product-image">
-                                    <a href="#"><img src="images/shop/pants/1-1.jpg" alt="Slim Fit Chinos"></a>
-                                    <a href="#"><img src="images/shop/pants/1.jpg" alt="Slim Fit Chinos"></a>
+                                    <a href="#"><img src="" alt="Slim Fit Chinos"></a>
+                                    <a href="#"><img src="" alt="Slim Fit Chinos"></a>
                                     <div class="product-overlay">
                                         <a href="#" class="add-to-cart"><i class="icon-shopping-cart"></i><span> Add to Cart</span></a>
                                         <a href="include/ajax/shop-item.html" class="item-quick-view" data-lightbox="ajax"><i class="icon-zoom-in2"></i><span> Quick View</span></a>
@@ -447,8 +451,8 @@
                         <div class="oc-item">
                             <div class="product iproduct clearfix">
                                 <div class="product-image">
-                                    <a href="#"><img src="images/shop/shoes/1-1.jpg" alt="Dark Brown Boots"></a>
-                                    <a href="#"><img src="images/shop/shoes/1.jpg" alt="Dark Brown Boots"></a>
+                                    <a href="#"><img src="" alt="Dark Brown Boots"></a>
+                                    <a href="#"><img src="" alt="Dark Brown Boots"></a>
                                     <div class="product-overlay">
                                         <a href="#" class="add-to-cart"><i class="icon-shopping-cart"></i><span> Add to Cart</span></a>
                                         <a href="include/ajax/shop-item.html" class="item-quick-view" data-lightbox="ajax"><i class="icon-zoom-in2"></i><span> Quick View</span></a>
@@ -471,8 +475,8 @@
                         <div class="oc-item">
                             <div class="product iproduct clearfix">
                                 <div class="product-image">
-                                    <a href="#"><img src="images/shop/dress/2.jpg" alt="Light Blue Denim Dress"></a>
-                                    <a href="#"><img src="images/shop/dress/2-2.jpg" alt="Light Blue Denim Dress"></a>
+                                    <a href="#"><img src="" alt="Light Blue Denim Dress"></a>
+                                    <a href="#"><img src="" alt="Light Blue Denim Dress"></a>
                                     <div class="product-overlay">
                                         <a href="#" class="add-to-cart"><i class="icon-shopping-cart"></i><span> Add to Cart</span></a>
                                         <a href="include/ajax/shop-item.html" class="item-quick-view" data-lightbox="ajax"><i class="icon-zoom-in2"></i><span> Quick View</span></a>
@@ -495,8 +499,8 @@
                         <div class="oc-item">
                             <div class="product iproduct clearfix">
                                 <div class="product-image">
-                                    <a href="#"><img src="images/shop/sunglasses/1.jpg" alt="Unisex Sunglasses"></a>
-                                    <a href="#"><img src="images/shop/sunglasses/1-1.jpg" alt="Unisex Sunglasses"></a>
+                                    <a href="#"><img src="" alt="Unisex Sunglasses"></a>
+                                    <a href="#"><img src="" alt="Unisex Sunglasses"></a>
                                     <div class="sale-flash">Sale!</div>
                                     <div class="product-overlay">
                                         <a href="#" class="add-to-cart"><i class="icon-shopping-cart"></i><span> Add to Cart</span></a>
@@ -548,7 +552,7 @@
 
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/1.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -563,7 +567,7 @@
 
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/6.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -578,7 +582,7 @@
 
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/7.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -601,7 +605,7 @@
                         <div class="widget-last-view">
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/3.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -616,7 +620,7 @@
 
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/10.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -631,7 +635,7 @@
 
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/11.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -653,7 +657,7 @@
                         <div id="Popular-item">
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/8.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -668,7 +672,7 @@
 
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/5.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -683,7 +687,7 @@
 
                             <div class="spost clearfix">
                                 <div class="entry-image">
-                                    <a href="#"><img src="images/shop/small/12.jpg" alt="Image"></a>
+                                    <a href="#"><img src="" alt="Image"></a>
                                 </div>
                                 <div class="entry-c">
                                     <div class="entry-title">
@@ -721,14 +725,14 @@
 
                         <div id="oc-clients-full" class="owl-carousel image-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000" data-pagi="false">
 
-                            <div class="oc-item"><a href="#"><img src="images/clients/1.png" alt="Clients"></a></div>
-                            <div class="oc-item"><a href="#"><img src="images/clients/2.png" alt="Clients"></a></div>
-                            <div class="oc-item"><a href="#"><img src="images/clients/3.png" alt="Clients"></a></div>
-                            <div class="oc-item"><a href="#"><img src="images/clients/4.png" alt="Clients"></a></div>
-                            <div class="oc-item"><a href="#"><img src="images/clients/5.png" alt="Clients"></a></div>
-                            <div class="oc-item"><a href="#"><img src="images/clients/6.png" alt="Clients"></a></div>
-                            <div class="oc-item"><a href="#"><img src="images/clients/7.png" alt="Clients"></a></div>
-                            <div class="oc-item"><a href="#"><img src="images/clients/8.png" alt="Clients"></a></div>
+                            {{--<div class="oc-item"><a href="#"><img src="images/clients/1.png" alt="Clients"></a></div>--}}
+                            {{--<div class="oc-item"><a href="#"><img src="images/clients/2.png" alt="Clients"></a></div>--}}
+                            {{--<div class="oc-item"><a href="#"><img src="images/clients/3.png" alt="Clients"></a></div>--}}
+                            {{--<div class="oc-item"><a href="#"><img src="images/clients/4.png" alt="Clients"></a></div>--}}
+                            {{--<div class="oc-item"><a href="#"><img src="images/clients/5.png" alt="Clients"></a></div>--}}
+                            {{--<div class="oc-item"><a href="#"><img src="images/clients/6.png" alt="Clients"></a></div>--}}
+                            {{--<div class="oc-item"><a href="#"><img src="images/clients/7.png" alt="Clients"></a></div>--}}
+                            {{--<div class="oc-item"><a href="#"><img src="images/clients/8.png" alt="Clients"></a></div>--}}
 
                         </div>
 

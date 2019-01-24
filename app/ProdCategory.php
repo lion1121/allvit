@@ -55,18 +55,19 @@ class ProdCategory extends Model
 
     public function getUrl()
     {
-        $name = [];
         $url = $this->slug;
-        array_push($name,$this->name);
 
         $category = $this;
 
         while ($category = $category->parent) {
-            $name[] = $category->name;
             $url = $category->slug.'/'.$url;
         }
 
+        return $url;
+    }
 
-        return array_reverse($url);
+    public function children()
+    {
+        return $this->hasMany('App\ProdCategory', 'parent_id', 'id');
     }
 }
