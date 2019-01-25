@@ -10,21 +10,21 @@
             <span>Start Buying your Favourite Theme</span>
             <div class="row">
                 {{--<ol class="breadcrumb">--}}
-                    {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
+                {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
 
                 {{--@foreach($breadcrambs as $item)--}}
 
-                        {{--<li class="breadcrumb-item active" aria-current="page">{{$item}}</li>--}}
+                {{--<li class="breadcrumb-item active" aria-current="page">{{$item}}</li>--}}
 
                 {{--@endforeach--}}
                 {{--@endforeach--}}
                 {{--</ol>--}}
             </div>
             {{--<ol class="breadcrumb">--}}
-                {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
-                {{--<li class="breadcrumb-item active" aria-current="page">Shop</li>--}}
+            {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
+            {{--<li class="breadcrumb-item active" aria-current="page">Shop</li>--}}
             {{--</ol>--}}
-           @include('front.elements.breadcrumbs',[$category,$category])
+            @include('front.elements.breadcrumbs',[$category,$category])
         </div>
 
     </section><!-- #page-title end -->
@@ -348,36 +348,25 @@
 
                         <div class="widget widget_links clearfix">
 
-                            <h4>Shop Categories</h4>
-                            <ul>
-                                <li><a href="#">Shirts</a></li>
-                                <li><a href="#">Pants</a></li>
-                                <li><a href="#">Tshirts</a></li>
-                                <li><a href="#">Sunglasses</a></li>
-                                <li><a href="#">Shoes</a></li>
-                                <li><a href="#">Bags</a></li>
-                                <li><a href="#">Watches</a></li>
-                            </ul>
-
+                            <h4>Категории</h4>
+                            {{--@if($categories)--}}
+                            {{--<ul>--}}
+                            {{--@foreach($categories as $category)--}}
+                            {{--<li>--}}
+                            {{--<a href="{{route('category')}}/{{$category->getUrl()}}">{{$category->name}}</a>--}}
+                            {{--</li>--}}
+                            {{--@endforeach--}}
+                            {{--</ul>--}}
+                            {{--@endif--}}
                         </div>
                         <div class="widget clearfix">
-                            <h4>Some Filter</h4>
-                            <div>
-                                <input id="checkbox-11" class="checkbox-style" name="checkbox-11" type="checkbox">
-                                <label for="checkbox-11" class="checkbox-style-3-label">Second Choice</label>
-                            </div>
-                            <div>
-                                <input id="checkbox-112" class="checkbox-style" name="checkbox-112" type="checkbox">
-                                <label for="checkbox-112" class="checkbox-style-3-label">Second Choice</label>
-                            </div>
-                            <div>
-                                <input id="checkbox-113" class="checkbox-style" name="checkbox-113" type="checkbox">
-                                <label for="checkbox-113" class="checkbox-style-3-label">Second Choice</label>
-                            </div>
-                            <div>
-                                <input id="checkbox-114" class="checkbox-style" name="checkbox-114" type="checkbox">
-                                <label for="checkbox-114" class="checkbox-style-3-label">Second Choice</label>
-                            </div>
+                            <h4>Производитель</h4>
+                            @foreach($vendors as $name => $count )
+                                <div>
+                                    <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11" type="checkbox">
+                                    <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}}  ({{$count}})</label>
+                                </div>
+                            @endforeach
                         </div>
                         <div class="widget clearfix">
                             <h4>Some Filter 2</h4>

@@ -11,6 +11,7 @@
 |
 */
 
+use App\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +24,11 @@ Route::get('/shop/cart','CrartController@index')->name('cart');
 Route::get('/test', function () {
 //    $product = DB::table('products')->whereJsonContains('attributes->Вкус',['Green Apple Envy'])->get();
 
-    $product = App\ProdCategory::findOrfail(6)->products()->WhereJsonContains('attributes->Вкус',['Banana','Chocolate'])->get();
+    $c = Product::with('categories', function($query){
+        return $query->where('parent_id','!=',null);
+    })->find(163);
 
-    dump($product);
+    dump($c);
 });
 
 
