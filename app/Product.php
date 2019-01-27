@@ -29,6 +29,11 @@ class Product extends Model
         return $this->name . '-' . $this->vendor_code;
     }
 
+    public function getCategoryNameAttribute()
+    {
+        return $this->categories()->first()->name . ' ' . $this->name;
+    }
+
     protected $fillable = [
         'inner_id', 'vendor', 'vendor_code', 'barcode', 'name', 'full_name', 'availability', 'slug', 'weight', 'packing',
         'portions_count', 'price', 'discount_price', 'description', 'status', 'ingredients', 'goals', 'present', 'free_delivery',
@@ -52,23 +57,19 @@ class Product extends Model
         return $this->belongsToMany('App\Promocode');
     }
 
-    public function getUrl()
+    public function getProdCatUrl()
     {
-        $url = $this->load('categories')->categories()->first()->getUrl() . '/' . $this->slug;
+        $url = $this->categories()->first()->getUrl() . '/' . $this->slug;
         return $url;
 
     }
 
     public function getCategoryUrl()
     {
-        $url = $this->load('categories')->categories()->first()->getUrl();
+        $url = $this->categories()->first()->getUrl();
         return $url;
     }
 
-    public function getCategoryNameAttribute()
-    {
-        return $this->categories()->first()->name . ' ' . $this->name;
-    }
 
     public function children()
     {

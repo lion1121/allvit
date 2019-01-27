@@ -7,7 +7,7 @@
 
     <div class="container clearfix">
         <h1>{{$product->category_name}}</h1>
-        <span>Start Buying your Favourite Theme</span>
+        <span>интернет-магазин спортивного питания в Украине</span>
         {{--<ol class="breadcrumb">--}}
             {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
             {{--<li class="breadcrumb-item active" aria-current="page">Shop</li>--}}

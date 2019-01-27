@@ -40,6 +40,7 @@ class ProdCategory extends Model
     {
         return $this->belongsToMany('App\Product', 'category_product', 'prod_category_id', 'product_id');
     }
+
     public function promocodes()
     {
         return $this->belongsToMany('App\Promocode','prod_category_promocodes','prod_category_id','promocode_id');

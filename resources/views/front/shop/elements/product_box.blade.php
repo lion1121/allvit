@@ -22,12 +22,12 @@
         </div>
     </div>
     <div class="product-desc">
-        <div class="product-title"><h3><a href="{{route('product')}}/{{$product->getUrl()}}">{{$product->name}}</a>
+        <div class="product-title"><h3><a href="{{route('product')}}/{{$product->getProdCatUrl()}}">{{$product->name}}</a>
             </h3>
         </div>
         <div class="product-price">
             <del>$24.99</del>
-            <ins>{{$product->rice}}</ins>
+            <ins>{{$product->price}}</ins>
         </div>
         <div class="product-rating">
             <i class="icon-star3"></i>

@@ -12,23 +12,31 @@
 */
 
 use App\Product;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AppController@index')->name('home');
-Route::get('/shop/product/{category?}/{subcategory?}/{subsubcategory?}/{product?}', 'ShopController@show')->name('product');
-Route::get('/shop/{category?}/{subcategory?}/{subsubcategory?}', 'ProdCategoryController@show')->name('category');
-Route::get('/shop/cart','CrartController@index')->name('cart');
+
+Route::group(['prefix' => 'shop'], function () {
+    Route::get('{category}', 'ShopController@top50')->name('category.top50');
+    Route::get('{category?}/{subcategory?}/{subsubcategory?}', 'ShopController@showCategories')->name('category');
+    Route::get('product/{category?}/{subcategory?}/{subsubcategory?}/{product?}', 'ShopController@show')->name('product');
+//Route::get('/shop/cart','CartController@index')->name('cart');
+});
 
 Route::get('/test', function () {
 //    $product = DB::table('products')->whereJsonContains('attributes->Вкус',['Green Apple Envy'])->get();
 
-    $c = Product::with('categories', function($query){
-        return $query->where('parent_id','!=',null);
-    })->find(163);
+    $c = App\ProdCategory::with(['products','subcategories.products'])->find(36)->subcategories()->get();
+    $original = new Collection();
+    foreach ($c as $item){
+        $original = $original->merge($item->products()->get());
+    }
 
-    dump($c);
+    dd($original);
+
 });
 
 

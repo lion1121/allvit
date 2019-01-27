@@ -8,22 +8,6 @@
         <div class="container clearfix">
             <h1>{{$category->name}}</h1>
             <span>интернет-магазин спортивного питания в Украине</span>
-            <div class="row">
-                {{--<ol class="breadcrumb">--}}
-                {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
-
-                {{--@foreach($breadcrambs as $item)--}}
-
-                {{--<li class="breadcrumb-item active" aria-current="page">{{$item}}</li>--}}
-
-                {{--@endforeach--}}
-                {{--@endforeach--}}
-                {{--</ol>--}}
-            </div>
-            {{--<ol class="breadcrumb">--}}
-            {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
-            {{--<li class="breadcrumb-item active" aria-current="page">Shop</li>--}}
-            {{--</ol>--}}
             @include('front.elements.breadcrumbs',[$category,$category])
         </div>
 
@@ -43,18 +27,15 @@
                     ============================================= -->
                     <div id="shop" class="shop product-3 grid-container clearfix" data-layout="fitRows">
 
-                        @if(count($products) > 0)
-                            @foreach($products as $product)
-                                @include('front.shop.elements.product_box',[$product,$product])
-                            @endforeach
-                        @else
-                            <div class="alert-info">
-                                Продукты по данному критерию отсутствуют.
-                            </div>
-                        @endif
-
-                        {{--{{ $products->links() }}--}}
-
+                        {{--@if(count($products) > 0)--}}
+                            {{--@foreach($products as $product)--}}
+                                {{--@include('front.shop.elements.product_box',[$product,$product])--}}
+                            {{--@endforeach--}}
+                        {{--@else--}}
+                            {{--<div class="alert-info">--}}
+                                {{--Продукты по данному критерию отсутствуют.--}}
+                            {{--</div>--}}
+                        {{--@endif--}}
 
                     </div><!-- #shop end -->
 
@@ -64,47 +45,29 @@
                 ============================================= -->
                 <div class="sidebar nobottommargin">
                     <div class="sidebar-widgets-wrap">
-                        <div class="widget clearfix">
-                            <h4>Производитель</h4>
-                            @foreach($vendors as $name => $count )
-                                <div>
-                                    <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11"
-                                           type="checkbox">
-                                    <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}} ({{$count}}
-                                        )</label>
-                                </div>
+
+                        <div class="widget widget_links clearfix">
+
+                            <h4>Категории</h4>
+                            @if($categories)
+                            <ul>
+                            @foreach($categories as $category)
+                            <li>
+                            <a href="{{route('category')}}/{{$category->getUrl()}}">{{$category->name}}</a>
+                            </li>
                             @endforeach
+                            </ul>
+                            @endif
                         </div>
-                        @if(count($allIngredients) > 0)
-                            <div class="widget clearfix">
-                                <h4>Ингридиенты</h4>
-                                @foreach($allIngredients as $name => $count )
-                                    <div>
-                                        @if($count > 0)
-                                            <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11"
-                                                   type="checkbox">
-                                            <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}}
-                                                ({{$count}})</label>
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
-                        @if(count($tastes) > 0)
-                            <div class="widget clearfix">
-                                <h4>Вкусы</h4>
-                                @foreach($tastes as $name => $count )
-                                    <div>
-                                        @if($count > 0)
-                                        <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11"
-                                               type="checkbox">
-                                        <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}}
-                                            ({{$count}})</label>
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
+                        {{--<div class="widget clearfix">--}}
+                            {{--<h4>Производитель</h4>--}}
+                            {{--@foreach($vendors as $name => $count )--}}
+                                {{--<div>--}}
+                                    {{--<input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11" type="checkbox">--}}
+                                    {{--<label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}}  ({{$count}})</label>--}}
+                                {{--</div>--}}
+                            {{--@endforeach--}}
+                        {{--</div>--}}
                         <div class="widget clearfix">
                             <h4>Some Filter 2</h4>
                             <div>
