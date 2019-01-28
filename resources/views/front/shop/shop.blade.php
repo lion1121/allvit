@@ -68,7 +68,7 @@
                             <h4>Производитель</h4>
                             @foreach($vendors as $name => $count )
                                 <div>
-                                    <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11"
+                                    <input id="vendor-{{$name}}" class="checkbox-style" data-vendor="{{$name}}" name="checkbox-11"
                                            type="checkbox">
                                     <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}} ({{$count}}
                                         )</label>
@@ -81,7 +81,22 @@
                                 @foreach($allIngredients as $name => $count )
                                     <div>
                                         @if($count > 0)
-                                            <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11"
+                                            <input id="vendor-{{$name}}" data-attribute-ingredient="{{$name}}" class="checkbox-style" name="checkbox-11"
+                                                   type="checkbox">
+                                            <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}}
+                                                ({{$count}})</label>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                        @if(count($allGoals) > 0)
+                            <div class="widget clearfix">
+                                <h4>Ингридиенты</h4>
+                                @foreach($allGoals as $name => $count )
+                                    <div>
+                                        @if($count > 0)
+                                            <input id="vendor-{{$name}}" data-attribute-goal="{{$name}}" class="checkbox-style" name="checkbox-11"
                                                    type="checkbox">
                                             <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}}
                                                 ({{$count}})</label>
@@ -96,7 +111,7 @@
                                 @foreach($tastes as $name => $count )
                                     <div>
                                         @if($count > 0)
-                                        <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11"
+                                        <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11" data-attribute-taste="{{$name}}"
                                                type="checkbox">
                                         <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}}
                                             ({{$count}})</label>

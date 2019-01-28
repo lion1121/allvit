@@ -56,6 +56,7 @@ class ProdCategory extends Model
 
     public function getUrl()
     {
+
         $url = $this->slug;
 
         $category = $this;
