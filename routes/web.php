@@ -19,10 +19,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AppController@index')->name('home');
 
-Route::group(['prefix' => 'shop'], function () {
-    Route::get('{category}', 'ShopController@top50')->name('category.top50');
-    Route::get('product/{category?}/{subcategory?}/{subsubcategory?}/{product?}', 'ShopController@show')->name('product');
-    Route::get('{category?}/{subcategory?}/{subsubcategory?}', 'ShopController@showCategories')->name('category');
+Route::group(['prefix' => 'catalog'], function () {
+//    Route::get('{category}', 'ShopController@top50')->name('category.top50');
+//    Route::get('product/{category?}/{subcategory?}/{subsubcategory?}/{product?}', 'ShopController@show')->name('product');
+//    Route::get('{category?}/{subcategory?}/{subsubcategory?}', 'ShopController@showCategories')->name('category');
+    Route::get('{category}/{product}', 'ShopController@showProduct')->where('product', '[a-zA-Z0-9/_-]+')->name('product');
+
+    Route::get('{path}', 'ShopController@show')->where('path', '[a-zA-Z0-9/_-]+')->name('category');
+
+
+//    Route::get('product/{category?}/{subcategory?}/{subsubcategory?}/{product?}', 'ShopController@show')->name('product');
+//    Route::get('{category?}/{subcategory?}/{subsubcategory?}', 'ShopController@showCategories')->name('category');
 
 //Route::get('/shop/cart','CartController@index')->name('cart');
 });

@@ -4,11 +4,29 @@ namespace App;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\NodeTrait;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+
+
+
 
 class ProdCategory extends Model
 {
 
-    use Sluggable;
+    use Sluggable , NodeTrait {
+        NodeTrait::replicate as replicateNode;
+        Sluggable::replicate as replicateSlug;
+    }
+
+    //Fix traits (Sluggable, NodeTrait) collision
+    public function replicate(array $except = null)
+    {
+        $instance = $this->replicateNode($except);
+        (new SlugService())->slug($instance, true);
+
+        return $instance;
+    }
+
 
     /**
      * Return the sluggable configuration array for this model.
@@ -34,7 +52,6 @@ class ProdCategory extends Model
         'inner_id',
         'name',
         'description','promocode_id','prod_category_id'
-
     ];
     public function products()
     {
@@ -46,30 +63,46 @@ class ProdCategory extends Model
         return $this->belongsToMany('App\Promocode','prod_category_promocodes','prod_category_id','promocode_id');
     }
 
-    public function subcategories(){
-        return $this->hasMany('\App\ProdCategory', 'parent_id');
-    }
+//    public function subcategories(){
+//        return $this->hasMany('\App\ProdCategory', 'parent_id');
+//    }
 
-    public function parent(){
-        return $this->belongsTo('\App\ProdCategory', 'parent_id');
-    }
+//    public function parent(){
+//        return $this->belongsTo('\App\ProdCategory', 'parent_id');
+//    }
 
     public function getUrl()
     {
-
-        $url = $this->slug;
-
-        $category = $this;
-
-        while ($category = $category->parent) {
-            $url = $category->slug.'/'.$url;
-        }
-
-        return $url;
+        return 'catalog/'.$this->path;
     }
 
-    public function children()
+    public function generatePath()
     {
-        return $this->hasMany('App\ProdCategory', 'parent_id', 'id');
+        $slugs = $this->ancestors()->pluck('slug')->toArray();
+        $slugs[] = $this->slug;
+
+        $this->path = implode('/', $slugs);
+
+        return $this;
     }
+
+    public function updateDescendantsPaths()
+    {
+        // Получаем всех потомков в древовидном порядке
+        $descendants = $this->descendants()->defaultOrder()->get();
+
+        // Данный метод заполняет отношения parent и children
+        $descendants->push($this)->linkNodes()->pop();
+
+        foreach ($descendants as $model) {
+            $model->generatePath()->save();
+        }
+    }
+
+//    public function children()
+//    {
+//        return $this->hasMany('App\ProdCategory', 'parent_id', 'id');
+//    }
+
+
 }

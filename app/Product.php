@@ -66,7 +66,7 @@ class Product extends Model
 
     public function getCategoryUrl()
     {
-        $url = $this->categories()->first()->getUrl();
+        $url = $this->categories()->first()->generatePath()->getUrl();
         return $url;
     }
 

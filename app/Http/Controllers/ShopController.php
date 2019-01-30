@@ -16,11 +16,24 @@ class shopController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show($path)
     {
-        $productSlug = end($request->route()->parameters);
-        $product = Product::where('slug', $productSlug)->first();
-        return view('front.shop.shop-single', compact('product'));
+        $categoryParam = explode('/', $path);
+        $category = ProdCategory::with('products')->where('slug', '=', end($categoryParam))->firstOrFail();//        $product = Product::where('slug', $productSlug)->first();
+        $products = $category->products()->get();
+        $categoryPath = $category->generatePath()->getUrl();
+        $filterParameters = $this->filterParameters($products);
+
+        return view('front.shop.shop', compact('products','category','categoryPath'))->with($filterParameters);
+    }
+
+    public function showProduct($categoryParam,$productSlug)
+    {
+        $categoryParam = explode('/', $categoryParam);
+        $category = ProdCategory::where('slug', '=', $categoryParam[0])->firstOrFail();//        $product = Product::where('slug', $productSlug)->first();
+        $product = $category->products()->where('slug',$productSlug)->get();
+        dd($product);
+        return view('front.shop.shop-single', compact('product','category'));
     }
 
     /**
@@ -46,6 +59,7 @@ class shopController extends Controller
         //Get last category from URL
         $urlCategory = end($request->route()->parameters);
         $category = ProdCategory::with(['subcategories.products'])->where('slug', $urlCategory)->first();
+        dump($category);
 
         //Get products from chosen subcategory
         if (count($request->route()->parameters) === 2) {
@@ -62,7 +76,6 @@ class shopController extends Controller
             $allProducts = $category->products()->get();
             $products = $category->products()->get()->forPage(1, 12);
         }
-
         /**
          * Load from trait
         */

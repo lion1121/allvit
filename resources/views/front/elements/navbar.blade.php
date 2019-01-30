@@ -4,22 +4,23 @@
             <div>Каталог</div>
         </a>
         <ul>
+
             @foreach ($categories as $category)
                 <li >
-                    <a href="{{route('category')}}/{{$category->slug}}">
+                    <a href="{{url($category->generatePath()->getUrl())}}">
                         <div>{{$category->name}}</div>
                     </a>
 
-                    @if(count($category->subCategories) > 0)
+                    @if(count($category->children))
                         <ul>
-                            @foreach ($category->subCategories as $subCategory)
+                            @foreach ($category->children as $subCategory)
                                 <li>
-                                    <a href="{{route('category')}}/{{$category->slug}}/{{$subCategory->slug}}"><div>{{$subCategory->name}}</div></a>
-                                    @if(count($subCategory->subCategories) > 0)
+                                    <a href="{{url($subCategory->generatePath()->getUrl())}}"><div>{{$subCategory->name}}</div></a>
+                                    @if(count($subCategory->children))
                                         <ul>
-                                            @foreach ($subCategory->subCategories as $subSubCategory)
+                                            @foreach ($subCategory->children as $subSubCategory)
                                                 <li>
-                                                    <a href="{{route('category')}}/{{$category->slug}}/{{$subCategory->slug}}/{{$subSubCategory->slug}}"><div>{{$subSubCategory->name}}</div></a>
+                                                    <a href="{{url($subSubCategory->generatePath()->getUrl())}}"><div>{{$subSubCategory->name}}</div></a>
                                                 </li>
                                             @endforeach
                                         </ul>
