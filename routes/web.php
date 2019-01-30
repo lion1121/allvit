@@ -21,8 +21,9 @@ Route::get('/', 'AppController@index')->name('home');
 
 Route::group(['prefix' => 'shop'], function () {
     Route::get('{category}', 'ShopController@top50')->name('category.top50');
-    Route::get('{category?}/{subcategory?}/{subsubcategory?}', 'ShopController@showCategories')->name('category');
     Route::get('product/{category?}/{subcategory?}/{subsubcategory?}/{product?}', 'ShopController@show')->name('product');
+    Route::get('{category?}/{subcategory?}/{subsubcategory?}', 'ShopController@showCategories')->name('category');
+
 //Route::get('/shop/cart','CartController@index')->name('cart');
 });
 

@@ -59,7 +59,6 @@ class shopController extends Controller
 
             //Get products from chosen category + subcategories
         } elseif (count($request->route()->parameters) === 3) {
-
             $allProducts = $category->products()->get();
             $products = $category->products()->get()->forPage(1, 12);
         }
