@@ -120,25 +120,22 @@
                                 @endforeach
                             </div>
                         @endif
-                        <div class="widget clearfix">
-                            <h4>Some Filter 2</h4>
-                            <div>
-                                <input id="checkbox-115" class="checkbox-style" name="checkbox-115" type="checkbox">
-                                <label for="checkbox-115" class="checkbox-style-3-label">Second Choice</label>
+                        @if(count($colors) > 0)
+                            <div class="widget clearfix">
+                                <h4>Цвет</h4>
+                                @foreach($colors as $name => $count )
+                                    <div>
+                                        @if($count > 0)
+                                            <input id="vendor-{{$name}}" class="checkbox-style" name="checkbox-11" data-attribute-color="{{$name}}"
+                                                   type="checkbox">
+                                            <label for="vendor-{{$name}}" class="checkbox-style-3-label">{{$name}}
+                                                ({{$count}})</label>
+                                        @endif
+                                    </div>
+                                @endforeach
                             </div>
-                            <div>
-                                <input id="checkbox-116" class="checkbox-style" name="checkbox-116" type="checkbox">
-                                <label for="checkbox-116" class="checkbox-style-3-label">Second Choice</label>
-                            </div>
-                            <div>
-                                <input id="checkbox-117" class="checkbox-style" name="checkbox-117" type="checkbox">
-                                <label for="checkbox-117" class="checkbox-style-3-label">Second Choice</label>
-                            </div>
-                            <div>
-                                <input id="checkbox-118" class="checkbox-style" name="checkbox-118" type="checkbox">
-                                <label for="checkbox-118" class="checkbox-style-3-label">Second Choice</label>
-                            </div>
-                        </div>
+                        @endif
+
                         <div class="widget clearfix">
 
                             <h4>Recent Items</h4>

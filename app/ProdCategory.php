@@ -63,13 +63,13 @@ class ProdCategory extends Model
         return $this->belongsToMany('App\Promocode','prod_category_promocodes','prod_category_id','promocode_id');
     }
 
-//    public function subcategories(){
-//        return $this->hasMany('\App\ProdCategory', 'parent_id');
-//    }
+    public function subcategories(){
+        return $this->hasMany('\App\ProdCategory', 'parent_id');
+    }
 
-//    public function parent(){
-//        return $this->belongsTo('\App\ProdCategory', 'parent_id');
-//    }
+    public function parent(){
+        return $this->belongsTo('\App\ProdCategory', 'parent_id');
+    }
 
     public function getUrl()
     {
@@ -99,10 +99,10 @@ class ProdCategory extends Model
         }
     }
 
-//    public function children()
-//    {
-//        return $this->hasMany('App\ProdCategory', 'parent_id', 'id');
-//    }
+    public function children()
+    {
+        return $this->hasMany('App\ProdCategory', 'parent_id', 'id');
+    }
 
 
 }

@@ -6,7 +6,7 @@
 <section id="page-title">
 
     <div class="container clearfix">
-        <h1>{{$product->category_name}}</h1>
+        <h1>{{$category->name}} {{$product->name}}</h1>
         <span>интернет-магазин спортивного питания в Украине</span>
         {{--<ol class="breadcrumb">--}}
             {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
@@ -99,7 +99,7 @@
                             <div class="card product-meta">
                                 <div class="card-body">
                                     <span itemprop="productID" class="sku_wrapper">КОД: <span class="sku">{{$product->vendor_code}}</span></span>
-                                    <span class="posted_in">Катерория: <a href="{{route('category')}}/{{$product->getCategoryUrl()}}" rel="tag">{{$product->categories()->first()->name}}</a>.</span>
+                                    <span class="posted_in">Катерория: <a href="{{route('category',$category->generatePath()->path)}}" rel="tag"></a>.</span>
                                     <span class="tagged_as">Tags: <a href="#" rel="tag">Pink</a>, <a href="#" rel="tag">Short</a>, <a href="#" rel="tag">Dress</a>, <a href="#" rel="tag">Printed</a>.</span>
                                 </div>
                             </div><!-- Product Single - Meta End -->

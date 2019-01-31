@@ -7,7 +7,7 @@
 
             @foreach ($categories as $category)
                 <li >
-                    <a href="{{url($category->generatePath()->getUrl())}}">
+                    <a href="{{route('category',$category->generatePath()->path)}}">
                         <div>{{$category->name}}</div>
                     </a>
 
@@ -15,12 +15,12 @@
                         <ul>
                             @foreach ($category->children as $subCategory)
                                 <li>
-                                    <a href="{{url($subCategory->generatePath()->getUrl())}}"><div>{{$subCategory->name}}</div></a>
+                                    <a href="{{route('category',$subCategory->generatePath()->path)}}"><div>{{$subCategory->name}}</div></a>
                                     @if(count($subCategory->children))
                                         <ul>
                                             @foreach ($subCategory->children as $subSubCategory)
                                                 <li>
-                                                    <a href="{{url($subSubCategory->generatePath()->getUrl())}}"><div>{{$subSubCategory->name}}</div></a>
+                                                    <a href="{{route('category',$subSubCategory->generatePath()->path)}}"><div>{{$subSubCategory->name}}</div></a>
                                                 </li>
                                             @endforeach
                                         </ul>

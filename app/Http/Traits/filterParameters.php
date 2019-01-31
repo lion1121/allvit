@@ -25,21 +25,51 @@ trait filterParameters
                 return $vendor->count();
             });
 
-            // Load attributes filter (Taste or Size)
-            $attributesArrays = $allProducts->where('attributes', '!=', null)->sortBy('attributes')
+            // Load attributes filter (Taste)
+            $attributesArraysTastes = $allProducts->where('attributes', '!=',null)->filter(function ($value, $key){
+                return strpos($value->attributes, 'Вкус');
+            })->sortBy('attributes')
                 ->groupBy('attributes')->keys()->map(function ($attribute) {
                     $attributeArray = json_decode($attribute, true);
-                    return array_combine($attributeArray['Вкус'], $attributeArray['quantity']);
+                        return array_combine($attributeArray['Вкус'], $attributeArray['quantity']);
                 });
+
             $tastes = [];
-            for ($i = 0; $i < count($attributesArrays); $i++) {
-                $keys = array_keys($attributesArrays[$i]);
-                for ($k = 0; $k < count($attributesArrays[$i]); $k++) {
+            for ($i = 0; $i < count($attributesArraysTastes); $i++) {
+//                dump($attributesArraysTastes[$i]);
+                $keys = array_keys($attributesArraysTastes[$i]);
+                for ($k = 0; $k < count($attributesArraysTastes[$i]); $k++) {
+
                     if (!array_key_exists($keys[$k], $tastes)) {
                         $tastes[$keys[$k]] = 1;
                     } else {
                         $tastes[$keys[$k]] += 1;
                     }
+
+                }
+            }
+
+            // Load attributes filter (Color)
+            $attributesArraysColors = $allProducts->where('attributes', '!=',null)->filter(function ($value, $key){
+                return strpos($value->attributes, 'Цвет');
+            })->sortBy('attributes')
+                ->groupBy('attributes')->keys()->map(function ($attribute) {
+                    $attributeArray = json_decode($attribute, true);
+//                    dump($attributeArray);
+                    return array_combine($attributeArray['Цвет'], $attributeArray['quantity']);
+                });
+            $colors = [];
+            for ($i = 0; $i < count($attributesArraysColors); $i++) {
+//                dump($attributesArraysColors[$i]);
+                $keys = array_keys($attributesArraysColors[$i]);
+                for ($k = 0; $k < count($attributesArraysColors[$i]); $k++) {
+
+                    if (!array_key_exists($keys[$k], $tastes)) {
+                        $colors[$keys[$k]] = 1;
+                    } else {
+                        $colors[$keys[$k]] += 1;
+                    }
+
                 }
             }
 
@@ -82,8 +112,8 @@ trait filterParameters
 
         return  [
             'vendors' => $vendors,
-            'attributesArrays' => $attributesArrays,
             'tastes' => $tastes,
+            'colors' => $colors,
             'min' => $min,
             'max' => $max,
             'allGoals' => $allGoals,

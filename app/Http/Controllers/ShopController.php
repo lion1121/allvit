@@ -19,9 +19,9 @@ class shopController extends Controller
     public function show($path)
     {
         $categoryParam = explode('/', $path);
-        $category = ProdCategory::with('products')->where('slug', '=', end($categoryParam))->firstOrFail();//        $product = Product::where('slug', $productSlug)->first();
+        $category = ProdCategory::with('products')->where('slug', '=', end($categoryParam))->firstOrFail();
         $products = $category->products()->get();
-        $categoryPath = $category->generatePath()->getUrl();
+        $categoryPath = $category->generatePath()->path;
         $filterParameters = $this->filterParameters($products);
 
         return view('front.shop.shop', compact('products','category','categoryPath'))->with($filterParameters);
@@ -30,9 +30,9 @@ class shopController extends Controller
     public function showProduct($categoryParam,$productSlug)
     {
         $categoryParam = explode('/', $categoryParam);
-        $category = ProdCategory::where('slug', '=', $categoryParam[0])->firstOrFail();//        $product = Product::where('slug', $productSlug)->first();
-        $product = $category->products()->where('slug',$productSlug)->get();
-        dd($product);
+        $category = ProdCategory::where('slug', '=', end($categoryParam))->firstOrFail();//
+        $product = $category->products()->where('slug',$productSlug)->first();
+
         return view('front.shop.shop-single', compact('product','category'));
     }
 

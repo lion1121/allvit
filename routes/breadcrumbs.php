@@ -14,11 +14,11 @@ Breadcrumbs::for('category', function ($trail, $category) {
     } else {
         $trail->parent('home');
     }
-    $trail->push($category->name, route('category', $category->slug));
+    $trail->push($category->name, route('category', $category->generatePath()->path));
 });
 
 Breadcrumbs::for('product', function ($trail, $product) {
     $category = $product->categories()->first();
     $trail->parent('category', $category);
-    $trail->push($product->name, route('product', $product->slug));
+    $trail->push($product->name, route('product', ['category' => isset($categoryPath)? $categoryPath  : $product->getCategoryUrl(), 'product' => $product->slug]));
 });
