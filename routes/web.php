@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AppController@index')->name('home');
 
-Route::get('catalog/{category}/{product}', 'ShopController@showProduct')->where('product', '[0-9]+-[a-zA-Z0-9_-]+')->name('product');
-Route::get('catalog/{category}', 'ShopController@show')->where('category', '[a-zA-Z0-9/_-]+')->name('category');
+Route::get('catalog/{category}/{product}', 'ShopController@showProduct')->where('category', '[a-zA-Z0-9/_-]+')->where('product', '[a-zA-Z_-]+([0-9_-]+|[a-zA-Z_-]+)+([a-zA-Z_-]+|[0-9_-]+)+[a-zA-Z_-]+[0-9_-]+')->name('product');
+Route::get('catalog/{path}', 'ShopController@show')->where('path', '[a-zA-Z0-9/_-]+')->name('category');
 
 
 //    Route::get('product/{category?}/{subcategory?}/{subsubcategory?}/{product?}', 'ShopController@show')->name('product');
