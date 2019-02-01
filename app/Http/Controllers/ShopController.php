@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\filterParameters;
 use App\ProdCategory;
-use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -12,19 +11,29 @@ class shopController extends Controller
 {
     use filterParameters;
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function show($path)
+
+    public function show(Request $request, $path)
     {
         $categoryParam = explode('/', $path);
         $category = ProdCategory::with('products')->where('slug', '=', end($categoryParam))->firstOrFail();
         $products = $category->products()->get();
+        $productsPag = $category->products()->paginate(12);
         $categoryPath = $category->generatePath()->path;
         $filterParameters = $this->filterParameters($products);
 
-        return view('front.shop.shop', compact('products','category','categoryPath'))->with($filterParameters);
+        if ($request->ajax()){
+            $viewProducts = view('front.shop.ajax.products-ajax', compact('productsPag','category','categoryPath'))->with($filterParameters);
+            $viewSidebar = view('front.shop.ajax.sidebar-ajax')->with($filterParameters);
+
+            return response()->json([
+                'status' => 'ok',
+                'listing' => $viewProducts->render(),
+                'sidebar' => $viewSidebar->render(),
+            ]);
+        }
+
+
+        return view('front.shop.shop', compact('productsPag','category','categoryPath'))->with($filterParameters);
     }
 
     public function showProduct($categoryParam,$productSlug)

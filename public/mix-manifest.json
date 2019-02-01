@@ -1,6 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/style.css": "/css/style.css",
+    "/css/custom-shop-pagination.css": "/css/custom-shop-pagination.css",
     "/css/responsive.css": "/css/responsive.css",
-    "/js/admin_voyager.js": "/js/admin_voyager.js"
+    "/js/admin_voyager.js": "/js/admin_voyager.js",
+    "/js/shop/shop.js": "/js/shop/shop.js"
 }
