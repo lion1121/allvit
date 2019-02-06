@@ -10,6 +10,6 @@
         </div>
     @endif
 </div>
-<div class="row mb-5">
+<div class="row mt-5">
     {{ $productsPag->links() }}
 </div>

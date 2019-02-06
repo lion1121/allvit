@@ -12,7 +12,7 @@ namespace CommerceML\Constructors;
 class Products extends \CommerceML\Implementation\Products
 {
     /**
-     * Products constructor.
+     * Product constructor.
      * @param $products
      */
     public function __construct (array $products)

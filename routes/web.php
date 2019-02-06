@@ -28,18 +28,7 @@ Route::get('catalog/{path}', 'ShopController@show')->where('path', '[a-zA-Z0-9/_
 
 //Route::get('/shop/cart','CartController@index')->name('cart');
 
-Route::get('/test', function () {
-//    $product = DB::table('products')->whereJsonContains('attributes->Вкус',['Green Apple Envy'])->get();
-
-    $c = App\ProdCategory::with(['products', 'subcategories.products'])->find(36)->subcategories()->get();
-    $original = new Collection();
-    foreach ($c as $item) {
-        $original = $original->merge($item->products()->get());
-    }
-
-    dd($original);
-
-});
+Route::get('/test', 'ShopController@index');
 
 
 Route::group(['prefix' => 'admin'], function () {

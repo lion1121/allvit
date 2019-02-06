@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Filters\Product\ProductFilters;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -22,6 +24,12 @@ class Product extends Model
                 'source' => 'fullslug'
             ]
         ];
+    }
+
+    public function scopeFilter(Builder $builder,$request)
+    {
+        return (new ProductFilters($request))->filter($builder);
+
     }
 
     public function getFullslugAttribute()

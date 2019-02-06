@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\filterParameters;
 use App\ProdCategory;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -11,38 +12,64 @@ class shopController extends Controller
 {
     use filterParameters;
 
+    public function index(Request $request)
+    {
+//        return Product::with('categories')->filter($request)->whereHas('categories', function ($q) {
+//            $q->where('slug', '=', 'razn');
+//        })->get();
+
+        $category = ProdCategory::where('slug','=','sportivnoe-pitanie')->first();
+
+        // Include the id of category itself
+        $categories = $category->descendants()->pluck('id');
+//        $categories[] = $category->getKey();
+
+            // Get goods
+        $products = Product::whereIn('category_id', $categories)->paginate(2);
+        return $products;
+
+    }
 
     public function show(Request $request, $path)
     {
         $categoryParam = explode('/', $path);
         $category = ProdCategory::with('products')->where('slug', '=', end($categoryParam))->firstOrFail();
-        $products = $category->products()->get();
-        $productsPag = $category->products()->paginate(12);
-        $categoryPath = $category->generatePath()->path;
+
+        $categories = $category->descendants()->pluck('id');
+//        $categories[] = $category->getKey();
+
+        // Get goods
+        $products = Product::with('categories')->whereIn('prod_category_id', $categories)->get();
+        $productsPag = Product::with('categories')->whereIn('prod_category_id', $categories)->paginate(12);
         $filterParameters = $this->filterParameters($products);
+//        $products = $category->products()->get();
+//        dump($products);
+//        $productsPag = $category->products()->paginate(12);
+//        $categoryPath = $category->generatePath()->path;
+//        $filterParameters = $this->filterParameters($products);
+//
+//        if ($request->ajax()) {
+//            $viewProducts = view('front.shop.ajax.products-ajax', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);
+//            $viewSidebar = view('front.shop.ajax.sidebar-ajax')->with($filterParameters);
+//
+//            return response()->json([
+//                'status' => 'ok',
+//                'listing' => $viewProducts->render(),
+//                'sidebar' => $viewSidebar->render(),
+//            ]);
+//        }
 
-        if ($request->ajax()){
-            $viewProducts = view('front.shop.ajax.products-ajax', compact('productsPag','category','categoryPath'))->with($filterParameters);
-            $viewSidebar = view('front.shop.ajax.sidebar-ajax')->with($filterParameters);
 
-            return response()->json([
-                'status' => 'ok',
-                'listing' => $viewProducts->render(),
-                'sidebar' => $viewSidebar->render(),
-            ]);
-        }
-
-
-        return view('front.shop.shop', compact('productsPag','category','categoryPath'))->with($filterParameters);
+        return view('front.shop.shop', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);
     }
 
-    public function showProduct($categoryParam,$productSlug)
+    public function showProduct($categoryParam, $productSlug)
     {
         $categoryParam = explode('/', $categoryParam);
         $category = ProdCategory::where('slug', '=', end($categoryParam))->firstOrFail();//
-        $product = $category->products()->where('slug',$productSlug)->first();
+        $product = $category->products()->where('slug', $productSlug)->first();
 
-        return view('front.shop.shop-single', compact('product','category'));
+        return view('front.shop.shop-single', compact('product', 'category'));
     }
 
     /**
@@ -87,9 +114,9 @@ class shopController extends Controller
         }
         /**
          * Load from trait
-        */
-       $filterParameters = $this->filterParameters($allProducts);
-        return view('front.shop.shop', compact('products','category'))->with($filterParameters);
+         */
+        $filterParameters = $this->filterParameters($allProducts);
+        return view('front.shop.shop', compact('products', 'category'))->with($filterParameters);
     }
 
 }

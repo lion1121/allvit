@@ -3,7 +3,7 @@ $(document).ready(function () {
        e.preventDefault();
        e.stopPropagation();
        e.stopImmediatePropagation();
-        window.location.hash = 'whatever';
+        // window.location.hash = 'whatever';
        let url = $(this).attr('href');
        $.ajax({
            url: url,
@@ -12,7 +12,9 @@ $(document).ready(function () {
            dataType: 'json',
            success: function (result) {
                if(result.status === 'ok'){
-                    $('.postcontent').html(result.listing) ;
+                    setTimeout(function () {
+                        $('.postcontent').html(result.listing)
+                    }, 1000) ;
                     $('.sidebar').html(result.sidebar) ;
                     console.log(result.sidebar) ;
                }

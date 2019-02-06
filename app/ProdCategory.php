@@ -53,9 +53,14 @@ class ProdCategory extends Model
         'name',
         'description','promocode_id','prod_category_id'
     ];
+//    public function products()
+//    {
+//        return $this->belongsToMany('App\Product', 'category_product', 'prod_category_id', 'product_id');
+//    }
+
     public function products()
     {
-        return $this->belongsToMany('App\Product', 'category_product', 'prod_category_id', 'product_id');
+        return $this->hasMany('\App\Product');
     }
 
     public function promocodes()
@@ -103,6 +108,5 @@ class ProdCategory extends Model
     {
         return $this->hasMany('App\ProdCategory', 'parent_id', 'id');
     }
-
 
 }

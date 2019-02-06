@@ -151,7 +151,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (1, 'users', 'users', 'Пользователь', 'Пользователи', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', '', '', 1, 0, NULL, '2018-12-18 12:50:04', '2018-12-18 12:50:04'),
 (2, 'menus', 'menus', 'Меню', 'Меню', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2018-12-18 12:50:04', '2018-12-18 12:50:04'),
 (3, 'roles', 'roles', 'Роль', 'Роли', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, '', '', 1, 0, NULL, '2018-12-18 12:50:04', '2018-12-18 12:50:04'),
-(4, 'products', 'products', 'Product', 'Products', NULL, 'App\\Product', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null}', '2018-12-18 14:03:37', '2018-12-18 14:03:37');
+(4, 'products', 'products', 'Product', 'Product', NULL, 'App\\Product', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null}', '2018-12-18 14:03:37', '2018-12-18 14:03:37');
 
 -- --------------------------------------------------------
 
@@ -212,7 +212,7 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (10, 1, 'Настройки', '', '_self', 'voyager-settings', NULL, NULL, 14, '2018-12-18 12:50:04', '2018-12-18 12:50:04', 'voyager.settings.index', NULL),
 (11, 1, 'Hooks', '', '_self', 'voyager-hook', NULL, NULL, 13, '2018-12-18 12:50:04', '2018-12-18 12:50:04', 'voyager.hooks', NULL),
 (12, 1, 'Промокод', '/admin/promocode', '_self', 'voyager-leaf', '#000000', NULL, 15, '2018-12-18 13:09:41', '2018-12-18 14:02:26', NULL, ''),
-(13, 1, 'Products', '', '_self', NULL, NULL, NULL, 16, '2018-12-18 14:03:38', '2018-12-18 14:03:38', 'voyager.products.index', NULL);
+(13, 1, 'Product', '', '_self', NULL, NULL, NULL, 16, '2018-12-18 14:03:38', '2018-12-18 14:03:38', 'voyager.products.index', NULL);
 
 -- --------------------------------------------------------
 
