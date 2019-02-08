@@ -1,29 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergey-pc
- * Date: 06.02.19
- * Time: 13:39
- */
+
+
+
 
 namespace App\Filters\Product;
 
 
+use App\Filters\FiltersAbstract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class ProductFilters
+use App\Filters\Product\GoalFilter;
+use App\Filters\Product\VendorFilter;
+use App\Filters\Product\TasteFilter;
+
+class ProductFilters extends FiltersAbstract
 {
-    protected $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    public function filter(Builder $builder)
-    {
-        return $builder;
-    }
+    protected $filters = [
+        'vendor' => VendorFilter::class,
+        'goal' => GoalFilter::class,
+        'taste' => TasteFilter::class,
+    ];
 
 }

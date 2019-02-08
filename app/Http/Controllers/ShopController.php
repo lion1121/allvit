@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\Product\GoalFilter;
+
 use App\Http\Traits\filterParameters;
 use App\ProdCategory;
 use App\Product;
@@ -14,33 +16,27 @@ class shopController extends Controller
 
     public function index(Request $request)
     {
-//        return Product::with('categories')->filter($request)->whereHas('categories', function ($q) {
-//            $q->where('slug', '=', 'razn');
-//        })->get();
-
         $category = ProdCategory::where('slug','=','sportivnoe-pitanie')->first();
-
-        // Include the id of category itself
         $categories = $category->descendants()->pluck('id');
-//        $categories[] = $category->getKey();
+        $categories[] = $category->getKey();
 
-            // Get goods
-        $products = Product::whereIn('category_id', $categories)->paginate(2);
+        $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
+
         return $products;
 
     }
 
+
     public function show(Request $request, $path)
     {
         $categoryParam = explode('/', $path);
-        $category = ProdCategory::with('products')->where('slug', '=', end($categoryParam))->firstOrFail();
+        $category = ProdCategory::where('slug', '=', end($categoryParam))->firstOrFail();
 
         $categories = $category->descendants()->pluck('id');
-//        $categories[] = $category->getKey();
+        $categories[] = $category->getKey();
 
-        // Get goods
-        $products = Product::with('categories')->whereIn('prod_category_id', $categories)->get();
-        $productsPag = Product::with('categories')->whereIn('prod_category_id', $categories)->paginate(12);
+        $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
+        $productsPag = Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12);
         $filterParameters = $this->filterParameters($products);
 //        $products = $category->products()->get();
 //        dump($products);

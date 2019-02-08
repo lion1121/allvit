@@ -26,9 +26,19 @@ class Product extends Model
         ];
     }
 
-    public function scopeFilter(Builder $builder,$request)
+    /**
+     * @param Builder $builder
+     * @param $request
+     * @param array $filters
+     * @return ProductFilters
+     */
+    public function scopeFilter(Builder $builder, $request)
     {
         return (new ProductFilters($request))->filter($builder);
+//        $productFilter = new ProductFilters($request);
+//        $productFilter->add($filters);
+//        $productFilter->filter($builder);
+//        return $productFilter;
 
     }
 

@@ -83,10 +83,9 @@ class ProdCategory extends Model
 
     public function generatePath()
     {
-        $slugs = $this->ancestors()->pluck('slug')->toArray();
-        $slugs[] = $this->slug;
+        $slug = $this->slug;
 
-        $this->path = implode('/', $slugs);
+        $this->path = $this->isRoot() ? $slug : $this->parent->path.'/'.$slug;
 
         return $this;
     }
