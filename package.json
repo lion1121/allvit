@@ -18,7 +18,8 @@
     "laravel-mix": "^2.0",
     "lodash": "^4.17.5",
     "popper.js": "^1.12",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.2"
   },
   "dependencies": {
     "@johmun/vue-tags-input": "^1.6.0"

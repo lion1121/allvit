@@ -16,7 +16,7 @@ class shopController extends Controller
 
     public function index(Request $request)
     {
-        $category = ProdCategory::where('slug','=','sportivnoe-pitanie')->first();
+        $category = ProdCategory::where('slug','=','pitanie')->first();
         $categories = $category->descendants()->pluck('id');
         $categories[] = $category->getKey();
 
@@ -38,22 +38,22 @@ class shopController extends Controller
         $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
         $productsPag = Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12);
         $filterParameters = $this->filterParameters($products);
-//        $products = $category->products()->get();
+        $products = $category->products()->get();
 //        dump($products);
 //        $productsPag = $category->products()->paginate(12);
 //        $categoryPath = $category->generatePath()->path;
 //        $filterParameters = $this->filterParameters($products);
 //
-//        if ($request->ajax()) {
-//            $viewProducts = view('front.shop.ajax.products-ajax', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);
-//            $viewSidebar = view('front.shop.ajax.sidebar-ajax')->with($filterParameters);
-//
-//            return response()->json([
-//                'status' => 'ok',
-//                'listing' => $viewProducts->render(),
-//                'sidebar' => $viewSidebar->render(),
-//            ]);
-//        }
+        if ($request->ajax()) {
+            $viewProducts = view('front.shop.ajax.products-ajax', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);
+            $viewSidebar = view('front.shop.ajax.sidebar-ajax')->with($filterParameters);
+
+            return response()->json([
+                'status' => 'ok',
+                'listing' => $productsPag,
+                'sidebar' => $filterParameters,
+            ]);
+        }
 
 
         return view('front.shop.shop', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);

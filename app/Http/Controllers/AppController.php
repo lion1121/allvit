@@ -10,7 +10,7 @@ class AppController extends Controller
     //
     public function index()
     {
-        $products = Product::with('categories')->get()->random(4);
+        $products = Product::get()->random(4);
         return view('home', compact('products'));
     }
 }

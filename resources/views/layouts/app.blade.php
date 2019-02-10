@@ -495,6 +495,7 @@
 
 <!-- External JavaScripts
 ============================================= -->
+<script src="{{asset('js/shop.js')}}"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{asset('js/libs/plugins.js')}}"></script>
@@ -515,7 +516,7 @@
 <script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.navigation.min.js')}}"></script>
 <script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.migration.min.js')}}"></script>
 <script src="{{asset('include/rs-plugin/js/extensions/revolution.extension.parallax.min.js')}}"></script>
-<script src="{{asset('js/shop/shop.js')}}"></script>
+{{--<script src="{{asset('js/shop/shop.js')}}"></script>--}}
 
 <script>
 

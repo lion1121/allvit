@@ -17,28 +17,41 @@
 
         <div class="content-wrap">
 
-            <div class="container clearfix">
+            <div class="container clearfix" id="shop">
 
-                <!-- Post Content
-                ============================================= -->
-                <div class="postcontent nobottommargin col_last" id="productsWrapper">
+                {{--<!-- Post Content--}}
+                {{--============================================= -->--}}
+                {{--<div class="postcontent nobottommargin col_last" id="productsWrapper">--}}
+                    {{--<!-- Shop--}}
+                    {{--============================================= -->--}}
+                {{--@include('front.shop.ajax.products-ajax',['productsPag' => $productsPag])--}}
+                {{--<!-- #shop end -->--}}
 
-                    <!-- Shop
-                    ============================================= -->
-                @include('front.shop.ajax.products-ajax',['productsPag' => $productsPag])
-                <!-- #shop end -->
+                {{--</div><!-- .postcontent end -->--}}
 
-                </div><!-- .postcontent end -->
-
-                <!-- Sidebar
-                ============================================= -->
-                <div class="sidebar nobottommargin">
-                    @include('front.shop.ajax.sidebar-ajax',['vendors' => $vendors, 'allIngredients' => $allIngredients, 'allGoals' => $allGoals, 'tastes' => $tastes, 'colors' => $colors])
-                <!-- .sidebar end -->
-                </div>
+                {{--<!-- Sidebar--}}
+                {{--============================================= -->--}}
+                {{--<div class="sidebar nobottommargin">--}}
+                    {{--@include('front.shop.ajax.sidebar-ajax',['vendors' => $vendors, 'allIngredients' => $allIngredients, 'allGoals' => $allGoals, 'tastes' => $tastes, 'colors' => $colors])--}}
+                {{--<!-- .sidebar end -->--}}
+                {{--</div>--}}
+                <products :products="products"></products>
+                <sidebar :filters="filters"></sidebar>
             </div>
 
         </div>
 
     </section><!-- #content end -->
 @endsection
+<script>
+    import Products from "../../../js/components/Products/products";
+    export default {
+        components: {Products}
+    }
+</script>
+<script>
+    import Sidebar from "../../../js/components/Products/sidebar";
+    export default {
+        components: {Sidebar}
+    }
+</script>

@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/shop.js', 'public/js')
     .js('resources/js/shop/shop.js', 'public/js/shop')
     .sass('resources/sass/style.scss', 'public/css')
     .sass('resources/sass/custom-shop-pagination.scss', 'public/css')

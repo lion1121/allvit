@@ -1,5 +1,4 @@
 <div id="shop" class="shop product-3 grid-container clearfix" data-layout="fitRows">
-
     @if(count($productsPag) > 0)
         @foreach($productsPag as $product)
             @include('front.shop.elements.product_box',[$product,$product])

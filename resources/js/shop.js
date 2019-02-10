@@ -31,6 +31,29 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// Vue.component('sidebar', require('./components/Products/sidebar.vue'));
+// Vue.component('products', require('./components/Products/products.vue'));
+import sidebar from "./components/Products/sidebar.vue"
+import products from "./components/Products/products.vue"
+import axios from 'axios';
+
 const app = new Vue({
-    el: '#app'
+    el: '#shop',
+    data: {
+      products: {},
+      sidebarFilters: {}
+    },
+    components:{
+        'sidebar':sidebar,
+        'products':  products
+    },
+    mounted(){
+        let url = window.location.href;
+        console.log(url);
+        axios.get('/catalog/pitanie').then(response => {
+            console.log(response);
+            this.products = response.data.listing.data;
+            this.sidebarFilters = response.data.sidebar
+        }).catch(() => console.warn('Something went wrong.'));
+    }
 });

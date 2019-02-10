@@ -36,16 +36,13 @@ trait filterParameters
 
             $tastes = [];
             for ($i = 0; $i < count($attributesArraysTastes); $i++) {
-//                dump($attributesArraysTastes[$i]);
                 $keys = array_keys($attributesArraysTastes[$i]);
                 for ($k = 0; $k < count($attributesArraysTastes[$i]); $k++) {
-
                     if (!array_key_exists($keys[$k], $tastes)) {
-                        $tastes[$keys[$k]] = 1;
-                    } else {
-                        $tastes[$keys[$k]] += 1;
+                        $tastes[$keys[$k]] = $attributesArraysTastes[$i][$keys[$k]];
+                    } elseif (array_key_exists($keys[$k], $tastes)) {
+                        $tastes[$keys[$k]] += $attributesArraysTastes[$i][$keys[$k]];
                     }
-
                 }
             }
 
@@ -63,11 +60,10 @@ trait filterParameters
 //                dump($attributesArraysColors[$i]);
                 $keys = array_keys($attributesArraysColors[$i]);
                 for ($k = 0; $k < count($attributesArraysColors[$i]); $k++) {
-
                     if (!array_key_exists($keys[$k], $tastes)) {
-                        $colors[$keys[$k]] = 1;
-                    } else {
-                        $colors[$keys[$k]] += 1;
+                        $colors[$keys[$k]] = $attributesArraysColors[$i][$keys[$k]];
+                    } elseif (array_key_exists($keys[$k], $tastes)) {
+                        $colors[$keys[$k]] += $attributesArraysColors[$i][$keys[$k]];
                     }
 
                 }
