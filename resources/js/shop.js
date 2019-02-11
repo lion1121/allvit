@@ -31,8 +31,8 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('sidebar', require('./components/Products/sidebar.vue'));
-// Vue.component('products', require('./components/Products/products.vue'));
+Vue.component('sidebar', require('./components/Products/sidebar.vue'));
+Vue.component('products', require('./components/Products/products.vue'));
 import sidebar from "./components/Products/sidebar.vue"
 import products from "./components/Products/products.vue"
 import axios from 'axios';
@@ -47,6 +47,7 @@ const app = new Vue({
         'sidebar':sidebar,
         'products':  products
     },
+
     mounted(){
         let url = window.location.href;
         console.log(url);

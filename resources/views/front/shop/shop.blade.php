@@ -21,22 +21,24 @@
 
                 {{--<!-- Post Content--}}
                 {{--============================================= -->--}}
-                {{--<div class="postcontent nobottommargin col_last" id="productsWrapper">--}}
-                    {{--<!-- Shop--}}
-                    {{--============================================= -->--}}
-                {{--@include('front.shop.ajax.products-ajax',['productsPag' => $productsPag])--}}
-                {{--<!-- #shop end -->--}}
+                <div class="postcontent nobottommargin col_last" id="productsWrapper">
+                    <products :products="products"></products>
 
-                {{--</div><!-- .postcontent end -->--}}
+                    <!-- Shop
+                    ============================================= -->
+{{--                @include('front.shop.ajax.products-ajax',['productsPag' => $productsPag])--}}
+                <!-- #shop end -->
+
+                </div><!-- .postcontent end -->
 
                 {{--<!-- Sidebar--}}
                 {{--============================================= -->--}}
-                {{--<div class="sidebar nobottommargin">--}}
-                    {{--@include('front.shop.ajax.sidebar-ajax',['vendors' => $vendors, 'allIngredients' => $allIngredients, 'allGoals' => $allGoals, 'tastes' => $tastes, 'colors' => $colors])--}}
-                {{--<!-- .sidebar end -->--}}
-                {{--</div>--}}
-                <products :products="products"></products>
-                <sidebar :filters="filters"></sidebar>
+                <div class="sidebar nobottommargin">
+                    <sidebar :filters="filters"></sidebar>
+
+                {{--                    @include('front.shop.ajax.sidebar-ajax',['vendors' => $vendors, 'allIngredients' => $allIngredients, 'allGoals' => $allGoals, 'tastes' => $tastes, 'colors' => $colors])--}}
+                <!-- .sidebar end -->
+                </div>
             </div>
 
         </div>

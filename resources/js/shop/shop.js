@@ -13,8 +13,12 @@ $(document).ready(function () {
             success: function (result) {
                 if (result.status === 'ok') {
                     $('.postcontent').html(result.listing);
-                    let url = window.location.href;
-                    window.location.href +=  '?page=2';
+                    var elem = document.querySelector('.grid-container');
+                    var iso = new Isotope( elem, {
+                        // options
+                        itemSelector: '.product',
+                        layoutMode: 'fitRows'
+                    });
                 }
             }
         })
