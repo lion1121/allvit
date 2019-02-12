@@ -23,7 +23,7 @@
             </div>
             <div class="product-desc">
                 <div class="product-title"><h3>
-                    <a v-bind:href="product.slug">{{product}}</a>
+                    <a v-bind:href="product.slug">{{product.name}}</a>
                 </h3>
                 </div>
                 <div class="product-price">
@@ -38,11 +38,10 @@
                 </div>
             </div>
         </div>
+        <ul>
 
+        </ul>
     </div>
-
-
-
 
 </template>
 
@@ -51,12 +50,10 @@
         name: "products",
         data(){
           return {
-              url: window.location.href,
           }
         },
-        props: ['products','url'],
+        props: ['products','paginateData'],
         mounted(){
-            console.log(this.$route.query);
         }
     }
 </script>

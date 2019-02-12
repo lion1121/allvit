@@ -21,27 +21,27 @@
 
                 {{--<!-- Post Content--}}
                 {{--============================================= -->--}}
-                <div class="postcontent nobottommargin col_last" id="productsWrapper">
+                {{--<div class="postcontent nobottommargin col_last" id="productsWrapper">--}}
 
-                    <products :products="products"></products>
+                    {{--<products :products="products"></products>--}}
 
-                    <!-- Shop
-                    ============================================= -->
+                    {{--<!-- Shop--}}
+                    {{--============================================= -->--}}
                 {{--                @include('front.shop.ajax.products-ajax',['productsPag' => $productsPag])--}}
-                <!-- #shop end -->
+                {{--<!-- #shop end -->--}}
 
-                </div><!-- .postcontent end -->
+                {{--</div><!-- .postcontent end -->--}}
 
                 {{--<!-- Sidebar--}}
                 {{--============================================= -->--}}
-                <div class="sidebar nobottommargin">
-                    <div class="sidebar-widgets-wrap clearfix">
+                {{--<div class="sidebar nobottommargin">--}}
+                    {{--<div class="sidebar-widgets-wrap clearfix">--}}
 
-                        <sidebar :filters="filters"></sidebar>
-                    </div>
+                        {{--<sidebar :filters="filters"></sidebar>--}}
+                    {{--</div>--}}
                 {{--                    @include('front.shop.ajax.sidebar-ajax',['vendors' => $vendors, 'allIngredients' => $allIngredients, 'allGoals' => $allGoals, 'tastes' => $tastes, 'colors' => $colors])--}}
-                <!-- .sidebar end -->
-                </div>
+                {{--<!-- .sidebar end -->--}}
+                {{--</div>--}}
             </div>
 
         </div>

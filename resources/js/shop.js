@@ -31,18 +31,15 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('product-index', require('./components/Products/ProductIndex.vue'));
 Vue.component('sidebar', require('./components/Products/sidebar.vue'));
 Vue.component('products', require('./components/Products/products.vue'));
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
-import sidebar from "./components/Products/sidebar.vue"
-import products from "./components/Products/products.vue"
-import axios from 'axios';
-
-
 const ProductIndex = require('./components/Products/ProductIndex.vue');
+
 const routes = [
     {
         path:'/catalog/:param?/:param2?/:param3/',
@@ -56,36 +53,6 @@ const router = new VueRouter({
 });
 
 const app = new Vue({
-    el: '#shop1',
+    el: '#app',
     router,
-    data: {
-      products: {},
-      filters: {},
-      paginateData:{
-          currentPage:0,
-          firstPage:'',
-          from:0,
-          lastPage:0,
-          lastPageUrl:'',
-          path:'',
-          perPage:0,
-          prevPageUrl:'',
-          to:0,
-          total:0
-      }
-    },
-    components:{
-        'sidebar':sidebar,
-        'products':  products
-    },
-
-    mounted(){
-        axios.get('/api' + this.$route.path).then(response => {
-            console.log(response);
-            this.products = response.data.listing.data;
-            this.paginateData = response.data.listing;
-            this.filters = response.data.sidebar;
-            console.log(this.paginateData);
-        }).catch(() => console.warn('Something went wrong.'));
-    }
 });
