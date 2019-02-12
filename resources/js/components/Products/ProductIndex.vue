@@ -43,9 +43,8 @@
         mounted(){
             axios.get('/api' + this.$route.path).then(response => {
                 console.log(response);
-                this.products = response.data.listing.data;
-                this.filters = response.data.sidebar;
-                this.paginateData =  response.data.listing;
+                this.products = response.data.data[1].data;
+                this.filters = response.data.data[0];
             }).catch(() => console.warn('Something went wrong.'));
         }
 

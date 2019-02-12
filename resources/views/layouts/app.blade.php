@@ -80,7 +80,7 @@
     <!-- Document Wrapper
     ============================================= -->
     <div id="wrapper" class="clearfix">
-        <example-component></example-component>
+
         <!-- Top Bar
         ============================================= -->
         <div id="top-bar" class="d-none d-md-block">

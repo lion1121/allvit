@@ -8,15 +8,14 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class ProductResource extends ResourceCollection
 {
     protected $filters;
-    protected $products;
-    protected $pagitation;
 
-    public function __construct(mixed $resource,$products,$filters)
+
+    public function __construct($resource,$filters)
     {
         parent::__construct($resource);
         $this->resource = $resource;
         $this->filters = $filters;
-        $this->products = $products;
+
     }
 
     /**
@@ -25,11 +24,19 @@ class ProductResource extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toJson($request)
+    public function toArray($request)
     {
-       return [
-           'listing' => $this->products,
-           'sidebar' => $this->filters,
-       ];
+        return [
+            $this->filters,
+            $this->resource
+        ];
+    }
+
+    public function with($request)
+    {
+        return [
+            $this->filters,
+            $this->resource
+        ];
     }
 }

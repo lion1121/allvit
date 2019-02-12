@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\ProductResource;
 use App\Http\Traits\filterParameters;
 
 use App\ProdCategory;
@@ -23,14 +24,11 @@ class ShopController extends Controller
         $categories[] = $category->getKey();
 
         $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
-        $productsPag = Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12);
+//        $productsPag = Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(4);
         $filterParameters = $this->filterParameters($products);
 
-        return response()->json([
-            'status' => 'ok',
-            'listing' => $productsPag,
-            'sidebar' => $filterParameters,
-            'category' => $category
-        ],200);
+          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(4),$filterParameters);
+
+
     }
 }
