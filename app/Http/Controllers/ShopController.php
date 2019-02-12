@@ -27,37 +27,37 @@ class shopController extends Controller
     }
 
 
-    public function show(Request $request, $path)
-    {
-        $categoryParam = explode('/', $path);
-        $category = ProdCategory::where('slug', '=', end($categoryParam))->firstOrFail();
-
-        $categories = $category->descendants()->pluck('id');
-        $categories[] = $category->getKey();
-
-        $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
-        $productsPag = Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12);
-        $filterParameters = $this->filterParameters($products);
-        $products = $category->products()->get();
-//        dump($products);
-//        $productsPag = $category->products()->paginate(12);
-//        $categoryPath = $category->generatePath()->path;
-//        $filterParameters = $this->filterParameters($products);
+//    public function show(Request $request, $path)
+//    {
+//        $categoryParam = explode('/', $path);
+//        $category = ProdCategory::where('slug', '=', end($categoryParam))->firstOrFail();
 //
-        if ($request->ajax()) {
-            $viewProducts = view('front.shop.ajax.products-ajax', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);
-            $viewSidebar = view('front.shop.ajax.sidebar-ajax')->with($filterParameters);
-
-            return response()->json([
-                'status' => 'ok',
-                'listing' => $productsPag,
-                'sidebar' => $filterParameters,
-            ]);
-        }
-
-
-        return view('front.shop.shop', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);
-    }
+//        $categories = $category->descendants()->pluck('id');
+//        $categories[] = $category->getKey();
+//
+//        $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
+//        $productsPag = Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12);
+//        $filterParameters = $this->filterParameters($products);
+//        $products = $category->products()->get();
+////        dump($products);
+////        $productsPag = $category->products()->paginate(12);
+////        $categoryPath = $category->generatePath()->path;
+////        $filterParameters = $this->filterParameters($products);
+////
+//        if ($request->ajax()) {
+//            $viewProducts = view('front.shop.ajax.products-ajax', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);
+//            $viewSidebar = view('front.shop.ajax.sidebar-ajax')->with($filterParameters);
+//
+//            return response()->json([
+//                'status' => 'ok',
+//                'listing' => $productsPag,
+//                'sidebar' => $filterParameters,
+//            ]);
+//        }
+//
+//
+//        return view('front.shop.shop', compact('productsPag', 'category', 'categoryPath'))->with($filterParameters);
+//    }
 
     public function showProduct($categoryParam, $productSlug)
     {

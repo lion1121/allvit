@@ -26,6 +26,10 @@ class Product extends Model
         ];
     }
 
+    protected $appends = [
+
+    ];
+
     /**
      * @param Builder $builder
      * @param $request

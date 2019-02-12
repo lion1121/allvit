@@ -23,9 +23,7 @@
             </div>
             <div class="product-desc">
                 <div class="product-title"><h3>
-                        {{product.name}}
-                    <!--<a href="{{route('product',['category' => isset($categoryPath)? $categoryPath  : $product->getCategoryUrl(), 'product' => $product->slug] )}}">{{$product->name}}</a>-->
-
+                    <a v-bind:href="product.slug">{{product}}</a>
                 </h3>
                 </div>
                 <div class="product-price">
@@ -53,11 +51,12 @@
         name: "products",
         data(){
           return {
+              url: window.location.href,
           }
         },
-        props: ['products'],
+        props: ['products','url'],
         mounted(){
-            console.log(this.props);
+            console.log(this.$route.query);
         }
     }
 </script>

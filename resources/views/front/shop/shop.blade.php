@@ -11,7 +11,7 @@
             @include('front.elements.breadcrumbs',[$category,$category])
         </div>
 
-    </section><!-- #page-title end -->
+    </section>
 
     <section id="content">
 
@@ -22,11 +22,12 @@
                 {{--<!-- Post Content--}}
                 {{--============================================= -->--}}
                 <div class="postcontent nobottommargin col_last" id="productsWrapper">
+
                     <products :products="products"></products>
 
                     <!-- Shop
                     ============================================= -->
-{{--                @include('front.shop.ajax.products-ajax',['productsPag' => $productsPag])--}}
+                {{--                @include('front.shop.ajax.products-ajax',['productsPag' => $productsPag])--}}
                 <!-- #shop end -->
 
                 </div><!-- .postcontent end -->
@@ -34,8 +35,10 @@
                 {{--<!-- Sidebar--}}
                 {{--============================================= -->--}}
                 <div class="sidebar nobottommargin">
-                    <sidebar :filters="filters"></sidebar>
+                    <div class="sidebar-widgets-wrap clearfix">
 
+                        <sidebar :filters="filters"></sidebar>
+                    </div>
                 {{--                    @include('front.shop.ajax.sidebar-ajax',['vendors' => $vendors, 'allIngredients' => $allIngredients, 'allGoals' => $allGoals, 'tastes' => $tastes, 'colors' => $colors])--}}
                 <!-- .sidebar end -->
                 </div>
@@ -45,15 +48,3 @@
 
     </section><!-- #content end -->
 @endsection
-<script>
-    import Products from "../../../js/components/Products/products";
-    export default {
-        components: {Products}
-    }
-</script>
-<script>
-    import Sidebar from "../../../js/components/Products/sidebar";
-    export default {
-        components: {Sidebar}
-    }
-</script>

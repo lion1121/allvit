@@ -2,29 +2,31 @@
 <html dir="ltr" lang="ru">
 <head>
 
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="SemiColonWeb" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="SemiColonWeb"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Stylesheets
     ============================================= -->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i"
           rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/custom-shop.css')}}">
     <link rel="stylesheet" href="{{asset('css/libs/magnific-popup/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('css/animate.css')}}">
     <link rel="stylesheet" href="{{asset('css/radio-checkbox.css')}}">
     <link rel="stylesheet" href="{{asset('libs/font-icons/font-icons.css')}}">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!--[if lt IE 9]>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 
     <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
-    <link rel="stylesheet" type="text/css" href="{{asset('include/rs-plugin/css/settings.css')}}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{asset('include/rs-plugin/css/settings.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('include/rs-plugin/css/layers.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('include/rs-plugin/css/navigation.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/custom-shop-pagination.css')}}">
@@ -61,9 +63,13 @@
             font-family: 'Raleway', sans-serif;
         }
 
-        .tp-video-play-button { display: none !important; }
+        .tp-video-play-button {
+            display: none !important;
+        }
 
-        .tp-caption { white-space: nowrap; }
+        .tp-caption {
+            white-space: nowrap;
+        }
 
     </style>
 
@@ -83,7 +89,8 @@
 
             <div class="col_half nobottommargin">
 
-                <p class="nobottommargin"><strong>Call:</strong> 1800-547-2145 | <strong>Email:</strong> info@canvas.com</p>
+                <p class="nobottommargin"><strong>Call:</strong> 1800-547-2145 | <strong>Email:</strong> info@canvas.com
+                </p>
 
             </div>
 
@@ -93,66 +100,75 @@
                 ============================================= -->
                 <div class="top-links">
                     @guest
-                    <ul>
-                        <li><a href="#">Ваш аккаунт</a>
-                            <div class="top-link-section">
-                                <form id="top-login" role="form" method="POST" action="{{ route('login') }}">
-                                    @csrf
-                                    <div class="input-group" id="top-login-username">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text"><i class="icon-user"></i></div>
-                                        </div>
-                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email адрес" name="email" value="{{ old('email') }}" required autofocus>
-                                        @if ($errors->has('email'))
-                                            <span class="invalid-feedback" role="alert">
+                        <ul>
+                            <li><a href="#">Ваш аккаунт</a>
+                                <div class="top-link-section">
+                                    <form id="top-login" role="form" method="POST" action="{{ route('login') }}">
+                                        @csrf
+                                        <div class="input-group" id="top-login-username">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="icon-user"></i></div>
+                                            </div>
+                                            <input id="email" type="email"
+                                                   class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                                   placeholder="Email адрес" name="email" value="{{ old('email') }}"
+                                                   required autofocus>
+                                            @if ($errors->has('email'))
+                                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                        @endif
-                                    </div>
-                                    <div class="input-group" id="top-login-password">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text"><i class="icon-key"></i></div>
+                                            @endif
                                         </div>
-                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"  placeholder="Пароль" name="password" required>
-                                        @if ($errors->has('password'))
-                                            <span class="invalid-feedback" role="alert">
+                                        <div class="input-group" id="top-login-password">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="icon-key"></i></div>
+                                            </div>
+                                            <input id="password" type="password"
+                                                   class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                                   placeholder="Пароль" name="password" required>
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
+                                            @endif
+                                        </div>
+                                        <p class="m-0"><a href="#">Забыли пароль?</a></p>
+                                        <button class="btn btn-danger btn-block" type="submit">Войти</button>
+                                        @if (Illuminate\Support\Facades\Route::has('password.request'))
+                                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
                                         @endif
-                                    </div>
-                                    <p class="m-0"><a href="#" >Забыли пароль?</a> </p>
-                                    <button class="btn btn-danger btn-block" type="submit">Войти</button>
-                                    @if (Illuminate\Support\Facades\Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
-                                </form>
-                                <div class="text-center">
-                                    <p class="mt-2 mb-2">вход через</p>
-                                    <div class="social_btn_group d-flex flex-row justify-content-around">
-                                        <a href="{{ url('auth/google') }}" class="social-icon si-colored si-gplus">
-                                            <i class="icon-gplus"></i>
-                                            <i class="icon-gplus"></i>
-                                        </a>
-                                        <a href="{{ url('auth/facebook') }}" class="social-icon si-colored si-facebook">
-                                            <i class="icon-facebook"></i>
-                                            <i class="icon-facebook"></i>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        @if (Illuminate\Support\Facades\Route::has('register'))
-                                            <p class="m-0">Нет учетной записиси? <a class="nav-link" href="{{ route('register') }}">регистрация</a></p>
+                                    </form>
+                                    <div class="text-center">
+                                        <p class="mt-2 mb-2">вход через</p>
+                                        <div class="social_btn_group d-flex flex-row justify-content-around">
+                                            <a href="{{ url('auth/google') }}" class="social-icon si-colored si-gplus">
+                                                <i class="icon-gplus"></i>
+                                                <i class="icon-gplus"></i>
+                                            </a>
+                                            <a href="{{ url('auth/facebook') }}"
+                                               class="social-icon si-colored si-facebook">
+                                                <i class="icon-facebook"></i>
+                                                <i class="icon-facebook"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            @if (Illuminate\Support\Facades\Route::has('register'))
+                                                <p class="m-0">Нет учетной записиси? <a class="nav-link"
+                                                                                        href="{{ route('register') }}">регистрация</a>
+                                                </p>
 
-                                        @endif
-                                    </div>
+                                            @endif
+                                        </div>
 
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
                     @else
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Illuminate\Support\Facades\Auth::user()->name }} <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -198,7 +214,7 @@
 
                 @include('front.elements.navbar')
 
-                    <!-- Top Cart
+                <!-- Top Cart
                     ============================================= -->
                     <div id="top-cart">
                         <a href="#" id="top-cart-trigger"><i class="icon-shopping-cart"></i><span>5</span></a>
@@ -209,7 +225,8 @@
                             <div class="top-cart-items">
                                 <div class="top-cart-item clearfix">
                                     <div class="top-cart-item-image">
-                                        <a href="#"><img src="images/shop/small/1.jpg" alt="Blue Round-Neck Tshirt" /></a>
+                                        <a href="#"><img src="images/shop/small/1.jpg"
+                                                         alt="Blue Round-Neck Tshirt"/></a>
                                     </div>
                                     <div class="top-cart-item-desc">
                                         <a href="#">Blue Round-Neck Tshirt</a>
@@ -219,7 +236,8 @@
                                 </div>
                                 <div class="top-cart-item clearfix">
                                     <div class="top-cart-item-image">
-                                        <a href="#"><img src="images/shop/small/6.jpg" alt="Light Blue Denim Dress" /></a>
+                                        <a href="#"><img src="images/shop/small/6.jpg"
+                                                         alt="Light Blue Denim Dress"/></a>
                                     </div>
                                     <div class="top-cart-item-desc">
                                         <a href="#">Light Blue Denim Dress</a>
@@ -255,8 +273,10 @@
 
     <!-- Content
     ============================================= -->
-    @yield('content')
+    <div id="shop1">
 
+        @yield('content')
+    </div>
     <!-- Footer
     ============================================= -->
     <footer id="footer" class="dark">
@@ -275,7 +295,8 @@
 
                             <img src="images/footer-widget-logo.png" alt="" class="footer-logo">
 
-                            <p>We believe in <strong>Simple</strong>, <strong>Creative</strong> &amp; <strong>Flexible</strong> Design Standards.</p>
+                            <p>We believe in <strong>Simple</strong>, <strong>Creative</strong> &amp;
+                                <strong>Flexible</strong> Design Standards.</p>
 
                             <div style="background: url('images/world-map.png') no-repeat center center; background-size: 100%;">
                                 <address>
@@ -364,12 +385,16 @@
                         <div class="row">
 
                             <div class="col-lg-6 bottommargin-sm">
-                                <div class="counter counter-small"><span data-from="50" data-to="15065421" data-refresh-interval="80" data-speed="3000" data-comma="true"></span></div>
+                                <div class="counter counter-small"><span data-from="50" data-to="15065421"
+                                                                         data-refresh-interval="80" data-speed="3000"
+                                                                         data-comma="true"></span></div>
                                 <h5 class="nobottommargin">Total Downloads</h5>
                             </div>
 
                             <div class="col-lg-6 bottommargin-sm">
-                                <div class="counter counter-small"><span data-from="100" data-to="18465" data-refresh-interval="50" data-speed="2000" data-comma="true"></span></div>
+                                <div class="counter counter-small"><span data-from="100" data-to="18465"
+                                                                         data-refresh-interval="50" data-speed="2000"
+                                                                         data-comma="true"></span></div>
                                 <h5 class="nobottommargin">Clients</h5>
                             </div>
 
@@ -378,14 +403,17 @@
                     </div>
 
                     <div class="widget subscribe-widget clearfix">
-                        <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
+                        <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp;
+                            Inside Scoops:</h5>
                         <div class="widget-subscribe-form-result"></div>
-                        <form id="widget-subscribe-form" action="include/subscribe.php" role="form" method="post" class="nobottommargin">
+                        <form id="widget-subscribe-form" action="include/subscribe.php" role="form" method="post"
+                              class="nobottommargin">
                             <div class="input-group divcenter">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="icon-email2"></i></div>
                                 </div>
-                                <input type="email" id="widget-subscribe-form-email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
+                                <input type="email" id="widget-subscribe-form-email" name="widget-subscribe-form-email"
+                                       class="form-control required email" placeholder="Enter your Email">
                                 <div class="input-group-append">
                                     <button class="btn btn-success" type="submit">Subscribe</button>
                                 </div>
@@ -398,18 +426,28 @@
                         <div class="row">
 
                             <div class="col-lg-6 clearfix bottommargin-sm">
-                                <a href="#" class="social-icon si-dark si-colored si-facebook nobottommargin" style="margin-right: 10px;">
+                                <a href="#" class="social-icon si-dark si-colored si-facebook nobottommargin"
+                                   style="margin-right: 10px;">
                                     <i class="icon-facebook"></i>
                                     <i class="icon-facebook"></i>
                                 </a>
-                                <a href="#"><small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on Facebook</small></a>
+                                <a href="#">
+                                    <small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on
+                                        Facebook
+                                    </small>
+                                </a>
                             </div>
                             <div class="col-lg-6 clearfix">
-                                <a href="#" class="social-icon si-dark si-colored si-rss nobottommargin" style="margin-right: 10px;">
+                                <a href="#" class="social-icon si-dark si-colored si-rss nobottommargin"
+                                   style="margin-right: 10px;">
                                     <i class="icon-rss"></i>
                                     <i class="icon-rss"></i>
                                 </a>
-                                <a href="#"><small style="display: block; margin-top: 3px;"><strong>Subscribe</strong><br>to RSS Feeds</small></a>
+                                <a href="#">
+                                    <small style="display: block; margin-top: 3px;"><strong>Subscribe</strong><br>to RSS
+                                        Feeds
+                                    </small>
+                                </a>
                             </div>
 
                         </div>
@@ -478,7 +516,9 @@
 
                     <div class="clear"></div>
 
-                    <i class="icon-envelope2"></i> info@canvas.com <span class="middot">&middot;</span> <i class="icon-headphones"></i> +91-11-6541-6369 <span class="middot">&middot;</span> <i class="icon-skype2"></i> CanvasOnSkype
+                    <i class="icon-envelope2"></i> info@canvas.com <span class="middot">&middot;</span> <i
+                            class="icon-headphones"></i> +91-11-6541-6369 <span class="middot">&middot;</span> <i
+                            class="icon-skype2"></i> CanvasOnSkype
                 </div>
 
             </div>
@@ -520,43 +560,43 @@
 
 <script>
 
-    var tpj=jQuery;
+    var tpj = jQuery;
     tpj.noConflict();
 
-    tpj(document).ready(function() {
+    tpj(document).ready(function () {
 
         var apiRevoSlider = tpj('#rev_slider_ishop').show().revolution(
             {
-                sliderType:"standard",
-                jsFileLocation:"include/rs-plugin/js/",
-                sliderLayout:"fullwidth",
-                dottedOverlay:"none",
-                delay:9000,
+                sliderType: "standard",
+                jsFileLocation: "include/rs-plugin/js/",
+                sliderLayout: "fullwidth",
+                dottedOverlay: "none",
+                delay: 9000,
                 navigation: {},
-                responsiveLevels:[1200,992,768,480,320],
-                gridwidth:1140,
-                gridheight:500,
-                lazyType:"none",
-                shadow:0,
-                spinner:"off",
-                autoHeight:"off",
-                disableProgressBar:"on",
-                hideThumbsOnMobile:"off",
-                hideSliderAtLimit:0,
-                hideCaptionAtLimit:0,
-                hideAllCaptionAtLilmit:0,
-                debugMode:false,
+                responsiveLevels: [1200, 992, 768, 480, 320],
+                gridwidth: 1140,
+                gridheight: 500,
+                lazyType: "none",
+                shadow: 0,
+                spinner: "off",
+                autoHeight: "off",
+                disableProgressBar: "on",
+                hideThumbsOnMobile: "off",
+                hideSliderAtLimit: 0,
+                hideCaptionAtLimit: 0,
+                hideAllCaptionAtLilmit: 0,
+                debugMode: false,
                 fallbacks: {
-                    simplifyAll:"off",
-                    disableFocusListener:false,
+                    simplifyAll: "off",
+                    disableFocusListener: false,
                 },
                 navigation: {
-                    keyboardNavigation:"off",
+                    keyboardNavigation: "off",
                     keyboard_direction: "horizontal",
-                    mouseScrollNavigation:"off",
-                    onHoverStop:"off",
-                    touch:{
-                        touchenabled:"on",
+                    mouseScrollNavigation: "off",
+                    onHoverStop: "off",
+                    touch: {
+                        touchenabled: "on",
                         swipe_threshold: 75,
                         swipe_min_touches: 1,
                         swipe_direction: "horizontal",
@@ -584,7 +624,7 @@
                 }
             });
 
-        apiRevoSlider.bind("revolution.slide.onloaded",function (e) {
+        apiRevoSlider.bind("revolution.slide.onloaded", function (e) {
             SEMICOLON.slider.sliderParallaxDimensions();
         });
 

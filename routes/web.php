@@ -11,6 +11,7 @@
 |
 */
 
+use App\ProdCategory;
 use App\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -19,20 +20,25 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AppController@index')->name('home');
 
-Route::group(['prefix' => 'api'], function () {
-    Route::get('{category}/{product}', 'Api\ShopController@showProduct')->where('category', '[a-zA-Z0-9/_-]+')->where('product', '([a-zA-Z_-]+|[0-9_-]+)+([0-9_-]+|[a-zA-Z_-]+)+([a-zA-Z_-]+|[0-9_-]+)+[a-zA-Z_-]+[0-9_-]+')->name('product');
+Route::group(['prefix' => 'api/catalog'], function () {
+//    Route::get('{category}/{product}', 'Api\ShopController@showProduct')->where('category', '[a-zA-Z0-9/_-]+')->where('product', '([a-zA-Z_-]+|[0-9_-]+)+([0-9_-]+|[a-zA-Z_-]+)+([a-zA-Z_-]+|[0-9_-]+)+[a-zA-Z_-]+[0-9_-]+')->name('product');
     Route::get('{path}', 'Api\ShopController@show')->where('path', '[a-zA-Z0-9/_-]+')->name('category');
 });
 
-Route::get('category', function (){
-    return view('front.shop.shop-empty');
-});
 
 Route::group(['prefix' => 'catalog'], function () {
     Route::get('{category}/{product}', 'ShopController@showProduct')->where('category', '[a-zA-Z0-9/_-]+')->where('product', '([a-zA-Z_-]+|[0-9_-]+)+([0-9_-]+|[a-zA-Z_-]+)+([a-zA-Z_-]+|[0-9_-]+)+[a-zA-Z_-]+[0-9_-]+')->name('product');
-    Route::get('{path}', 'ShopController@show')->where('path', '[a-zA-Z0-9/_-]+')->name('category');
+//    Route::get('{path}', 'ShopController@show')->where('path', '[a-zA-Z0-9/_-]+')->name('category');
 });
 
+
+Route::group(['prefix' => 'catalog'], function () {
+    Route::get('{path}', function ($path) {
+        $categoryParam = explode('/', $path);
+        $category = ProdCategory::where('slug', '=', end($categoryParam))->firstOrFail();
+        return view('front.shop.shop-empty',compact('category'));
+    })->where('path', '[a-zA-Z0-9/_-]+')->name('category');
+});
 
 
 Route::get('/test', 'ShopController@index');

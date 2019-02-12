@@ -15,7 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/shop.js', 'public/js')
     .js('resources/js/shop/shop.js', 'public/js/shop')
     .sass('resources/sass/style.scss', 'public/css')
-    .sass('resources/sass/custom-shop-pagination.scss', 'public/css')
+    .sass('resources/sass/custom-shop.scss', 'public/css')
     .sass('resources/sass/responsive.scss', 'public/css')
     .js('resources/js/admin_voyager.js', 'public/js')
     .sourceMaps();

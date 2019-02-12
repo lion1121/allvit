@@ -33,15 +33,46 @@ window.Vue = require('vue');
 
 Vue.component('sidebar', require('./components/Products/sidebar.vue'));
 Vue.component('products', require('./components/Products/products.vue'));
+
+import VueRouter from 'vue-router'
+Vue.use(VueRouter);
+
 import sidebar from "./components/Products/sidebar.vue"
 import products from "./components/Products/products.vue"
 import axios from 'axios';
 
+
+const ProductIndex = require('./components/Products/ProductIndex.vue');
+const routes = [
+    {
+        path:'/catalog/:param?/:param2?/:param3/',
+        name: 'product.index',
+        component: ProductIndex
+    }
+];
+const router = new VueRouter({
+    mode:'history',
+    routes
+});
+
 const app = new Vue({
-    el: '#shop',
+    el: '#shop1',
+    router,
     data: {
       products: {},
-      sidebarFilters: {}
+      filters: {},
+      paginateData:{
+          currentPage:0,
+          firstPage:'',
+          from:0,
+          lastPage:0,
+          lastPageUrl:'',
+          path:'',
+          perPage:0,
+          prevPageUrl:'',
+          to:0,
+          total:0
+      }
     },
     components:{
         'sidebar':sidebar,
@@ -49,12 +80,12 @@ const app = new Vue({
     },
 
     mounted(){
-        let url = window.location.href;
-        console.log(url);
-        axios.get('/catalog/pitanie').then(response => {
+        axios.get('/api' + this.$route.path).then(response => {
             console.log(response);
             this.products = response.data.listing.data;
-            this.sidebarFilters = response.data.sidebar
+            this.paginateData = response.data.listing;
+            this.filters = response.data.sidebar;
+            console.log(this.paginateData);
         }).catch(() => console.warn('Something went wrong.'));
     }
 });
