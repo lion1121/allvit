@@ -63,7 +63,9 @@ class shopController extends Controller
     {
         $categoryParam = explode('/', $categoryParam);
         $category = ProdCategory::where('slug', '=', end($categoryParam))->firstOrFail();//
-        $product = $category->products()->where('slug', $productSlug)->first();
+
+        $product = $category->products()->where('slug', $productSlug)->get();
+        dump($productSlug);
 
         return view('front.shop.shop-single', compact('product', 'category'));
     }

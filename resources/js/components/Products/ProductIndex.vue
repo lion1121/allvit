@@ -33,11 +33,12 @@
             'pagination': pagination,
         },
         mounted(){
-            this.getProducts()
+            this.getProducts();
+            console.log(this.$route.query);
         },
         methods:{
             getProducts(page = this.$route.query.page){
-                axios.get('/api' + this.$route.path, {
+                axios.get('/api' + this.$route.fullPath, {
                     params: {
                         page: page
                     }
