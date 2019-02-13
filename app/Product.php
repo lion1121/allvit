@@ -27,7 +27,7 @@ class Product extends Model
     }
 
     protected $appends = [
-
+        'prod_cat_url'
     ];
 
     /**
@@ -64,10 +64,16 @@ class Product extends Model
 
     public $timestamps = false;
 
+//    public function categories()
+//    {
+//        return $this->belongsToMany('App\ProdCategory', 'category_product', 'product_id', 'prod_category_id');
+//    }
+
     public function categories()
     {
-        return $this->belongsToMany('App\ProdCategory', 'category_product', 'product_id', 'prod_category_id');
+        return $this->belongsTo('App\ProdCategory','prod_category_id');
     }
+
 
     public function properties()
     {
@@ -79,7 +85,13 @@ class Product extends Model
         return $this->belongsToMany('App\Promocode');
     }
 
-    public function getProdCatUrl()
+//    public function getProdCatUrl()
+//    {
+//        $url = $this->categories()->first()->getUrl() . '/' . $this->slug;
+//        return $url;
+//
+//    }
+    public function getProdCatUrlAttribute()
     {
         $url = $this->categories()->first()->getUrl() . '/' . $this->slug;
         return $url;

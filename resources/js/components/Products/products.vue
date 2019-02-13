@@ -23,8 +23,9 @@
             </div>
             <div class="product-desc">
                 <div class="product-title"><h3>
-                    <a v-bind:href="meta.path.split('api')[1] + '/' + product.slug">{{product.name}}</a>
+                    <a v-bind:href="meta.path.split('api')[0] + product.prod_cat_url">{{product.name}}</a>
                 </h3>
+                    {{product.prod_cat_url}}
                 </div>
                 <div class="product-price">
                     <del>$24.99</del>
