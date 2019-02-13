@@ -1,7 +1,9 @@
 <template>
-   <div>
+   <div class="clearfix">
        <div class="postcontent nobottommargin col_last" id="productsWrapper">
-           <products :products="products" :paginateData="paginateData"></products>
+           <products :products="products" :meta="meta"></products>
+           <pagination :meta="meta" v-on:pagination:switched="getProducts"></pagination>
+
        </div>
        <div class="sidebar nobottommargin">
            <div class="sidebar-widgets-wrap clearfix">
@@ -14,6 +16,7 @@
 <script>
     import sidebar from "./sidebar.vue"
     import products from "./products.vue"
+    import pagination from "./pagination.vue"
     import axios from 'axios';
     export default {
         name: "ProductIndex",
@@ -21,33 +24,31 @@
             return {
                 products: {},
                 filters: {},
-                paginateData:{
-                    currentPage:0,
-                    firstPage:'',
-                    from:0,
-                    lastPage:0,
-                    lastPageUrl:'',
-                    path:'',
-                    perPage:0,
-                    prevPageUrl:'',
-                    to:0,
-                    total:0
-                }
+                meta:{},
             }
         },
         components:{
             'sidebar':sidebar,
-            'products':  products
+            'products':  products,
+            'pagination': pagination,
         },
-
         mounted(){
-            axios.get('/api' + this.$route.path).then(response => {
-                console.log(response);
-                this.products = response.data.data[1].data;
-                this.filters = response.data.data[0];
-            }).catch(() => console.warn('Something went wrong.'));
+            this.getProducts()
+        },
+        methods:{
+            getProducts(page = this.$route.query.page){
+                axios.get('/api' + this.$route.path, {
+                    params: {
+                        page: page
+                    }
+                }).then(response => {
+                    console.log(response);
+                    this.products = response.data.data[1].data;
+                    this.filters = response.data.data[0];
+                    this.meta = response.data.meta;
+                }).catch(() => console.warn('Something went wrong.'));
+            }
         }
-
     }
 </script>
 

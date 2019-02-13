@@ -23,7 +23,7 @@
             </div>
             <div class="product-desc">
                 <div class="product-title"><h3>
-                    <a v-bind:href="product.slug">{{product.name}}</a>
+                    <a v-bind:href="meta.path.split('api')[1] + '/' + product.slug">{{product.name}}</a>
                 </h3>
                 </div>
                 <div class="product-price">
@@ -52,8 +52,9 @@
           return {
           }
         },
-        props: ['products','paginateData'],
+        props: ['products','meta'],
         mounted(){
+
         }
     }
 </script>

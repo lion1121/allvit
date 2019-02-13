@@ -34,6 +34,7 @@ window.Vue = require('vue');
 Vue.component('product-index', require('./components/Products/ProductIndex.vue'));
 Vue.component('sidebar', require('./components/Products/sidebar.vue'));
 Vue.component('products', require('./components/Products/products.vue'));
+Vue.component('pagination', require('./components/Products/pagination.vue'));
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);

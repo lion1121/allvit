@@ -24,10 +24,9 @@ class ShopController extends Controller
         $categories[] = $category->getKey();
 
         $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
-//        $productsPag = Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(4);
         $filterParameters = $this->filterParameters($products);
 
-          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(4),$filterParameters);
+          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12),$filterParameters);
 
 
     }
