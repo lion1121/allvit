@@ -14,17 +14,17 @@ class shopController extends Controller
 {
     use filterParameters;
 
-    public function index(Request $request)
-    {
-        $category = ProdCategory::where('slug','=','pitanie')->first();
-        $categories = $category->descendants()->pluck('id');
-        $categories[] = $category->getKey();
-
-        $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
-
-        return $products;
-
-    }
+//    public function index(Request $request)
+//    {
+//        $category = ProdCategory::where('slug','=','pitanie')->first();
+//        $categories = $category->descendants()->pluck('id');
+//        $categories[] = $category->getKey();
+//
+//        $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
+//
+//        return $products;
+//
+//    }
 
 
 //    public function show(Request $request, $path)

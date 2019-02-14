@@ -93,7 +93,7 @@ class Product extends Model
 //    }
     public function getProdCatUrlAttribute()
     {
-        $url = $this->categories()->first()->getUrl() . '/' . $this->slug;
+        $url = $this->categories()->first()->getUrl();
         return $url;
 
     }
@@ -104,6 +104,13 @@ class Product extends Model
         return $url;
     }
 
+
+
+    public function getCategoryUrlAttribute()
+    {
+        $url = $this->categories()->first()->generatePath()->path;
+        return $url;
+    }
 
     public function children()
     {

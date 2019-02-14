@@ -16,16 +16,13 @@
                 <div class="product-overlay">
                     <a href="#" class="add-to-cart"><i
                             class="icon-shopping-cart"></i><span> Купить</span></a>
-                    <a href="include/ajax/shop-item.html" class="item-quick-view"
-                       data-lightbox="ajax"><i
-                            class="icon-zoom-in2"></i><span> Посмотреть</span></a>
+                    <a href="include/ajax/shop-item.html" class="item-quick-view"><i class="icon-zoom-in2"></i><span> Посмотреть</span></a>
                 </div>
             </div>
             <div class="product-desc">
                 <div class="product-title"><h3>
-                    <a v-bind:href="meta.path.split('api')[0] + product.prod_cat_url">{{product.name}}</a>
+                    <a v-bind:href="meta.path.split('api')[0] + 'catalog/' + product.prod_cat_url + '/' + product.slug">{{product.name}}</a>
                 </h3>
-                    {{product.prod_cat_url}}
                 </div>
                 <div class="product-price">
                     <del>$24.99</del>
@@ -47,6 +44,7 @@
 </template>
 
 <script>
+
     export default {
         name: "products",
         data(){

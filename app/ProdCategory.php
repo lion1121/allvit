@@ -79,16 +79,12 @@ class ProdCategory extends Model
     public function getUrl()
     {
         $path = '';
-        // Получаем заглушки всех предков
         $slugs = $this->ancestors()->pluck('slug');
-        // Добавляем заглушку самого раздела
-        $slugs[] = $this->slug;
 
-        // И склеиваем это все
         foreach ($slugs as $slug) {
-            $path .=  '/'.$slug;
+            $path .=  $slug .'/';
         }
-        return 'catalog'.$path;
+        return $path . $this->slug;
     }
 
     public function generatePath()

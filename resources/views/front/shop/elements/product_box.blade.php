@@ -24,7 +24,7 @@
     <div class="product-desc">
         <div class="product-title"><h3>
 
-                <a href="{{route('product',['category' => isset($categoryPath)? $categoryPath  : $product->getCategoryUrl(), 'product' => $product->slug] )}}">{{$product->name}}</a>
+                <a href="{{route('product',['category' => isset($categoryPath)? $categoryPath  : $product->getProdCatUrlAttribute(), 'product' => $product->slug] )}}">{{$product->name}}</a>
 
             </h3>
         </div>
