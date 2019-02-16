@@ -70,8 +70,8 @@ trait filterParameters
             }
 
             //Load max / min prices filter
-            $min = $allProducts->where('price', $allProducts->min('price'))->first();
-            $max = $allProducts->where('price', $allProducts->max('price'))->first();
+            $min = $allProducts->where('price', $allProducts->min('price'))->first()->price;
+            $max = $allProducts->where('price', $allProducts->max('price'))->first()->price;
 
             //Load goals filter
             $goals = $allProducts->where('goals', '!=', null)->map(function ($item) {
@@ -110,8 +110,7 @@ trait filterParameters
             'vendors' => $vendors,
             'tastes' => $tastes,
             'colors' => $colors,
-            'min' => $min,
-            'max' => $max,
+            'price' => [$min,$max],
             'allGoals' => $allGoals,
             'allIngredients' => $allIngredients
         ];

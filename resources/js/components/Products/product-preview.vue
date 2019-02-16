@@ -1,9 +1,10 @@
 <template>
 
-    <div class="single-product shop-quick-view-ajax clearfix">
+    <div class="single-product shop-quick-view-ajax clearfix modal2__content">
 
-        <div class="ajax-modal-title">
-            <h2>Pink Printed Dress</h2>
+        <div class="ajax-modal-title d-flex justify-content-between">
+            <h2>{{selectedProduct.name}}</h2>
+           <span id="single_product_close" @click.prevent="closeProduct()">&times</span>
         </div>
 
         <div class="product modal-padding clearfix">
@@ -13,9 +14,7 @@
                     <div class="fslider" data-pagi="false">
                         <div class="flexslider">
                             <div class="slider-wrap">
-                                <div class="slide"><a href="images/shop/dress/3.jpg" title="Pink Printed Dress - Front View"><img src="images/shop/dress/3.jpg" alt="Pink Printed Dress"></a></div>
-                                <div class="slide"><a href="images/shop/dress/3-1.jpg" title="Pink Printed Dress - Side View"><img src="images/shop/dress/3-1.jpg" alt="Pink Printed Dress"></a></div>
-                                <div class="slide"><a href="images/shop/dress/3-2.jpg" title="Pink Printed Dress - Back View"><img src="images/shop/dress/3-2.jpg" alt="Pink Printed Dress"></a></div>
+                                <div class="slide"><a href="https://via.placeholder.com/270x360.png?text=product" title="Pink Printed Dress - Front View"><img src="https://via.placeholder.com/270x360.png?text=product" alt="Pink Printed Dress"></a></div>
                             </div>
                         </div>
                     </div>
@@ -69,10 +68,49 @@
 
 <script>
     export default {
-        name: "product-preview"
+        name: "product-preview",
+        props:['selectedProduct'],
+        methods:{
+            closeProduct(){
+                this.$emit('singleProduct:close')
+            }
+        }
     }
+
 </script>
 
-<style scoped>
-
+<style >
+    .modal2 {
+        display: none;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 999;
+        background-color:rgba(0, 0, 0, 0.5);
+    }
+    .modal2.open {
+        display: flex;
+        flex-direction: column;
+    }
+    .modal2__header,
+    .modal2__footer {
+        height: 100px;
+    }
+    .modal2__content {
+        height: 80%;
+        overflow-y: auto;
+        top: 10%;
+    }
+    #single_product_close {
+        font-size: 25px;
+        cursor: pointer;
+    }
+    @media (max-width: 992px) {
+        #header {
+            position: relative;
+            /*z-index: 99;*/
+        }
+    }
 </style>

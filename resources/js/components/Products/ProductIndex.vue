@@ -17,8 +17,9 @@
     import sidebar from "./sidebar.vue"
     import products from "./products.vue"
     import pagination from "./pagination.vue"
-    import productPreview from "./product-preview.vue"
     import axios from 'axios';
+
+
     export default {
         name: "ProductIndex",
         data() {
@@ -32,7 +33,6 @@
             'sidebar':sidebar,
             'products':  products,
             'pagination': pagination,
-            'product-preview': productPreview
         },
         mounted(){
             this.getProducts();
