@@ -107,9 +107,9 @@ trait filterParameters
         }
 
         return  [
-            'vendors' => $vendors,
-            'tastes' => $tastes,
-            'colors' => $colors,
+            'vendor' => $vendors,
+            'taste' => $tastes,
+            'color' => $colors,
             'price' => [$min,$max],
             'allGoals' => $allGoals,
             'allIngredients' => $allIngredients

@@ -1,5 +1,5 @@
 <template>
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation example" class="mb-5 clearfix">
         <ul class="pagination">
             <li :class="{' disabled ': meta.current_page == 1}" class="page-item">
                 <a class="page-link" href="#" @click.prevent="switched(meta.current_page - 1)">
@@ -29,7 +29,7 @@
                 }
                 this.$emit('pagination:switched', page);
                 this.$router.replace({
-                    query: {page}
+                    query: Object.assign({}, this.$route.query, {page})
                 });
             },
             pageIsOutOfBounds(page){

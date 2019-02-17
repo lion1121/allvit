@@ -1,16 +1,21 @@
 <template>
-   <div class="clearfix">
-       <div class="postcontent nobottommargin col_last" id="productsWrapper">
-           <products :products="products" :meta="meta"></products>
-           <pagination :meta="meta" v-on:pagination:switched="getProducts"></pagination>
+    <div class="clearfix">
+        <div class="postcontent nobottommargin col_last" id="productsWrapper">
+            <template v-if="products.length > 0">
+                <products :products="products" :meta="meta"></products>
+            </template>
+            <template v-else>
+                No results
+            </template>
+            <pagination :meta="meta" v-on:pagination:switched="getProducts"></pagination>
 
-       </div>
-       <div class="sidebar nobottommargin">
-           <div class="sidebar-widgets-wrap clearfix">
-               <sidebar :filters="filters"></sidebar>
-           </div>
-       </div>
-   </div>
+        </div>
+        <div class="sidebar nobottommargin">
+            <div class="sidebar-widge ts-wrap clearfix">
+                <sidebar :filters="filters"></sidebar>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -26,23 +31,32 @@
             return {
                 products: {},
                 filters: {},
-                meta:{},
+                meta: {},
             }
         },
-        components:{
-            'sidebar':sidebar,
-            'products':  products,
+        components: {
+            'sidebar': sidebar,
+            'products': products,
             'pagination': pagination,
         },
-        mounted(){
+        mounted() {
             this.getProducts();
             console.log(this.$route.query);
         },
-        methods:{
-            getProducts(page = this.$route.query.page){
+        watch: {
+            '$route.query': {
+                handler(query) {
+                    this.getProducts(1, query);
+                },
+                deep: true
+            }
+        },
+        methods: {
+            getProducts(page = this.$route.query.page, query = this.$route.query) {
                 axios.get('/api' + this.$route.fullPath, {
                     params: {
-                        page: page
+                        page: page,
+                        ...query
                     }
                 }).then(response => {
                     console.log(response);
