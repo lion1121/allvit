@@ -41,7 +41,6 @@
         },
         mounted() {
             this.getProducts();
-            console.log(this.$route.query);
         },
         watch: {
             '$route.query': {

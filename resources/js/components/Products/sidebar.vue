@@ -10,14 +10,14 @@
             <!--<h4 >{{elem}}</h4>-->
             <div v-for="(item, index) in filter">
                 <input
-                        v-bind:id="'vendor-' + index" class="checkbox-style" data-vendor=""
+                        v-bind:id="'vendor-' + index" class="checkbox-style" :data-vendor="index"
                         v-bind:name="'vendor-' + index"
                         type="checkbox"
                         @click="activateFilter(elem,index)"
                         :value="index"
-                        v-model.string="clickedFilters[elem]">
+                        v-model="clickedFilters">
                 <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}} ({{item}})</label>
-                <div>{{selectedFilter[elem]}} ---- {{index}}</div>
+                <div>{{clickedFilters[elem]}} ---- {{elem}}</div>
             </div>
 
             <!--<template v-if="elem === 'vendors'">-->
@@ -77,26 +77,66 @@
     export default {
         name: "sidebar",
         mounted() {
-            console.log(this.selectedFilter);
         },
         data(){
           return {
-              clickedFilters:{},
+              clickedFilters:[],
               selectedFilter: _.omit(this.$route.query, ['page']),
+              selectedFilter1:{},
           }
         },
         props: ['filters'],
         methods: {
             activateFilter(key, value){
 
-                this.selectedFilter = Object.assign({}, this.selectedFilter, {[key]: value});
-                this.$router.replace({
-                    query:{
-                        ...this.selectedFilter,
-                        page: 1
+                if(this.clickedFilters.includes(value)){
+                    console.log('qweqweqwe');
+                    const valueToRemove = value;
+                    this.clickedFilters = this.clickedFilters.filter(item => item !== valueToRemove);
+                    this.selectedFilter1 = Object.assign({}, this.selectedFilter1, {[key]: value});
+                    console.log(Object.values(this.selectedFilter1));
+                    // if (Object.values(this.selectedFilter).indexOf(value) > -1) {
+                    //     delete this.selectedFilter;
+                    // }
+                    function getKeyByValue(object, value) {
+                        // let key = Object.keys(object).find(key => object[key] === value);
+                        // delete this.selectedFilter.Object.keys(object).find(key => object[key] === value);
+                        // delete this.selectedFilter1.Object.keys(object).find(key => object[key] === value);
+                        console.log(key);
                     }
-                });
-                this.clickedFilters = this.selectedFilter;
+                    getKeyByValue(this.selectedFilter1, value);
+                    // function deleteByVal(searchValue) {
+                    //
+                    //     console.log(this.selectedFilter);
+                    //     // Array.from(this.selectedFilter).forEach(key => {
+                    //     //     const user = this.list[key];
+                    //     //     if(user === searchValue){
+                    //     //         console.log('111');
+                    //     //     }
+                    //     // });
+                    // }
+                    //
+                    // deleteByVal(value);
+
+                    this.$router.replace({
+                        query:{
+                            ...this.selectedFilter1,
+                            page: 1
+                        }
+                    });
+                } else {
+                    this.selectedFilter = Object.assign({}, this.selectedFilter, {[key]: value});
+                    this.$router.replace({
+                        query:{
+                            ...this.selectedFilter,
+                            page: 1
+                        }
+                    });
+                    this.clickedFilters.push = value;
+                }
+
+
+
             }
         }
     }
