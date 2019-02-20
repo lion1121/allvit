@@ -6,15 +6,10 @@
             <h4 v-if="elem === 'color'">Цвет</h4>
             <h4 v-if="elem === 'allGoals'">Цель</h4>
             <h4 v-if="elem === 'allIngredients'">Ингридиенты</h4>
-            <h4 v-if="elem === 'price'">Цена</h4>
-            <!--<h4 >{{elem}}</h4>-->
+            <!--<h4 v-if="elem === 'price'">Цена</h4>-->
+
             <div v-for="(item, index) in filter">
-
-                <template v-if="elem === 'price'">
-                    <p>123</p>
-                </template>
-
-                <template v-if="elem !== 'price'">
+                <template v-if="elem != 'price'">
                     <input v-bind:id="'vendor-' + index" class="checkbox-style" :data-vendor="index"
                            v-bind:name="'vendor-' + index"
                            type="checkbox"
@@ -24,6 +19,7 @@
                     <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label clearfix">{{index}} <span
                             class="badge badge-pill badge-primary right font-size-16">{{item}}</span></label>
                 </template>
+
             </div>
 
             <!--<template v-if="elem === 'vendors'">-->
@@ -130,8 +126,6 @@
                     });
                     this.clickedFilters.push = value;
                 }
-
-
             }
         },
 

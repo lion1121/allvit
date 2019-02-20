@@ -13,6 +13,10 @@
         <div class="sidebar nobottommargin">
             <div class="sidebar-widge ts-wrap clearfix">
                 <sidebar :filters="filters"></sidebar>
+                <template>
+                    <h4>Цена</h4>
+                    <price-filter :filters="filters"></price-filter>
+                </template>
             </div>
         </div>
     </div>
@@ -22,6 +26,8 @@
     import sidebar from "./sidebar.vue"
     import products from "./products.vue"
     import pagination from "./pagination.vue"
+    import priceFilter from "./filters/price-filter.vue"
+
     import axios from 'axios';
 
 
@@ -38,6 +44,7 @@
             'sidebar': sidebar,
             'products': products,
             'pagination': pagination,
+            'price-filter': priceFilter,
         },
         mounted() {
             this.getProducts();
