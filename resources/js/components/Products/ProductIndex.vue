@@ -7,7 +7,7 @@
             <template v-else>
                 No results
             </template>
-            <pagination :meta="meta" v-on:pagination:switched="getProducts"></pagination>
+            <pagination :meta="meta" ></pagination>
 
         </div>
         <div class="sidebar nobottommargin">
