@@ -23,10 +23,13 @@ class ShopController extends Controller
         $categories = $category->descendants()->pluck('id');
         $categories[] = $category->getKey();
 
-        $products = Product::whereIn('prod_category_id', $categories)->filter($request)->get();
-        $filterParameters = $this->filterParameters($products);
+        $productsRaw = Product::whereIn('prod_category_id', $categories);
+        $categoryFilters = $productsRaw->get();
+        $products = $productsRaw->filter($request)->get();
+        $filteredParameters = $this->filterParameters($products);
+        $categoryParameters = $this->filterParameters($categoryFilters);
 
-          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12),$filterParameters);
+          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12),$filteredParameters,$categoryParameters);
 
 
     }

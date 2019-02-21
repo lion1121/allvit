@@ -12,7 +12,7 @@
         </div>
         <div class="sidebar nobottommargin">
             <div class="sidebar-widgets-wrap ts-wrap ">
-                <sidebar :filters="filters"></sidebar>
+                <sidebar :filters="filters" :updatedFilters="updatedFilters"></sidebar>
                 <template>
                     <div class="mt-4">
                         <h4>Цена</h4>
@@ -40,6 +40,7 @@
                 products: {},
                 filters: {},
                 meta: {},
+                updatedFilters: {}
             }
         },
         components: {
@@ -68,8 +69,9 @@
                     }
                 }).then(response => {
                     console.log(response);
-                    this.products = response.data.data[1].data;
-                    this.filters = response.data.data[0];
+                    this.products = response.data.data[2].data;
+                    this.updatedFilters = response.data.data[0];
+                    this.filters = response.data.data[1];
                     this.meta = response.data.meta;
                 }).catch(() => console.warn('Something went wrong.'));
             }

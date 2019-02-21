@@ -1,5 +1,5 @@
 <template>
-        <vue-slider ref="slider" v-if="this.$route.query.price" v-model="value" v-bind="options" @click.native="changePrice(value)"></vue-slider>
+        <vue-slider ref="slider" v-if="this.$route.query.price" :value="price" v-model="value" v-bind="options" @click.native="changePrice(value)"></vue-slider>
         <vue-slider ref="slider" v-else v-model="filters.price" v-bind="options" @click.native="changePrice(filters.price)"></vue-slider>
 </template>
 
@@ -11,13 +11,14 @@
         },
         data() {
             return{
-                value:  this.$route.query.price.split(','),
+                price: [],
+                value: this.$route.query.price ? this.$route.query.price.split(',') : this.price,
                 options: {
                     width: "100%",
                     height: 8,
                     dotSize: 16,
                     min: 0,
-                    max: 500,
+                    max: 1500,
                     disabled: false,
                     show: true,
                     useKeyboard: true,

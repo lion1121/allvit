@@ -88,7 +88,7 @@
                 selectedFilter: {},
             }
         },
-        props: ['filters'],
+        props: ['filters','updatedFilters'],
         methods: {
             activateFilter(key, value) {
                 //removing get parameter
