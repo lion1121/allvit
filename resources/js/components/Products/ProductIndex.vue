@@ -11,11 +11,13 @@
 
         </div>
         <div class="sidebar nobottommargin">
-            <div class="sidebar-widge ts-wrap clearfix">
+            <div class="sidebar-widgets-wrap ts-wrap ">
                 <sidebar :filters="filters"></sidebar>
                 <template>
-                    <h4>Цена</h4>
-                    <price-filter :filters="filters"></price-filter>
+                    <div class="mt-4">
+                        <h4>Цена</h4>
+                        <price-filter :filters="filters"></price-filter>
+                    </div>
                 </template>
             </div>
         </div>

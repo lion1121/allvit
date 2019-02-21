@@ -180,7 +180,7 @@ class XmlParser implements Parser
                         break;
                     case $key === 'ГруппыСайта':
                         if ((string) $val === ''){
-                            $product['categories'] = (array) 6;
+                            $product['prod_category_id'] = (array) 6;
                         } else {
                             $categories = (array)$val;
 //                        foreach ($categories as $category) {
@@ -233,13 +233,14 @@ class XmlParser implements Parser
     public function writeProducts()
     {
         foreach ($this->products as $product) {
+            Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
             $tempProduct = Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
             $product_id = $tempProduct->id;
-            foreach ($product['categories'] as $category) {
-                $lastProduct = Product::findOrFail($product_id);
-                //Synchronize pivot table (category_product)
-                $lastProduct->categories()->sync([$product_id => $category]);
-            }
+//            foreach ($product['categories'] as $category) {
+//                $lastProduct = Product::findOrFail($product_id);
+//                //Synchronize pivot table (category_product)
+//                $lastProduct->categories()->sync([$product_id => $category]);
+//            }
         }
     }
 }

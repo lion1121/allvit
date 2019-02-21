@@ -1,16 +1,17 @@
 <template>
-    <div>
-        <vue-slider ref="slider" v-model="filters.price" v-bind="options" @click.native="changePrice(filters.price)"></vue-slider>
-    </div>
+        <vue-slider ref="slider" v-if="this.$route.query.price" v-model="value" v-bind="options" @click.native="changePrice(value)"></vue-slider>
+        <vue-slider ref="slider" v-else v-model="filters.price" v-bind="options" @click.native="changePrice(filters.price)"></vue-slider>
 </template>
 
 <script>
     import vueSlider from 'vue-slider-component'
     export default {
         name: "price-filter",
+        mounted(){
+        },
         data() {
             return{
-                value:[0,150],
+                value:  this.$route.query.price.split(','),
                 options: {
                     width: "100%",
                     height: 8,
@@ -34,13 +35,26 @@
                     processStyle: {
                         "backgroundColor": "#999"
                     }
-                }
+                },
+                selectedFilter: {},
             }
 
         },
         methods:{
           changePrice(value){
-              console.log(value);
+              console.log(this.$route.query.price);
+              //get filters from URL
+              this.selectedFilter =_.omit(this.$route.query, ['page']);
+              //Add price filter to existing filters
+              this.selectedFilter = Object.assign({},this.selectedFilter, {['price']: _.join(value, ',')});
+                //Send new request
+              this.$router.replace({
+                  query: {
+                      ...this.selectedFilter,
+                      page: 1
+                  }
+              });
+
           }
         },
         components: {

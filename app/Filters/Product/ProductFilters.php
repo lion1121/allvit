@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Filters\Product\GoalFilter;
 use App\Filters\Product\VendorFilter;
 use App\Filters\Product\TasteFilter;
+use App\Filters\Product\PriceFilter;
 
 class ProductFilters extends FiltersAbstract
 {
@@ -20,6 +21,7 @@ class ProductFilters extends FiltersAbstract
         'vendor' => VendorFilter::class,
         'goal' => GoalFilter::class,
         'taste' => TasteFilter::class,
+        'price' => PriceFilter::class,
     ];
 
 }

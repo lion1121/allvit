@@ -1,15 +1,15 @@
 <template>
     <div class="sidebar nobottommargin w-100">
         <div class="widget clearfix" v-for="(filter, elem) in filters" v-if="Object.keys(filter).length > 0">
-            <h4 v-if="elem === 'vendor'">Производитель</h4>
-            <h4 v-if="elem === 'taste'">Вкус</h4>
-            <h4 v-if="elem === 'color'">Цвет</h4>
-            <h4 v-if="elem === 'allGoals'">Цель</h4>
-            <h4 v-if="elem === 'allIngredients'">Ингридиенты</h4>
-            <!--<h4 v-if="elem === 'price'">Цена</h4>-->
+            <template v-if="elem != 'price'">
+                <h4 v-if="elem === 'vendor'">Производитель</h4>
+                <h4 v-if="elem === 'taste'">Вкус</h4>
+                <h4 v-if="elem === 'color'">Цвет</h4>
+                <h4 v-if="elem === 'allGoals'">Цель</h4>
+                <h4 v-if="elem === 'allIngredients'">Ингридиенты</h4>
 
-            <div v-for="(item, index) in filter">
-                <template v-if="elem != 'price'">
+                <div v-for="(item, index) in filter">
+
                     <input v-bind:id="'vendor-' + index" class="checkbox-style" :data-vendor="index"
                            v-bind:name="'vendor-' + index"
                            type="checkbox"
@@ -18,9 +18,9 @@
                            v-model="clickedFilters">
                     <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label clearfix">{{index}} <span
                             class="badge badge-pill badge-primary right font-size-16">{{item}}</span></label>
-                </template>
 
-            </div>
+                </div>
+            </template>
 
             <!--<template v-if="elem === 'vendors'">-->
             <!--<h4>Производитель</h4>-->
@@ -84,13 +84,16 @@
         data() {
             return {
                 clickedFilters: [],
-                selectedFilter: _.omit(this.$route.query, ['page']),
+                // selectedFilter: _.omit(this.$route.query, ['page']),
+                selectedFilter: {},
             }
         },
         props: ['filters'],
         methods: {
             activateFilter(key, value) {
                 //removing get parameter
+                this.selectedFilter = _.omit(this.$route.query, ['page']);
+
                 if (this.clickedFilters.includes(value)) {
                     // check is url already has get parameter
                     if (this.selectedFilter.hasOwnProperty(key) && this.selectedFilter[key].split(',').length > 1) {
@@ -98,6 +101,7 @@
                         let params = this.selectedFilter[key].split(',');
                         // delete clicked (checkbox) value
                         params = _.remove(params, function (n) {
+                            console.log(params);
                             return n !== value;
                         });
                         this.selectedFilter[key] = _.join(params, ',');

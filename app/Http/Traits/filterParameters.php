@@ -73,6 +73,8 @@ trait filterParameters
             $min = $allProducts->where('price', $allProducts->min('price'))->first()->price;
             $max = $allProducts->where('price', $allProducts->max('price'))->first()->price;
 
+
+
             //Load goals filter
             $goals = $allProducts->where('goals', '!=', null)->map(function ($item) {
                 $goalArray = json_decode($item->goals);

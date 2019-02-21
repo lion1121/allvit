@@ -27,6 +27,7 @@
                     </div>
                     <div class="product-price">
                         <del>$24.99</del>
+                        <span>{{product.price}}</span>
                     </div>
                     <div class="product-rating">
                         <i class="icon-star3"></i>
