@@ -37,33 +37,34 @@
             </template>
 
             <template v-if="elem === 'taste'">
-                <h4>Производитель</h4>
-                <div v-for="(item, index) in filter">
-                    <input v-bind:id="'vendor-' + index" class="checkbox-style" :data-vendor="index"
-                           v-bind:name="'vendor-' + index"
+                <h4>Вкус</h4>
+                <div v-for="(quantity, key) in filter">
+                    <input v-bind:id="'vendor-' + key" class="checkbox-style" :data-vendor="key"
+                           v-bind:name="'vendor-' + key"
                            type="checkbox"
-                           @click="activateFilter(elem,index)"
-                           :value="index"
-                           v-model="clickedFilters">
+                           @click="activateFilter(elem,key)"
+                           :value="key"
+                           v-model="clickedFilters"
+                            :disabled="quantity === 0">
 
-                    <template v-if="clickedFilters.includes(index) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}}
+                    <template v-if="clickedFilters.includes(key) && clickedFilters.length > 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
                             <span class="badge badge-pill badge-primary right font-size-16">
-                           {{item}}
+                           {{quantity}}
                         </span>
                         </label>
                     </template>
-                    <template v-if="!clickedFilters.includes(index) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}}
+                    <template v-if="!clickedFilters.includes(key) && clickedFilters.length > 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0 }" class="checkbox-style-3-label">{{key}}
                             <span class="badge badge-pill badge-primary right font-size-16">
-                           {{'+' + item}}
+                           {{'+' + quantity}}
                         </span>
                         </label>
                     </template>
                     <template v-if="clickedFilters.length === 0">
-                        <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}}
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
                             <span class="badge badge-pill badge-primary right font-size-16">
-                           {{item}}
+                           {{quantity}}
                         </span>
                         </label>
                     </template>
@@ -72,31 +73,106 @@
 
             <template v-if="elem === 'color'">
                 <h4>Цвет</h4>
-                <div v-for="(item, index) in filter">
-                    <input v-bind:id="'vendor-' + index" class="checkbox-style" data-vendor=""
-                           v-bind:name="'vendor-' + index"
-                           type="checkbox">
-                    <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}} ({{item}})</label>
+                <div v-for="(quantity, key) in filter">
+                    <input v-bind:id="'vendor-' + key" class="checkbox-style" :data-vendor="key"
+                           v-bind:name="'vendor-' + key"
+                           type="checkbox"
+                           @click="activateFilter(elem,key)"
+                           :value="key"
+                           v-model="clickedFilters"
+                           :disabled="quantity === 0">
+
+                    <template v-if="clickedFilters.includes(key) && clickedFilters.length > 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{quantity}}
+                        </span>
+                        </label>
+                    </template>
+                    <template v-if="!clickedFilters.includes(key) && clickedFilters.length > 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0 }" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{'+' + quantity}}
+                        </span>
+                        </label>
+                    </template>
+                    <template v-if="clickedFilters.length === 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{quantity}}
+                        </span>
+                        </label>
+                    </template>
                 </div>
             </template>
 
-            <template v-if="elem === 'allGoals'">
+            <template v-if="elem === 'goals'">
                 <h4>Цель</h4>
-                <div v-for="(item, index) in filter">
-                    <input v-bind:id="'vendor-' + index" class="checkbox-style" data-vendor=""
-                           v-bind:name="'vendor-' + index"
-                           type="checkbox">
-                    <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}} ({{item}})</label>
+                <div v-for="(quantity, key) in filter">
+                    <input v-bind:id="'vendor-' + key" class="checkbox-style" :data-vendor="key"
+                           v-bind:name="'vendor-' + key"
+                           type="checkbox"
+                           @click="activateFilter(elem,key)"
+                           :value="key"
+                           v-model="clickedFilters"
+                           :disabled="quantity === 0">
+
+                    <template v-if="clickedFilters.includes(key) && clickedFilters.length > 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{quantity}}
+                        </span>
+                        </label>
+                    </template>
+                    <template v-if="!clickedFilters.includes(key) && clickedFilters.length > 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0 }" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{'+' + quantity}}
+                        </span>
+                        </label>
+                    </template>
+                    <template v-if="clickedFilters.length === 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{quantity}}
+                        </span>
+                        </label>
+                    </template>
                 </div>
             </template>
 
-            <template v-if="elem === 'allIngredients'">
+            <template v-if="elem === 'ingredients'">
                 <h4>Ингридиенты</h4>
-                <div v-for="(item, index) in filter">
-                    <input v-bind:id="'vendor-' + index" class="checkbox-style" data-vendor=""
-                           v-bind:name="'vendor-' + index"
-                           type="checkbox">
-                    <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}} ({{item}})</label>
+                <div v-for="(quantity, key) in filter">
+                    <input v-bind:id="'vendor-' + key" class="checkbox-style" :data-vendor="key"
+                           v-bind:name="'vendor-' + key"
+                           type="checkbox"
+                           @click="activateFilter(elem,key)"
+                           :value="key"
+                           v-model="clickedFilters"
+                           :disabled="quantity === 0">
+
+                    <template v-if="clickedFilters.includes(key) && clickedFilters.length > 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{quantity}}
+                        </span>
+                        </label>
+                    </template>
+                    <template v-if="!clickedFilters.includes(key) && clickedFilters.length > 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0 }" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{'+' + quantity}}
+                        </span>
+                        </label>
+                    </template>
+                    <template v-if="clickedFilters.length === 0">
+                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                            <span class="badge badge-pill badge-primary right font-size-16">
+                           {{quantity}}
+                        </span>
+                        </label>
+                    </template>
                 </div>
             </template>
 

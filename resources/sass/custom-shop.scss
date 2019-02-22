@@ -2,3 +2,8 @@
   display: flex;
   flex-wrap: wrap ;
 }
+
+.disabledLabel {
+  color: #55555585;
+  cursor: default !important;
+}

@@ -441,7 +441,7 @@ CREATE TABLE `products` (
 -- Дамп данных таблицы `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `slug`, `price`, `description`, `status`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, short_name, `slug`, `price`, `description`, status, `created_at`, `updated_at`) VALUES
 (1, 'MusclePharm Combat protein', 'MusclePharm Combatv', 55.00, 'mJHw90WG23', 1, NULL, NULL),
 (2, 'Syntrax Trophix protein', 'Syntrax Trophixb', 44.00, 'yI3tH0l3Bd', 1, NULL, NULL),
 (3, 'BSN Syntha 6 protein', 'BSN Syntha 6m', 33.00, 'TQeYG3U8jn', 1, NULL, NULL),

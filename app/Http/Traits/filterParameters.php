@@ -113,8 +113,8 @@ trait filterParameters
             'taste' => $tastes,
             'color' => $colors,
             'price' => [$min,$max],
-            'allGoals' => $allGoals,
-            'allIngredients' => $allIngredients
+            'goals' => $allGoals,
+            'ingredients' => $allIngredients
         ];
     }
 

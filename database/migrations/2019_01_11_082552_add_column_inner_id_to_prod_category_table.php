@@ -15,7 +15,7 @@ class AddColumnInnerIdToProdCategoryTable extends Migration
     {
         Schema::table('prod_categories', function (Blueprint $table) {
             //
-            $table->string('inner_id')->index()->after('id');
+            $table->string('inner_id')->index('inner_id')->after('id');
         });
     }
 

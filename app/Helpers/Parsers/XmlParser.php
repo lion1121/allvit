@@ -12,6 +12,7 @@ namespace App\Helpers\Parsers;
 use App\ProdCategory;
 use App\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -95,14 +96,18 @@ class XmlParser implements Parser
                         break;
                     case $key === 'Ингредиенты':
                         $tempIngerients = explode(',', $val);
-                        $product['ingredients'] = count($tempIngerients) > 1 ? json_encode(array_map(array($this, 'trimStrElement'), $tempIngerients)) : null;
+                        $product['ingredients'] = count($tempIngerients) > 0 ? json_encode(array_map(array($this, 'trimStrElement'), $tempIngerients)) : null;
                         break;
                     case $key === 'КоличествоПорций':
                         $product['portions_count'] = (integer)$val;
                         break;
                     case $key === 'ПоставленнаяЦель':
-                        $tempGoals = explode(',', $val);
-                        $product['goals'] = count($tempGoals) > 1 ? json_encode(array_map(array($this, 'trimStrElement'), $tempGoals)) : null;;
+                        if ($val !== '') {
+                            $tempGoals = explode(',', $val);
+                            $product['goals'] = count($tempGoals) > 0 ? json_encode(array_map(array($this, 'trimStrElement'), $tempGoals)) : null;;
+                        } else {
+                            $product['goals'] = null;
+                        }
                         break;
                     case $key === 'Наличие':
                         $product['availability'] = (integer)$val;
@@ -179,16 +184,14 @@ class XmlParser implements Parser
                         $newArray = '';
                         break;
                     case $key === 'ГруппыСайта':
-                        if ((string) $val === ''){
-                            $product['prod_category_id'] = (array) 6;
-                        } else {
-                            $categories = (array)$val;
-//                        foreach ($categories as $category) {
-                            if (isset($categories['Ид'])) {
-                                $product['categories'] = ProdCategory::where('inner_id', $categories['Ид'])->first()->id;
-                            }
+                        Log::debug($val);
+                        $categories = (array)$val;
+                        $catArr = [];
+                        foreach ($categories as $category) {
+                            $categoryId = ProdCategory::where('inner_id', $category)->first()->id;
+                            $catArr[] = $categoryId;
                         }
-//                        }
+                        $product['prod_category_id'] = [6];
                         break;
                     default:
                         break;
@@ -233,14 +236,20 @@ class XmlParser implements Parser
     public function writeProducts()
     {
         foreach ($this->products as $product) {
-            Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
-            $tempProduct = Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
-            $product_id = $tempProduct->id;
-//            foreach ($product['categories'] as $category) {
-//                $lastProduct = Product::findOrFail($product_id);
-//                //Synchronize pivot table (category_product)
-//                $lastProduct->categories()->sync([$product_id => $category]);
+//            Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
+//            $tempProduct = Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
+//            $product_id = $tempProduct->id;
+            $product['prod_category_id'] = 5;
+            Product::updateOrCreate(['vendor_code' => $product['vendor_code'], 'prod_category_id' => $product['prod_category_id']], $product);
+
+//            foreach ($product['prod_category_id'] as $category) {
+//                $product['prod_category_id'] = [5];
+//                Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
 //            }
         }
+
+//        $lastProduct = Product::findOrFail($product_id);
+        //Synchronize pivot table (category_product)
+//                $lastProduct->categories()->sync([$product_id => $category]);
     }
 }
