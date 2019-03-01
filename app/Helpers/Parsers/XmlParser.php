@@ -126,13 +126,13 @@ class XmlParser implements Parser
                             $product['free_delivery'] = 0;
                         }
                         break;
-                    case $key === 'ПодЗаказ':
-                        if ($val === '+') {
-                            $product['order_only'] = 1;
-                        } else {
-                            $product['order_only'] = 0;
-                        }
-                        break;
+//                    case $key === 'ПодЗаказ':
+//                        if ($val === '+') {
+//                            $product['order_only'] = 1;
+//                        } else {
+//                            $product['order_only'] = 0;
+//                        }
+//                        break;
                     case $key === 'Розетка_Пол':
                         $product['gender'] = (string)$val;
                         break;
@@ -166,6 +166,15 @@ class XmlParser implements Parser
                     case $key === 'Статус':
                         $product['status'] = (integer)$val;
                         break;
+                    case $key === 'ГруппыСайта':
+                        $categories = (array)$val;
+                        $catArr = [];
+                        foreach ($categories as $category) {
+                            $categoryId = ProdCategory::where('inner_id', $category)->first()->id;
+                            $catArr[] = $categoryId;
+                        }
+                        $product['prod_category_id'] = $catArr;
+                        break;
                     case $key === 'ХарактеристикиТовара':
                         $newArray = '';
                         $block = [];
@@ -182,16 +191,6 @@ class XmlParser implements Parser
                             $product['attributes'] = null;
                         }
                         $newArray = '';
-                        break;
-                    case $key === 'ГруппыСайта':
-                        Log::debug($val);
-                        $categories = (array)$val;
-                        $catArr = [];
-                        foreach ($categories as $category) {
-                            $categoryId = ProdCategory::where('inner_id', $category)->first()->id;
-                            $catArr[] = $categoryId;
-                        }
-                        $product['prod_category_id'] = [6];
                         break;
                     default:
                         break;
@@ -235,17 +234,19 @@ class XmlParser implements Parser
      */
     public function writeProducts()
     {
+//        Product::query()->truncate();
+
         foreach ($this->products as $product) {
 //            Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
 //            $tempProduct = Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
 //            $product_id = $tempProduct->id;
-            $product['prod_category_id'] = 5;
-            Product::updateOrCreate(['vendor_code' => $product['vendor_code'], 'prod_category_id' => $product['prod_category_id']], $product);
+//            $product['prod_category_id'] = 5;
+//            Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
 
-//            foreach ($product['prod_category_id'] as $category) {
-//                $product['prod_category_id'] = [5];
-//                Product::updateOrCreate(['vendor_code' => $product['vendor_code']], $product);
-//            }
+            foreach ($product['prod_category_id'] as $category) {
+                $product['prod_category_id'] = $category;
+                Product::updateOrCreate(['vendor_code' => $product['vendor_code'],'prod_category_id' => $category], $product);
+            }
         }
 
 //        $lastProduct = Product::findOrFail($product_id);

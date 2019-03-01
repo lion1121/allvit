@@ -13,7 +13,23 @@ use Illuminate\Support\Collection;
 class shopController extends Controller
 {
     use filterParameters;
+public function index()
+{
+    return ProdCategory::get()->toTree()->map(function($item,$key){
+        $testArr = [];
+        foreach ($item as $child) {
+            if (count($child->children) > 0 ){
+               array_unshift($testArr, $child);
+            } else {
+                array_push($testArr, $child);
 
+            }
+            return $testArr;
+       }
+
+    });
+
+}
 //    public function index(Request $request)
 //    {
 //        $category = ProdCategory::where('slug','=','pitanie')->first();
@@ -65,6 +81,7 @@ class shopController extends Controller
         $category = ProdCategory::where('slug', '=', end($categoryParam))->firstOrFail();//
 
         $product = $category->products()->first()->where('slug', $productSlug)->first();
+
 
         return view('front.shop.shop-single', compact('product', 'category'));
     }

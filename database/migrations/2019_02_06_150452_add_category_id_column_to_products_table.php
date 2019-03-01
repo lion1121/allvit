@@ -15,7 +15,7 @@ class AddCategoryIdColumnToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             //
-            $table->integer('prod_category_id')->nullable()->index();
+            $table->integer('prod_category_id');
 
         });
     }

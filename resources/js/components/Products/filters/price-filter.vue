@@ -1,6 +1,6 @@
 <template>
-        <vue-slider ref="slider" v-if="this.$route.query.price" :value="price" v-model="value" v-bind="options" @click.native="changePrice(value)"></vue-slider>
-        <vue-slider ref="slider" v-else v-model="filters.price" v-bind="options" @click.native="changePrice(filters.price)"></vue-slider>
+        <vue-slider ref="slider" v-if="this.$route.query.price"  v-model="value" v-bind="options" @click.native="changePrice(value)"></vue-slider>
+        <vue-slider ref="slider" v-else v-model="value = filters.price" v-bind="options" @click.native="changePrice(filters.price)"></vue-slider>
 </template>
 
 <script>

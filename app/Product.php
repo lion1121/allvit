@@ -59,7 +59,7 @@ class Product extends Model
     protected $fillable = [
         'inner_id', 'vendor', 'vendor_code', 'barcode', 'name', 'full_name', 'availability', 'slug', 'weight', 'packing',
         'portions_count', 'price', 'discount_price', 'description', 'status', 'ingredients', 'goals', 'present', 'free_delivery',
-        'order_only', 'gender', 'vendors_country', 'vendor_country_brand', 'form', 'portion_size', 'currency', 'outter_code', 'attributes'
+        'order_only', 'gender', 'vendors_country', 'vendor_country_brand', 'form', 'portion_size', 'currency', 'outter_code', 'attributes', 'prod_category_id'
     ];
 
     public $timestamps = false;

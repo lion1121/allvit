@@ -16,7 +16,7 @@
                 <template>
                     <div class="mt-4">
                         <h4>Цена</h4>
-                        <price-filter :filters="filters"></price-filter>
+                        <price-filter :filters="filters" :updatedFilters="updatedFilters"></price-filter>
                     </div>
                 </template>
             </div>
