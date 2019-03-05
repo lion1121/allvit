@@ -11,7 +11,10 @@
 
     </section>
 
-    <div class="container">
-        <router-view></router-view>
-    </div>
+    <section class="content">
+        <div class="content-wrap">
+            <router-view></router-view>
+        </div>
+
+    </section>
 @endsection

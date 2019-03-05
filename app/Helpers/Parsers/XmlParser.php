@@ -96,18 +96,14 @@ class XmlParser implements Parser
                         break;
                     case $key === 'Ингредиенты':
                         $tempIngerients = explode(',', $val);
-                        $product['ingredients'] = count($tempIngerients) > 0 ? json_encode(array_map(array($this, 'trimStrElement'), $tempIngerients)) : null;
+                        $product['ingredients'] = count($tempIngerients) > 0 && $tempIngerients[0] !== ''  ? json_encode(array_map(array($this, 'trimStrElement'), $tempIngerients)) : null;
                         break;
                     case $key === 'КоличествоПорций':
                         $product['portions_count'] = (integer)$val;
                         break;
                     case $key === 'ПоставленнаяЦель':
-                        if ($val !== '') {
                             $tempGoals = explode(',', $val);
-                            $product['goals'] = count($tempGoals) > 0 ? json_encode(array_map(array($this, 'trimStrElement'), $tempGoals)) : null;;
-                        } else {
-                            $product['goals'] = null;
-                        }
+                            $product['goals'] = count($tempGoals) > 0 && $tempGoals[0] !== '' ? json_encode(array_map(array($this, 'trimStrElement'), $tempGoals)) : null;;
                         break;
                     case $key === 'Наличие':
                         $product['availability'] = (integer)$val;

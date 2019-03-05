@@ -29,7 +29,7 @@ class ShopController extends Controller
         $filteredParameters = $this->filterParameters($products);
         $categoryParameters = $this->filterParameters($categoryFilters);
 
-          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(12),$filteredParameters,$categoryParameters);
+          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(18),$filteredParameters,$categoryParameters);
 
 
     }

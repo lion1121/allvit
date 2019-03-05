@@ -19,3 +19,11 @@
   width: 330px !important;
 }
 
+.sidebar-widgets-wrap .widget {
+  padding-top: 20px;
+}
+
+.sidebar-widgets-wrap .widget {
+  margin-top: 20px;
+}
+

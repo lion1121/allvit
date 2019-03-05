@@ -1,5 +1,7 @@
 <template>
-    <div class="clearfix">
+
+    <div class="container clearfix">
+        <sort-filter></sort-filter>
         <div class="postcontent nobottommargin col_last" id="productsWrapper">
             <template v-if="products.length > 0">
                 <products :products="products" :meta="meta"></products>
@@ -7,18 +9,18 @@
             <template v-else>
                 No results
             </template>
-            <pagination :meta="meta" ></pagination>
+            <pagination :meta="meta"></pagination>
 
         </div>
         <div class="sidebar nobottommargin">
             <div class="sidebar-widgets-wrap ts-wrap ">
-                <sidebar :filters="filters" :updatedFilters="updatedFilters"></sidebar>
                 <template>
-                    <div class="mt-4">
-                        <h4>Цена</h4>
+                    <div class="mb-3">
+                        <h4 class="mb-5">Цена</h4>
                         <price-filter :filters="filters" :updatedFilters="updatedFilters"></price-filter>
                     </div>
                 </template>
+                <sidebar :fitersNoPrice="fitersNoPrice" :updatedFilters="updatedFilters"></sidebar>
             </div>
         </div>
     </div>
@@ -29,6 +31,7 @@
     import products from "./products.vue"
     import pagination from "./pagination.vue"
     import priceFilter from "./filters/price-filter.vue"
+    import sortFilter from "./filters/sort-filter.vue"
 
     import axios from 'axios';
 
@@ -48,9 +51,17 @@
             'products': products,
             'pagination': pagination,
             'price-filter': priceFilter,
+            'sort-filter': sortFilter,
         },
         mounted() {
             this.getProducts();
+        },
+        computed: {
+            fitersNoPrice: function () {
+                let fitersWithoutPrice = Object.assign({}, this.filters);
+                delete fitersWithoutPrice.price;
+                return fitersWithoutPrice;
+            }
         },
         watch: {
             '$route.query': {

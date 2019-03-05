@@ -111,10 +111,11 @@ trait filterParameters
         return  [
             'vendor' => $vendors,
             'taste' => $tastes,
-            'color' => $colors,
             'price' => [$min,$max],
             'goals' => $allGoals,
-            'ingredients' => $allIngredients
+            'ingredients' => $allIngredients,
+            'color' => $colors,
+
         ];
     }
 

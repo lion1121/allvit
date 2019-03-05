@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar nobottommargin w-100">
-        <div class="widget clearfix" v-for="(filter, elem) in filters" v-if="Object.keys(filter).length > 0">
+        <div class="widget clearfix" v-for="(filter, elem) in fitersNoPrice" v-if="Object.keys(filter).length > 0">
 
             <template v-if="elem === 'vendor'">
                 <h4>Производитель</h4>
@@ -10,24 +10,12 @@
                            type="checkbox"
                            @click="activateFilter(elem,index)"
                            :value="index"
-                           v-model="clickedFilters">
-
-                    <template v-if="clickedFilters.includes(index) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{item}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="!clickedFilters.includes(index) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{'+' + item}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="clickedFilters.length === 0">
-                        <label v-bind:for="'vendor-' + index" class="checkbox-style-3-label">{{index}}
+                           v-model="clickedFilters"
+                           :disabled="parametersCount > 0 && !updatedFilters.vendor[index] || (queryParams > 0 && !updatedFilters.vendor[index])">
+                    <template>
+                        <label v-bind:for="'vendor-' + index"
+                               :class="{disabledLabel : (parametersCount > 0 && !updatedFilters.vendor[index]) || (queryParams > 0 && !updatedFilters.vendor[index])}"
+                               class="checkbox-style-3-label">{{index}}
                             <span class="badge badge-pill badge-primary right font-size-16">
                            {{item}}
                         </span>
@@ -45,24 +33,12 @@
                            @click="activateFilter(elem,key)"
                            :value="key"
                            v-model="clickedFilters"
-                            :disabled="quantity === 0">
+                           :disabled="quantity === 0 || !updatedFilters.taste[key]">
 
-                    <template v-if="clickedFilters.includes(key) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{quantity}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="!clickedFilters.includes(key) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0 }" class="checkbox-style-3-label">{{key}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{'+' + quantity}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="clickedFilters.length === 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                    <template>
+                        <label v-bind:for="'vendor-' + key"
+                               :class="{disabledLabel : quantity === 0 || !updatedFilters.taste[key]}"
+                               class="checkbox-style-3-label">{{key}}
                             <span class="badge badge-pill badge-primary right font-size-16">
                            {{quantity}}
                         </span>
@@ -80,24 +56,12 @@
                            @click="activateFilter(elem,key)"
                            :value="key"
                            v-model="clickedFilters"
-                           :disabled="quantity === 0">
+                           :disabled="quantity === 0 || !updatedFilters.color[key]">
 
-                    <template v-if="clickedFilters.includes(key) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{quantity}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="!clickedFilters.includes(key) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0 }" class="checkbox-style-3-label">{{key}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{'+' + quantity}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="clickedFilters.length === 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                    <template>
+                        <label v-bind:for="'vendor-' + key"
+                               :class="{disabledLabel : quantity === 0 || !updatedFilters.color[key]}"
+                               class="checkbox-style-3-label">{{key}}
                             <span class="badge badge-pill badge-primary right font-size-16">
                            {{quantity}}
                         </span>
@@ -115,24 +79,12 @@
                            @click="activateFilter(elem,key)"
                            :value="key"
                            v-model="clickedFilters"
-                           :disabled="quantity === 0">
+                           :disabled="quantity === 0 || !updatedFilters.goals[key]">
 
-                    <template v-if="clickedFilters.includes(key) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{quantity}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="!clickedFilters.includes(key) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0 }" class="checkbox-style-3-label">{{key}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{'+' + quantity}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="clickedFilters.length === 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                    <template>
+                        <label v-bind:for="'vendor-' + key"
+                               :class="{disabledLabel : !updatedFilters.goals[key] ||  quantity === 0 }"
+                               class="checkbox-style-3-label">{{key}}
                             <span class="badge badge-pill badge-primary right font-size-16">
                            {{quantity}}
                         </span>
@@ -152,22 +104,10 @@
                            v-model="clickedFilters"
                            :disabled="quantity === 0">
 
-                    <template v-if="clickedFilters.includes(key) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{quantity}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="!clickedFilters.includes(key) && clickedFilters.length > 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0 }" class="checkbox-style-3-label">{{key}}
-                            <span class="badge badge-pill badge-primary right font-size-16">
-                           {{'+' + quantity}}
-                        </span>
-                        </label>
-                    </template>
-                    <template v-if="clickedFilters.length === 0">
-                        <label v-bind:for="'vendor-' + key" :class="{disabledLabel : quantity === 0}" class="checkbox-style-3-label">{{key}}
+                    <template>
+                        <label v-bind:for="'vendor-' + key"
+                               :class="{disabledLabel : !updatedFilters.ingredients[key] ||  quantity === 0 }"
+                               class="checkbox-style-3-label">{{key}}
                             <span class="badge badge-pill badge-primary right font-size-16">
                            {{quantity}}
                         </span>
@@ -186,15 +126,20 @@
         name: "sidebar",
         mounted() {
         },
+        computed: {
+            parametersCount: function () {
+                return Object.keys(_.omit(this.selectedFilter, ['vendor', 'page','sort'])).length;
+            }
+        },
         data() {
             return {
+                queryParams: Object.keys(_.omit(this.$route.query, ['vendor', 'page','sort'])).length,
                 clickedFilters: Object.values(_.omit(this.$route.query, ['page'])),
-                // selectedFilter: _.omit(this.$route.query, ['page']),
                 selectedFilter: {},
                 trigger: false,
             }
         },
-        props: ['filters', 'updatedFilters'],
+        props: ['fitersNoPrice', 'updatedFilters'],
         methods: {
             activateFilter(key, value) {
                 console.log(this.clickedFilters);

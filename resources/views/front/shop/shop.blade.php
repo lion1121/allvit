@@ -15,9 +15,7 @@
 
     <section id="content">
 
-        <div class="content-wrap">
 
-            <div class="container clearfix" id="shop">
 
                 {{--<!-- Post Content--}}
                 {{--============================================= -->--}}
@@ -42,9 +40,7 @@
                 {{--                    @include('front.shop.ajax.sidebar-ajax',['vendors' => $vendors, 'allIngredients' => $allIngredients, 'allGoals' => $allGoals, 'tastes' => $tastes, 'colors' => $colors])--}}
                 {{--<!-- .sidebar end -->--}}
                 {{--</div>--}}
-            </div>
 
-        </div>
 
     </section><!-- #content end -->
 @endsection

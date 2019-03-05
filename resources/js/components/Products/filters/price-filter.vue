@@ -1,6 +1,6 @@
 <template>
-        <vue-slider ref="slider" v-if="this.$route.query.price"  v-model="value" v-bind="options" @click.native="changePrice(value)"></vue-slider>
-        <vue-slider ref="slider" v-else v-model="value = filters.price" v-bind="options" @click.native="changePrice(filters.price)"></vue-slider>
+        <vue-slider ref="slider" v-if="this.$route.query.price" :min="0" :max="filters ? parseInt(filters.price[1]) : 100 "  v-model="value" @click.native="changePrice(value)"></vue-slider>
+        <vue-slider ref="slider" v-else v-model="value = filters.price" :min="0" :max="parseInt(filters.price[1]) === undefined ? 100 : parseInt(filters.price[1])" @click.native="changePrice(filters.price)"></vue-slider>
 </template>
 
 <script>
@@ -8,6 +8,10 @@
     export default {
         name: "price-filter",
         mounted(){
+            console.log(this.value);
+        },
+        computed:{
+
         },
         data() {
             return{
@@ -17,8 +21,6 @@
                     width: "100%",
                     height: 8,
                     dotSize: 16,
-                    min: 0,
-                    max: 1500,
                     disabled: false,
                     show: true,
                     useKeyboard: true,

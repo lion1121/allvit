@@ -9,6 +9,7 @@
 namespace App\Filters;
 use App\Filters\Product\VendorFilter;
 use App\Filters\Product\GoalFilter;
+use App\Filters\Product\IngredientFilter;
 
 
 use Illuminate\Database\Eloquent\Builder;
