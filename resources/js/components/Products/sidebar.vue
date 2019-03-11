@@ -123,8 +123,10 @@
 <script>
 
     export default {
+
         name: "sidebar",
         mounted() {
+
         },
         computed: {
             parametersCount: function () {

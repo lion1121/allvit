@@ -79,3 +79,6 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('addPromocode', 'Voyager\PromocodeController@store');
     Route::post('getCategories', 'Voyager\PromocodeController@getProdCategories');
 });
+
+
+Route::get('cart', 'CartController@index')->name('cart');

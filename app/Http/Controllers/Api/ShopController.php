@@ -9,6 +9,7 @@ use App\ProdCategory;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
@@ -29,7 +30,9 @@ class ShopController extends Controller
         $filteredParameters = $this->filterParameters($products);
         $categoryParameters = $this->filterParameters($categoryFilters);
 
-          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(18),$filteredParameters,$categoryParameters);
+        $userAuth = Auth::user();
+
+          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(18),$filteredParameters,$categoryParameters,$userAuth);
 
 
     }

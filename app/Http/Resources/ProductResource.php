@@ -9,14 +9,16 @@ class ProductResource extends ResourceCollection
 {
     protected $selectedFilters;
     protected $categoryFilters;
+    protected $userAuth;
 
 
-    public function __construct($resource, $selectedFilters, $categoryFilters)
+    public function __construct($resource, $selectedFilters, $categoryFilters, $userAuth)
     {
         parent::__construct($resource);
         $this->resource = $resource;
         $this->selectedFilters = $selectedFilters;
         $this->categoryFilters = $categoryFilters;
+        $this->userAuth = $userAuth;
 
     }
 
@@ -31,7 +33,8 @@ class ProductResource extends ResourceCollection
         return [
             $this->selectedFilters,
             $this->categoryFilters,
-            $this->resource
+            $this->resource,
+            $this->userAuth
         ];
     }
 
@@ -40,7 +43,8 @@ class ProductResource extends ResourceCollection
         return [
             $this->selectedFilters,
             $this->categoryFilters,
-            $this->resource
+            $this->resource,
+            $this->userAuth
         ];
     }
 }

@@ -14,8 +14,8 @@
                     <div class="sale-flash">50% Off*</div>
                     <!--@endif-->
                     <div class="product-overlay">
-                        <a href="#" class="add-to-cart"><i
-                                class="icon-shopping-cart"></i><span> Купить</span></a>
+                        <a href="#" class="add-to-cart" @click.prevent="addToCart(product)">
+                            <i class="icon-shopping-cart" ></i><span> Купить</span></a>
                         <a href="#" class="item-quick-view" @click.prevent="showProduct(product)"><i
                                 class="icon-zoom-in2"></i><span> Посмотреть</span></a>
                     </div>
@@ -47,6 +47,7 @@
 
 <script>
     import productPreview from "./product-preview.vue"
+    export const bus = new Vue();
 
     export default {
         name: "products",
@@ -67,6 +68,19 @@
             },
             closeProduct(){
                 this.preview = false;
+            },
+            addToCart(product){
+                if(localStorage.cart){
+                    let cartProductsStorage = JSON.parse(localStorage.cart);
+                    cartProductsStorage.push(product);
+                    this.$root.$emit('cartProducts',cartProductsStorage);
+                    localStorage.cart =  JSON.stringify(cartProductsStorage);
+                } else {
+                    let products = [];
+                    products.push(product);
+                    console.log(products);
+                    localStorage.cart =  JSON.stringify(products);
+                }
             }
         }
 

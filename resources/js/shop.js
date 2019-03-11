@@ -36,28 +36,36 @@ Vue.component('sidebar', require('./components/Products/sidebar.vue'));
 Vue.component('products', require('./components/Products/products.vue'));
 Vue.component('product-preview', require('./components/Products/product-preview.vue'));
 Vue.component('pagination', require('./components/Products/pagination.vue'));
+Vue.component('cart', require('./components/Cart/cart.vue'));
+Vue.component('cart-preview', require('./components/Cart/cart-preview.vue'));
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 const ProductIndex = require('./components/Products/ProductIndex.vue');
+const Cart = require('./components/Cart/cart.vue');
 
 const routes = [
     {
         path:'/catalog/:param?/:param2?/:param3/',
         name: 'product.index',
         component: ProductIndex
-    }
+    },
 ];
 const router = new VueRouter({
     mode:'history',
     routes
 });
 
+
 const app = new Vue({
     el: '#app',
-    mounted(){
-      console.log(this.$router.path);
+    data(){
+      return {
+          cartProducts: {}
+      }
     },
     router,
+
+
 });

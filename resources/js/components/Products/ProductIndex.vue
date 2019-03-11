@@ -43,7 +43,8 @@
                 products: {},
                 filters: {},
                 meta: {},
-                updatedFilters: {}
+                updatedFilters: {},
+                userData:{}
             }
         },
         components: {
@@ -84,6 +85,7 @@
                     this.updatedFilters = response.data.data[0];
                     this.filters = response.data.data[1];
                     this.meta = response.data.meta;
+                    this.userData = response.data.data[3]
                 }).catch(() => console.warn('Something went wrong.'));
             }
         }
