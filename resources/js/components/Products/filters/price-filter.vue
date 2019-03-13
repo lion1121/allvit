@@ -1,20 +1,22 @@
 <template>
-        <vue-slider ref="slider" v-if="this.$route.query.price" :min="0" :max="filters ? parseInt(filters.price[1]) : 100 "  v-model="value" @click.native="changePrice(value)"></vue-slider>
-        <vue-slider ref="slider" v-else v-model="value = filters.price" :min="0" :max="parseInt(filters.price[1]) === undefined ? 100 : parseInt(filters.price[1])" @click.native="changePrice(filters.price)"></vue-slider>
+    <vue-slider ref="slider" v-if="this.$route.query.price" :min="0" :max="filters ? parseInt(filters.price[1]) : 100 "
+                v-model="value" @click.native="changePrice(value)"></vue-slider>
+    <vue-slider ref="slider" v-else v-model="value = filters.price" :min="0"
+                :max="filters === undefined ? 100 : parseInt(filters.price[1])"
+                @click.native="changePrice(filters.price)"></vue-slider>
 </template>
 
 <script>
     import vueSlider from 'vue-slider-component'
+
     export default {
         name: "price-filter",
-        mounted(){
+        mounted() {
             console.log(this.value);
         },
-        computed:{
-
-        },
+        computed: {},
         data() {
-            return{
+            return {
                 price: [],
                 value: this.$route.query.price ? this.$route.query.price.split(',') : this.price,
                 options: {
@@ -43,27 +45,28 @@
             }
 
         },
-        methods:{
-          changePrice(value){
-              console.log(this.$route.query.price);
-              //get filters from URL
-              this.selectedFilter =_.omit(this.$route.query, ['page']);
-              //Add price filter to existing filters
-              this.selectedFilter = Object.assign({},this.selectedFilter, {['price']: _.join(value, ',')});
+        methods: {
+            changePrice(value) {
+                console.log(this.$route.query.price);
+                //get filters from URL
+                this.selectedFilter = _.omit(this.$route.query, ['page']);
+                //Add price filter to existing filters
+                this.selectedFilter = Object.assign({}, this.selectedFilter, {['price']: _.join(value, ',')});
                 //Send new request
-              this.$router.replace({
-                  query: {
-                      ...this.selectedFilter,
-                      page: 1
-                  }
-              });
+                this.$router.replace({
+                    query: {
+                        ...this.selectedFilter,
+                        page: 1
+                    }
+                });
 
-          }
+            }
         },
         components: {
             vueSlider
         },
         props: ['filters'],
+
     }
 </script>
 

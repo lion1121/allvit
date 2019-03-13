@@ -32,7 +32,7 @@ class ShopController extends Controller
 
         $userAuth = Auth::user();
 
-          return  new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(18),$filteredParameters,$categoryParameters,$userAuth);
+        return new ProductResource(Product::whereIn('prod_category_id', $categories)->filter($request)->paginate(18), $filteredParameters, $categoryParameters, $userAuth);
 
 
     }

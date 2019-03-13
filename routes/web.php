@@ -26,6 +26,11 @@ Route::group(['prefix' => 'api/catalog'], function () {
 });
 
 
+Route::group(['prefix' => 'api/cart'], function (){
+    Route::get('/products','Api\CartController@getCartProducts');
+    Route::get('/user','Api\CartController@userStatus');
+});
+
 Route::group(['prefix' => 'catalog'], function () {
     Route::get('{category}/{product}', 'ShopController@showProduct')->where('category', '[a-zA-Z0-9/_-]+')->where('product', '([a-zA-Z_-]+|[0-9_-]+)+([0-9_-]+|[a-zA-Z_-]+)+([a-zA-Z_-]+|[0-9_-]+)+[a-zA-Z_-]+[0-9_-]+')->name('product');
 //    Route::get('{path}', 'ShopController@show')->where('path', '[a-zA-Z0-9/_-]+')->name('category');

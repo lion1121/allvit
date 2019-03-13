@@ -51,6 +51,7 @@ const routes = [
         name: 'product.index',
         component: ProductIndex
     },
+
 ];
 const router = new VueRouter({
     mode:'history',
@@ -58,13 +59,59 @@ const router = new VueRouter({
 });
 
 
+import Vuex from 'vuex';
+import Axios from 'axios';
+import {mapState} from 'vuex';
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+    state: {
+        products: null,
+        userId: false
+    },
+
+    getters: {
+
+    },
+
+    mutations: {
+        SET_PRODUCTS(state, data) {
+            // state.products = products;
+            // this.$store.state.userId = userId;
+            state.userId = data.user_id;
+            state.products = data.products;
+            // state.producs = {...state.producs, producs:data.producs};
+        }
+    },
+
+    actions: {
+        loadDbData ({commit}){
+          axios.get('/api/cart/products').then((res)=> {
+              if(res.data !== null) {
+                  commit('SET_PRODUCTS', res.data);
+              }
+          })
+        },
+    },
+});
+
+
 const app = new Vue({
     el: '#app',
-    data(){
-      return {
-          cartProducts: {}
-      }
+    mounted(){
+        this.$store.dispatch('loadDbData')
     },
+    created(){
+
+    },
+    computed: {
+      ...mapState([
+          'products',
+          'userId'
+      ])
+    },
+    store,
     router,
 
 

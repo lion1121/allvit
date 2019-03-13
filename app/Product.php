@@ -116,4 +116,9 @@ class Product extends Model
     {
         return $this->hasMany('App\ProdCategory', 'parent_id', 'id');
     }
+
+    public function cartProduct()
+    {
+        return $this->belongsTo('App\Cart');
+    }
 }
