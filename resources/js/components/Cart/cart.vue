@@ -382,15 +382,19 @@
     export default {
         name: "cart",
         mounted(){
-            this.products = JSON.parse(localStorage.cart);
+
         },
         data() {
             return {
-                products:[],
                 total:0,
                 coupon:'',
 
             }
+        },
+        computed:{
+          products(){
+              return this.$store.state.products;
+          }
         },
         methods: {
             removeCartProduct(product){

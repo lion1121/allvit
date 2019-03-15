@@ -68,7 +68,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         products: null,
-        userId: false
+        userId: null
     },
 
     getters: {
@@ -77,11 +77,17 @@ const store = new Vuex.Store({
 
     mutations: {
         SET_PRODUCTS(state, data) {
-            // state.products = products;
-            // this.$store.state.userId = userId;
             state.userId = data.user_id;
-            state.products = data.products;
-            // state.producs = {...state.producs, producs:data.producs};
+            state.products = data.products ;
+        },
+        SET_PRODUCTS_LS(state, data){
+            state.products = data ;
+        },
+        ADD_PRODUCT_TO_LS(state,data){
+            state.products = data
+        },
+        REMOVE_PRODUCT(state, data){
+            state.products
         }
     },
 
@@ -93,16 +99,41 @@ const store = new Vuex.Store({
               }
           })
         },
+        loadLsData({commit}){
+            commit('SET_PRODUCTS_LS', JSON.parse(localStorage.cart))
+        },
+        addProductToLs({commit}, payload){
+            commit('ADD_PRODUCT_TO_LS', JSON.parse(payload))
+        },
+        removeProduct({commit}, payload){
+            commit()
+        }
     },
 });
 
 
 const app = new Vue({
     el: '#app',
-    mounted(){
-        this.$store.dispatch('loadDbData')
+    data(){
+      return {
+          emptyLS: [1112,3,4,5],
+      }
     },
-    created(){
+    mounted(){
+        if(localStorage.cart){
+            // let cartProductsStorage = JSON.parse(localStorage.cart);
+            // cartProductsStorage.push(product);
+            // localStorage.cart =  JSON.stringify(cartProductsStorage);
+        } else {
+            localStorage.cart =  JSON.stringify(this.emptyLS);
+        }
+
+
+        if(this.$store.state.userId !==  null){
+            this.$store.dispatch('loadDbData');
+        } else {
+            this.$store.dispatch('loadLsData');
+        }
 
     },
     computed: {
@@ -113,6 +144,4 @@ const app = new Vue({
     },
     store,
     router,
-
-
 });

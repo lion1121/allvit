@@ -70,17 +70,26 @@
                 this.preview = false;
             },
             addToCart(product){
-                if(localStorage.cart){
+
+                if(this.$store.state.userId === null){
                     let cartProductsStorage = JSON.parse(localStorage.cart);
                     cartProductsStorage.push(product);
-                    this.$root.$emit('cartProducts',cartProductsStorage);
                     localStorage.cart =  JSON.stringify(cartProductsStorage);
-                } else {
-                    let products = [];
-                    products.push(product);
-                    console.log(products);
-                    localStorage.cart =  JSON.stringify(products);
+                    this.$store.dispatch('addProductToLs', localStorage.cart);
                 }
+
+
+                // if(localStorage.cart){
+                //     let cartProductsStorage = JSON.parse(localStorage.cart);
+                //     cartProductsStorage.push(product);
+                //     this.$root.$emit('cartProducts',cartProductsStorage);
+                //     localStorage.cart =  JSON.stringify(cartProductsStorage);
+                // } else {
+                //     let products = [];
+                //     products.push(product);
+                //     console.log(products);
+                //     localStorage.cart =  JSON.stringify(products);
+                // }
             }
         }
 
