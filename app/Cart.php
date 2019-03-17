@@ -11,6 +11,8 @@ class Cart extends Model
         'user_id', 'product_id', 'quantity'
     ];
 
+    protected $appends = ['quantity'];
+
     public function users()
     {
         return $this->belongsTo('App\User');
@@ -19,5 +21,10 @@ class Cart extends Model
     public function productsList()
     {
         return $this->hasOne('App\Product');
+    }
+
+    public function setQuantityAttribute($value)
+    {
+        return $this->attributes['quantity'] = $value;
     }
 }

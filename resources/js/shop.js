@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -40,21 +39,23 @@ Vue.component('cart', require('./components/Cart/cart.vue'));
 Vue.component('cart-preview', require('./components/Cart/cart-preview.vue'));
 
 import VueRouter from 'vue-router'
+
 Vue.use(VueRouter);
 
 const ProductIndex = require('./components/Products/ProductIndex.vue');
+const products = require('./components/Products/products.vue');
 const Cart = require('./components/Cart/cart.vue');
 
 const routes = [
     {
-        path:'/catalog/:param?/:param2?/:param3/',
+        path: '/catalog/:param?/:param2?/:param3/',
         name: 'product.index',
         component: ProductIndex
     },
 
 ];
 const router = new VueRouter({
-    mode:'history',
+    mode: 'history',
     routes
 });
 
@@ -62,6 +63,15 @@ const router = new VueRouter({
 import Vuex from 'vuex';
 import Axios from 'axios';
 import {mapState} from 'vuex';
+
+require('vue-flash-message/src/FlashMessage.css');
+
+import VueFlashMessage from 'vue-flash-message';
+Vue.use(VueFlashMessage, {
+    messageOptions: {
+        timeout: 3000,
+    },
+});
 
 Vue.use(Vuex);
 
@@ -71,42 +81,61 @@ const store = new Vuex.Store({
         userId: null
     },
 
-    getters: {
-
-    },
+    getters: {},
 
     mutations: {
         SET_PRODUCTS(state, data) {
             state.userId = data.user_id;
-            state.products = data.products ;
+            state.products = data.products;
         },
-        SET_PRODUCTS_LS(state, data){
-            state.products = data ;
+        SET_PRODUCTS_LS(state, data) {
+            state.products = data;
         },
-        ADD_PRODUCT_TO_LS(state,data){
+        ADD_PRODUCT_TO_LS(state, data) {
             state.products = data
         },
-        REMOVE_PRODUCT(state, data){
-            state.products
+        ADD_PRODUCT_TO_CART(state, data) {
+            state.products.push(data);
+        },
+        REMOVE_PRODUCT(state, data) {
+        },
+        SET_USER_STATUS(state, data) {
+            state.userId = data;
         }
     },
 
     actions: {
-        loadDbData ({commit}){
-          axios.get('/api/cart/products').then((res)=> {
-              if(res.data !== null) {
-                  commit('SET_PRODUCTS', res.data);
-              }
-          })
+         init({commit}) {
+            axios.get('/api/cart/user').then((res) => {
+                commit('SET_USER_STATUS', res.data);
+                if(res.data !== null){
+                    axios.get('/api/cart/products').then((res) => {
+                        if (res.data !== null) {
+                            commit('SET_PRODUCTS', res.data);
+                        }
+                    })
+                } else {
+                    commit('SET_PRODUCTS_LS', JSON.parse(localStorage.cart));
+                }
+
+            })
         },
-        loadLsData({commit}){
-            commit('SET_PRODUCTS_LS', JSON.parse(localStorage.cart))
-        },
-        addProductToLs({commit}, payload){
+        addProductToLs({commit}, payload) {
             commit('ADD_PRODUCT_TO_LS', JSON.parse(payload))
         },
-        removeProduct({commit}, payload){
-            commit()
+     async   addProductToDb({commit, dispatch}, payload) {
+          return await axios.post('/api/cart/addProduct',{
+               product: payload.product,
+               quantity: payload.quantity
+            }).then((res) => {
+                console.log(res.data);
+                   commit('ADD_PRODUCT_TO_CART', res.data)
+            }).catch(e => {
+                console.log(e);
+            });
+        },
+        removeProduct({commit}, payload) {
+
         }
     },
 });
@@ -114,34 +143,26 @@ const store = new Vuex.Store({
 
 const app = new Vue({
     el: '#app',
-    data(){
-      return {
-          emptyLS: [1112,3,4,5],
-      }
+    data() {
+        return {
+            emptyLS: [],
+        }
     },
-    mounted(){
-        if(localStorage.cart){
-            // let cartProductsStorage = JSON.parse(localStorage.cart);
-            // cartProductsStorage.push(product);
-            // localStorage.cart =  JSON.stringify(cartProductsStorage);
-        } else {
-            localStorage.cart =  JSON.stringify(this.emptyLS);
+    mounted() {
+        if (!localStorage.cart) {
+            localStorage.cart = JSON.stringify(this.emptyLS);
         }
-
-
-        if(this.$store.state.userId !==  null){
-            this.$store.dispatch('loadDbData');
-        } else {
-            this.$store.dispatch('loadLsData');
-        }
-
+        this.$store.dispatch('init');
     },
     computed: {
-      ...mapState([
-          'products',
-          'userId'
-      ])
+        ...mapState([
+            'products',
+            'userId'
+        ])
     },
     store,
     router,
+    components:{
+        products
+    }
 });

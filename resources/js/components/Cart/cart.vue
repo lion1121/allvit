@@ -24,7 +24,7 @@
                     </td>
 
                     <td class="cart-product-name">
-                        <a href="#">{{product.full_name}}</a>
+                        <a v-bind:href="currentDomain + 'catalog/' + product.prod_cat_url + '/' + product.slug" target="_blank">{{product.name}}</a>
                     </td>
 
                     <td class="cart-product-price">
@@ -34,7 +34,7 @@
                     <td class="cart-product-quantity">
                         <div class="quantity clearfix">
                             <input type="button" value="-" class="minus">
-                            <input type="text" name="quantity" value="2" class="qty"/>
+                            <input type="text" name="quantity" :value="product.quantity" class="qty"/>
                             <input type="button" value="+" class="plus">
                         </div>
                     </td>
@@ -382,12 +382,13 @@
     export default {
         name: "cart",
         mounted(){
-
+            this.currentDomain = window.location.pathname.split('/')[0];
         },
         data() {
             return {
                 total:0,
                 coupon:'',
+                currentDomain: ''
 
             }
         },
