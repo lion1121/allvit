@@ -400,21 +400,13 @@
         },
         methods: {
             removeCartProduct(product){
-                // if(this.products.includes(product)){
-                //     this.products = _.remove(this.products,(el) => {
-                //         if(el !== product){
-                //             return el;
-                //         }
-                //     });
-                //
-                //     localStorage.cart = JSON.stringify(this.products)
-                // }
                 this.flash(`Товар ${product.name} удален из корзины.`, 'info');
                 if(this.$store.state.userId === null){
                     let cartProductsStorage = JSON.parse(localStorage.cart);
-                    cartProductsStorage.push(product);
-                    localStorage.cart =  JSON.stringify(cartProductsStorage);
-                    this.$store.dispatch('addProductToLs', localStorage.cart);
+                    let products = cartProductsStorage;
+                    products.splice(products.indexOf(product), 1);
+                    localStorage.cart =  JSON.stringify(products);
+                    this.$store.dispatch('removeProductFromLs', localStorage.cart);
                 } else {
                     this.$store.dispatch('removeProductFromDb', {product:product});
                 }

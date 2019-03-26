@@ -98,7 +98,11 @@ const store = new Vuex.Store({
         ADD_PRODUCT_TO_CART(state, data) {
             state.products.push(data);
         },
-        REMOVE_PRODUCT(state, data) {
+        REMOVE_PRODUCT_FROM_DB(state, data) {
+            let products = state.products;
+            products.splice(products.indexOf(data), 1);
+        },
+        REMOVE_PRODUCT_FROM_LS(state, data) {
             let products = state.products;
             products.splice(products.indexOf(data), 1);
         },
@@ -142,10 +146,13 @@ const store = new Vuex.Store({
                 product: payload.product,
             }).then((res) => {
                 console.log(res.data);
-                commit('REMOVE_PRODUCT', res.data)
+                commit('REMOVE_PRODUCT_FROM_DB', res.data)
             }).catch(e => {
                 console.log(e);
             });
+        },
+        async removeProductFromLs({commit}, payload) {
+            commit('REMOVE_PRODUCT_FROM_LS', payload)
         }
     },
 });
