@@ -30,6 +30,7 @@ Route::group(['prefix' => 'api/cart'], function (){
     Route::get('/products','Api\CartController@getCartProducts');
     Route::get('/user','Api\CartController@userStatus');
     Route::post('/addProduct','Api\CartController@addProduct');
+    Route::post('/removeProduct','Api\CartController@removeProduct');
 });
 
 Route::group(['prefix' => 'catalog'], function () {

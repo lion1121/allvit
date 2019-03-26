@@ -18,11 +18,11 @@ class CartController extends Controller
             $user_id = Auth::id();
             $cartProducts = User::findOrFail($user_id)->cart()->get();
             $cartProductsId = $cartProducts->pluck('product_id')->all();
-            $cartQuantity = $cartProducts->pluck('quantity','product_id')->all();
+            $cartQuantity = $cartProducts->pluck('quantity', 'product_id')->all();
             $products = Product::whereIn('id', $cartProductsId)->get();
             $products = $products->map(function ($item, $key) use ($cartQuantity) {
-                foreach ($cartQuantity as $key => $value){
-                    if($item->id === $key){
+                foreach ($cartQuantity as $key => $value) {
+                    if ($item->id === $key) {
                         $item->quantity = $value;
                     }
                 }
@@ -54,6 +54,18 @@ class CartController extends Controller
             $modifyProduct = Product::find($request->product)->first();
             $modifyProduct->quantity = $request->quantity;
             return response()->json($modifyProduct);
+        }
+    }
+
+    public function removeProduct(Request $request)
+    {
+        if (Auth::user() !== null) {
+            $product = $request->product;
+            $productId = $product['id'];
+            $userId = Auth::id();
+            $match = ['product_id' => $productId, 'user_id' => $userId];
+            Cart::where($match)->delete();
+            return response()->json($product);
         }
     }
 

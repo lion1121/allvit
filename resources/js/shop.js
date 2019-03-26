@@ -67,6 +67,7 @@ import {mapState} from 'vuex';
 require('vue-flash-message/src/FlashMessage.css');
 
 import VueFlashMessage from 'vue-flash-message';
+
 Vue.use(VueFlashMessage, {
     messageOptions: {
         timeout: 3000,
@@ -98,6 +99,8 @@ const store = new Vuex.Store({
             state.products.push(data);
         },
         REMOVE_PRODUCT(state, data) {
+            let products = state.products;
+            products.splice(products.indexOf(data), 1);
         },
         SET_USER_STATUS(state, data) {
             state.userId = data;
@@ -105,10 +108,10 @@ const store = new Vuex.Store({
     },
 
     actions: {
-         init({commit}) {
+        init({commit}) {
             axios.get('/api/cart/user').then((res) => {
                 commit('SET_USER_STATUS', res.data);
-                if(res.data !== null){
+                if (res.data !== null) {
                     axios.get('/api/cart/products').then((res) => {
                         if (res.data !== null) {
                             commit('SET_PRODUCTS', res.data);
@@ -123,19 +126,26 @@ const store = new Vuex.Store({
         addProductToLs({commit}, payload) {
             commit('ADD_PRODUCT_TO_LS', JSON.parse(payload))
         },
-     async   addProductToDb({commit, dispatch}, payload) {
-          return await axios.post('/api/cart/addProduct',{
-               product: payload.product,
-               quantity: payload.quantity
+        async addProductToDb({commit, dispatch}, payload) {
+            return await axios.post('/api/cart/addProduct', {
+                product: payload.product,
+                quantity: payload.quantity
             }).then((res) => {
-                console.log(res.data);
-                   commit('ADD_PRODUCT_TO_CART', res.data)
+                console.log(this.state.products);
+                commit('ADD_PRODUCT_TO_CART', res.data)
             }).catch(e => {
                 console.log(e);
             });
         },
-        removeProduct({commit}, payload) {
-
+        async removeProductFromDb({commit,dispatch}, payload) {
+            return await axios.post('/api/cart/removeProduct', {
+                product: payload.product,
+            }).then((res) => {
+                console.log(res.data);
+                commit('REMOVE_PRODUCT', res.data)
+            }).catch(e => {
+                console.log(e);
+            });
         }
     },
 });
@@ -162,7 +172,7 @@ const app = new Vue({
     },
     store,
     router,
-    components:{
+    components: {
         products
     }
 });
