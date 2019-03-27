@@ -88,7 +88,6 @@ const store = new Vuex.Store({
             let quantity = 0;
             state.products.map(function (item) {
                 quantity += item.quantity;
-                console.log(quantity);
             });
             return quantity;
         }

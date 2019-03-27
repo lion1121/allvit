@@ -80,7 +80,30 @@
                     let cartProductsStorage = JSON.parse(localStorage.cart);
                     // Set default quantity value
                     product.quantity = 1;
-                    cartProductsStorage.push(product);
+
+                    (function () {
+                        cartProductsStorage.map(function (item) {
+                            if (item.id === product.id) {
+                                item.quantity++;
+                            }
+                        });
+                    }());
+                    console.log(cartProductsStorage);
+                    let cartProductsStorageLength = cartProductsStorage.length;
+                    // if (cartProductsStorageLength === 0) {
+                    //     console.log(1111);
+                    //     cartProductsStorage.push(product);
+                    // }
+
+
+                        if (!_.includes(cartProductsStorage,product)) {
+                            console.log(2222222);
+                            cartProductsStorage.push(product);
+                        }
+
+
+
+                    // cartProductsStorage.push(product);
                     localStorage.cart = JSON.stringify(cartProductsStorage);
                     this.$store.dispatch('addProductToLs', localStorage.cart);
                 } else {
