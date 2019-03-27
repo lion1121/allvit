@@ -78,11 +78,21 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        products: null,
-        userId: null
+        products: [],
+        userId: null,
+        summ: null,
     },
 
-    getters: {},
+    getters: {
+        productsQuantity:  state => {
+            let quantity = 0;
+            state.products.map(function (item) {
+                quantity += item.quantity;
+                console.log(quantity);
+            });
+            return quantity;
+        }
+    },
 
     mutations: {
         SET_PRODUCTS(state, data) {
@@ -124,7 +134,6 @@ const store = new Vuex.Store({
                 } else {
                     commit('SET_PRODUCTS_LS', JSON.parse(localStorage.cart));
                 }
-
             })
         },
         addProductToLs({commit}, payload) {
@@ -135,17 +144,15 @@ const store = new Vuex.Store({
                 product: payload.product,
                 quantity: payload.quantity
             }).then((res) => {
-                console.log(this.state.products);
                 commit('ADD_PRODUCT_TO_CART', res.data)
             }).catch(e => {
                 console.log(e);
             });
         },
-        async removeProductFromDb({commit,dispatch}, payload) {
+        async removeProductFromDb({commit, dispatch}, payload) {
             return await axios.post('/api/cart/removeProduct', {
                 product: payload.product,
             }).then((res) => {
-                console.log(res.data);
                 commit('REMOVE_PRODUCT_FROM_DB', res.data)
             }).catch(e => {
                 console.log(e);
@@ -174,7 +181,7 @@ const app = new Vue({
     computed: {
         ...mapState([
             'products',
-            'userId'
+            'userId',
         ])
     },
     store,

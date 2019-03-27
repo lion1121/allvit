@@ -15,7 +15,8 @@
                 <tbody>
                 <tr class="cart_item" v-for="product in products">
                     <td class="cart-product-remove">
-                        <a href="#" class="remove" title="Удалить товар" @click.prevent="removeCartProduct(product)"><i class="icon-trash2"></i></a>
+                        <a href="#" class="remove" title="Удалить товар" @click.prevent="removeCartProduct(product)"><i
+                                class="icon-trash2"></i></a>
                     </td>
 
                     <td class="cart-product-thumbnail">
@@ -24,7 +25,8 @@
                     </td>
 
                     <td class="cart-product-name">
-                        <a v-bind:href="currentDomain + 'catalog/' + product.prod_cat_url + '/' + product.slug" target="_blank">{{product.name}}</a>
+                        <a v-bind:href="currentDomain + 'catalog/' + product.prod_cat_url + '/' + product.slug"
+                           target="_blank">{{product.name}}</a>
                     </td>
 
                     <td class="cart-product-price">
@@ -33,9 +35,10 @@
 
                     <td class="cart-product-quantity">
                         <div class="quantity clearfix">
-                            <input type="button" value="-" class="minus">
-                            <input type="text" name="quantity" :value="product.quantity" class="qty"/>
-                            <input type="button" value="+" class="plus">
+                            <input type="button" value="-" class="minus" @click.prevent="addOneToQuantity(product)">
+                            <input type="text" name="quantity" v-model="product.quantity"
+                                   @blur="inputQuantity(product.quantity, product)" class="qty"/>
+                            <input type="button" value="+" class="plus" @click="removeOneFromQuantity(product)">
                         </div>
                     </td>
 
@@ -383,32 +386,51 @@
 <script>
     export default {
         name: "cart",
-        mounted(){
+        mounted() {
             this.currentDomain = window.location.pathname.split('/')[0];
         },
         data() {
             return {
-                total:0,
-                coupon:'',
-                currentDomain: ''
+                total: 0,
+                coupon: '',
+                currentDomain: '',
+                value: 0
             }
         },
-        computed:{
-          products(){
-              return this.$store.state.products;
-          }
+        computed: {
+            products() {
+                return this.$store.state.products;
+            },
+
         },
         methods: {
-            removeCartProduct(product){
+            removeCartProduct(product) {
                 this.flash(`Товар ${product.name} удален из корзины.`, 'info');
-                if(this.$store.state.userId === null){
-                    let cartProductsStorage = JSON.parse(localStorage.cart);
-                    let products = cartProductsStorage;
+                if (this.$store.state.userId === null) {
+                    let products = JSON.parse(localStorage.cart);
                     products.splice(products.indexOf(product), 1);
-                    localStorage.cart =  JSON.stringify(products);
+                    localStorage.cart = JSON.stringify(products);
                     this.$store.dispatch('removeProductFromLs', localStorage.cart);
                 } else {
-                    this.$store.dispatch('removeProductFromDb', {product:product});
+                    this.$store.dispatch('removeProductFromDb', {product: product});
+                }
+            },
+            addOneToQuantity(product) {
+
+            },
+            inputQuantity(value, product) {
+                if (this.$store.state.userId === null) {
+                    this.flash(`Кол-во товара ${product.name} изменено на ${value}.`, 'info');
+                    let products = JSON.parse(localStorage.cart);
+                    let updatedProducts = products.map(function (item) {
+                        if (item.hasOwnProperty('id') && item.id === product.id) {
+                            item.quantity = parseInt(value);
+                        }
+                        return item;
+                    });
+                    localStorage.cart = JSON.stringify(updatedProducts);
+                } else {
+
                 }
             }
         }
@@ -421,6 +443,7 @@
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
     }
+
     .flashpool {
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
@@ -433,6 +456,7 @@
         perspective: 400px;
         z-index: 99999;
     }
+
     .flashpool .flash__message {
         width: 260px;
         -webkit-transition: all 500ms;
@@ -445,14 +469,17 @@
         font-size: 13px;
         line-height: 130%;
     }
+
     .flash-enter, .flash-leave-to {
         opacity: 0;
         -webkit-transform: rotateX(-30deg) scale(.88) translateY(-30px);
         transform: rotateX(-30deg) scale(.88) translateY(-30px);
     }
+
     .flash-leave-active {
         position: absolute;
     }
+
     .cpanel {
         font-family: 'Oxygen', sans-serif;
         position: fixed;
@@ -471,10 +498,12 @@
         flex-direction: column;
         border-right: 1px solid rgb(235, 234, 234);
     }
+
     .cpanel__wrapper {
         height: 100%;
         padding-bottom: 24px;
     }
+
     .cpanel__donate {
         -ms-flex-negative: 0;
         flex-shrink: 0;
@@ -487,13 +516,16 @@
         justify-content: center;
         opacity: .3;
     }
+
     .cpanel__donate:hover {
         opacity: 1;
     }
+
     .cpanel__group {
         font-size: 13px;
         margin: 0 10px 31px 0;
     }
+
     .cpanel__input {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -504,16 +536,19 @@
         border-bottom: 2px solid #ddd;
         width: 100%;
     }
+
     .cpanel__checkbox {
         margin-right: 3px;
         margin-bottom: 5px;
     }
+
     .cpanel input:focus {
         -webkit-box-shadow: none;
         box-shadow: none;
         outline: none;
         border-bottom: 2px solid #47B784;
     }
+
     .cpanel button {
         width: 100%;
         -webkit-appearance: none;
@@ -526,12 +561,15 @@
         border-radius: 3px;
         cursor: pointer;
     }
+
     .cpanel button:focus, .cpanel button:active {
         outline: none;
     }
+
     .cpanel button:active {
         background-color: rgb(225, 241, 234);
     }
+
     .cpanel button.cpanel__reset {
         width: 100%;
         border-color: transparent;
@@ -542,15 +580,18 @@
         border-radius: 0;
         cursor: pointer;
     }
+
     .cpanel__label, .cpanel__hint {
         display: block;
         margin-bottom: 5px;
         color: #7f8c8d;
         font-size: 0.85em;
     }
+
     .cpanel__label {
         cursor: pointer;
     }
+
     .cpanel__hint {
         margin-top: 5px;
         font-style: italic;

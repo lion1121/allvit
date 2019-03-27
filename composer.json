@@ -75,9 +75,9 @@
             "type": "composer",
             "url": "https://larapack.io"
         },
-      "0": {
-        "type": "vcs",
-        "url": "https://bitbucket.org/arsengoian/laravel-1c-protocol.git"
-      }
+        "0": {
+            "type": "vcs",
+            "url": "https://bitbucket.org/arsengoian/laravel-1c-protocol.git"
+        }
     }
 }
