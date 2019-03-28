@@ -123,7 +123,13 @@ const store = new Vuex.Store({
         SET_USER_STATUS(state, data) {
             state.userId = data;
         },
-        UPDATE_PRODUCT_FROM_DB(state, data) {
+        UPDATE_PRODUCT_FROM_DB(state, data, quantity) {
+            let products = state.products;
+            products.map(function (item) {
+                if(item.id === data.product.id){
+                    item.quantity = quantity
+                }
+            })
 
         }
 
@@ -162,7 +168,7 @@ const store = new Vuex.Store({
                 product: payload.product,
                 quantity: payload.quantity
             }).then((res) => {
-                commit('UPDATE_PRODUCT_FROM_DB', res.data)
+                commit('UPDATE_PRODUCT_FROM_DB', res.data, payload)
             }).catch(e => {
                 console.log(e);
             });

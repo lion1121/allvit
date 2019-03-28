@@ -77,10 +77,10 @@ class CartController extends Controller
             $quantity = $request->quantity;
             $userId = Auth::id();
             $match = ['product_id' => $productId, 'user_id' => $userId];
-            $cartProduct = Cart::where($match)->get();
+            $cartProduct = Cart::where($match)->first();
             $cartProduct->quantity = $quantity;
             $cartProduct->save();
-            return response()->json($cartProduct);
+            return response()->json($quantity);
         }
     }
 
