@@ -69,5 +69,20 @@ class CartController extends Controller
         }
     }
 
+    public function updateProduct(Request $request)
+    {
+        if (Auth::user() !== null) {
+            $product = $request->product;
+            $productId = $product['id'];
+            $quantity = $request->quantity;
+            $userId = Auth::id();
+            $match = ['product_id' => $productId, 'user_id' => $userId];
+            $cartProduct = Cart::where($match)->get();
+            $cartProduct->quantity = $quantity;
+            $cartProduct->save();
+            return response()->json($cartProduct);
+        }
+    }
+
 
 }

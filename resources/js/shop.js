@@ -109,7 +109,11 @@ const store = new Vuex.Store({
         },
         REMOVE_PRODUCT_FROM_DB(state, data) {
             let products = state.products;
-            products.splice(products.indexOf(data), 1);
+            const removeIndex = products.map(function (item) {
+                return item.id;
+            }).indexOf(data.id);
+            products.splice(removeIndex, 1);
+
         },
         REMOVE_PRODUCT_FROM_LS(state, data) {
             // let products = state.products;
@@ -118,7 +122,11 @@ const store = new Vuex.Store({
         },
         SET_USER_STATUS(state, data) {
             state.userId = data;
+        },
+        UPDATE_PRODUCT_FROM_DB(state, data) {
+
         }
+
     },
 
     actions: {
@@ -145,6 +153,16 @@ const store = new Vuex.Store({
                 quantity: payload.quantity
             }).then((res) => {
                 commit('ADD_PRODUCT_TO_CART', res.data)
+            }).catch(e => {
+                console.log(e);
+            });
+        },
+        async updateQuantityProductDb({commit, dispatch}, payload) {
+            return await axios.put('/api/cart/updateProduct', {
+                product: payload.product,
+                quantity: payload.quantity
+            }).then((res) => {
+                commit('UPDATE_PRODUCT_FROM_DB', res.data)
             }).catch(e => {
                 console.log(e);
             });

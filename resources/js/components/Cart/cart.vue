@@ -35,10 +35,12 @@
 
                     <td class="cart-product-quantity">
                         <div class="quantity clearfix">
-                            <input type="button" value="-" class="minus" @click.prevent="addOneToQuantity(product)">
+                            <input type="button" value="-" class="minus"
+                                   @click="removedOneFromQuantity(--product.quantity, product)">
                             <input type="text" name="quantity" v-model="product.quantity"
                                    @blur="inputQuantity(product.quantity, product)" class="qty"/>
-                            <input type="button" value="+" class="plus" @click="removeOneFromQuantity(product)">
+                            <input type="button" value="+" class="plus"
+                                   @click="addOneToQuantity(++product.quantity, product)">
                         </div>
                     </td>
 
@@ -401,7 +403,9 @@
             products() {
                 return this.$store.state.products;
             },
+            productQuantity() {
 
+            }
         },
         methods: {
             removeCartProduct(product) {
@@ -418,8 +422,35 @@
                     this.$store.dispatch('removeProductFromDb', {product: product});
                 }
             },
-            addOneToQuantity(product) {
-
+            addOneToQuantity(value, product) {
+                if (this.$store.state.userId === null) {
+                    this.flash(`Добавлена 1 позиция ${product.name}.`, 'info');
+                    let products = JSON.parse(localStorage.cart);
+                    let updatedProducts = products.map(function (item) {
+                        if (item.hasOwnProperty('id') && item.id === product.id) {
+                            item.quantity = value;
+                        }
+                        return item;
+                    });
+                    localStorage.cart = JSON.stringify(updatedProducts);
+                } else {
+                    this.$store.dispatch('updateQuantityProductDb', {product: product, quantity: value});
+                }
+            },
+            removedOneFromQuantity(value, product) {
+                if (this.$store.state.userId === null) {
+                    this.flash(`Удалена 1 позиция ${product.name}.`, 'info');
+                    let products = JSON.parse(localStorage.cart);
+                    let updatedProducts = products.map(function (item) {
+                        if (item.hasOwnProperty('id') && item.id === product.id) {
+                            item.quantity = value;
+                        }
+                        return item;
+                    });
+                    localStorage.cart = JSON.stringify(updatedProducts);
+                } else {
+                    this.$store.dispatch('updateQuantityProductDb', {product: product, quantity: value});
+                }
             },
             inputQuantity(value, product) {
                 if (this.$store.state.userId === null) {
@@ -433,7 +464,7 @@
                     });
                     localStorage.cart = JSON.stringify(updatedProducts);
                 } else {
-
+                    this.$store.dispatch('updateQuantityProductDb', {product: product, quantity: value});
                 }
             }
         }
