@@ -87,7 +87,7 @@ const store = new Vuex.Store({
         productsQuantity:  state => {
             let quantity = 0;
             state.products.map(function (item) {
-                quantity += item.quantity;
+                quantity += parseInt(item.quantity);
             });
             return quantity;
         }

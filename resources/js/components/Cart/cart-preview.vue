@@ -47,20 +47,11 @@
     export default {
         name: "cart-preview",
         computed: {
-            // count() {
-            //     // let quantity = 0;
-            //     // return this.$store.state.products ? this.$store.state.products : [];
-            // },
             userId() {
                 return this.$store.state.userId
             },
-            // ...mapState([
-            //     'products',
-            //     'userId',
-            //     'quantity'
-            // ]),
             count() {
-                return this.$store.getters.productsQuantity || 0
+                return parseInt(this.$store.getters.productsQuantity) || 0
             },
             products() {
                 return this.$store.state.products || 0
