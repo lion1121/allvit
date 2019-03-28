@@ -408,9 +408,12 @@
                 this.flash(`Товар ${product.name} удален из корзины.`, 'info');
                 if (this.$store.state.userId === null) {
                     let products = JSON.parse(localStorage.cart);
-                    products.splice(products.indexOf(product), 1);
+                    const removeIndex = products.map(function (item) {
+                        return item.id;
+                    }).indexOf(product.id);
+                    products.splice(removeIndex, 1);
                     localStorage.cart = JSON.stringify(products);
-                    this.$store.dispatch('removeProductFromLs', localStorage.cart);
+                    this.$store.dispatch('removeProductFromLs', products);
                 } else {
                     this.$store.dispatch('removeProductFromDb', {product: product});
                 }

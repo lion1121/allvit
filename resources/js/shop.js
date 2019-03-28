@@ -112,8 +112,9 @@ const store = new Vuex.Store({
             products.splice(products.indexOf(data), 1);
         },
         REMOVE_PRODUCT_FROM_LS(state, data) {
-            let products = state.products;
-            products.splice(products.indexOf(data), 1);
+            // let products = state.products;
+            state.products = data;
+            // products.splice(products.indexOf(data), 1);
         },
         SET_USER_STATUS(state, data) {
             state.userId = data;
