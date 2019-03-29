@@ -123,16 +123,22 @@ const store = new Vuex.Store({
         SET_USER_STATUS(state, data) {
             state.userId = data;
         },
-        UPDATE_PRODUCT_FROM_DB(state, data, quantity) {
+        UPDATE_PRODUCT_DB(state, data) {
             let products = state.products;
             products.map(function (item) {
                 if(item.id === data.product.id){
-                    item.quantity = quantity
+                    item.quantity = data.quantity;
                 }
             })
-
+        },
+        UPDATE_PRODUCT_LS(state, data) {
+            let products = state.products;
+            products.map(function (item) {
+                if(item.id === data.product.id){
+                    item.quantity = data.quantity;
+                }
+            })
         }
-
     },
 
     actions: {
@@ -168,10 +174,13 @@ const store = new Vuex.Store({
                 product: payload.product,
                 quantity: payload.quantity
             }).then((res) => {
-                commit('UPDATE_PRODUCT_FROM_DB', res.data, payload)
+                commit('UPDATE_PRODUCT_DB', res.data, payload)
             }).catch(e => {
                 console.log(e);
             });
+        },
+        async updateQuantityProductLs({commit, dispatch}, payload) {
+            commit('UPDATE_PRODUCT_LS', payload)
         },
         async removeProductFromDb({commit, dispatch}, payload) {
             return await axios.post('/api/cart/removeProduct', {
