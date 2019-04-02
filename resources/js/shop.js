@@ -80,16 +80,19 @@ const store = new Vuex.Store({
     state: {
         products: [],
         userId: null,
-        summ: null,
+        cartSumm: 0,
     },
 
     getters: {
-        productsQuantity:  state => {
+        productsQuantity: state => {
             let quantity = 0;
             state.products.map(function (item) {
                 quantity += parseInt(item.quantity);
             });
             return quantity;
+        },
+        cartSummGetter: state => {
+            return parseFloat(state.cartSumm);
         }
     },
 
@@ -100,6 +103,15 @@ const store = new Vuex.Store({
         },
         SET_PRODUCTS_LS(state, data) {
             state.products = data;
+            let tempTotal = state.products.map(function (item) {
+                let summ = 0;
+                summ = summ + item.total;
+                return summ;
+            });
+            state.cartSumm = tempTotal.reduce(function (sum, item) {
+                return sum + item;
+            })
+
         },
         ADD_PRODUCT_TO_LS(state, data) {
             state.products = data
@@ -113,7 +125,6 @@ const store = new Vuex.Store({
                 return item.id;
             }).indexOf(data.id);
             products.splice(removeIndex, 1);
-
         },
         REMOVE_PRODUCT_FROM_LS(state, data) {
             // let products = state.products;
@@ -126,18 +137,34 @@ const store = new Vuex.Store({
         UPDATE_PRODUCT_DB(state, data) {
             let products = state.products;
             products.map(function (item) {
-                if(item.id === data.product.id){
+                if (item.id === data.product.id) {
                     item.quantity = data.quantity;
+                    item.total = data.quantity * item.price;
                 }
             })
         },
         UPDATE_PRODUCT_LS(state, data) {
+            console.log(data);
             let products = state.products;
             products.map(function (item) {
-                if(item.id === data.product.id){
+                if (item.id === data.product.id) {
+                    let k = item.quantity - data.quantity;
+                    switch (k !== null) {
+                        case  Math.sign(k) === -1:
+                            // state.cartSumm += Math.abs(k) * item.price;
+                            Object.assign(state.cartSumm,state.cartSumm += Math.abs(k) * item.price);
+                            break;
+                        case Math.sign(k) === 1:
+                            // state.cartSumm -= Math.abs(k) * item.price;
+                            Object.assign(state.cartSumm,state.cartSumm -= Math.abs(k) * item.price);
+                            break;
+                        default:
+                            break;
+                    }
                     item.quantity = data.quantity;
+                    item.total = data.quantity * item.price;
                 }
-            })
+            });
         }
     },
 

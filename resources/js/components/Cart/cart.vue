@@ -45,7 +45,7 @@
                     </td>
 
                     <td class="cart-product-subtotal">
-                        <span class="amount">$ {{total}}</span>
+                        <span class="amount">$ {{product.total}}</span>
                     </td>
                 </tr>
 
@@ -369,7 +369,7 @@
                             </td>
 
                             <td class="cart-product-name">
-                                <span class="amount color lead"><strong>$106.94</strong></span>
+                                <span class="amount color lead"><strong>$ {{summ1}}</strong></span>
                             </td>
                         </tr>
                         </tbody>
@@ -402,8 +402,9 @@
             products() {
                 return this.$store.state.products;
             },
-            productQuantity() {
-
+            summ1() {
+                // console.log(this.$store.getters.cartSummGetter);
+                return this.$store.state.cartSumm;
             }
         },
         methods: {
@@ -440,6 +441,7 @@
                         let updatedProducts = products.map(function (item) {
                             if (item.hasOwnProperty('id') && item.id === product.id) {
                                 item.quantity = value;
+                                item.total = item.price * value;
                             }
                             return item;
                         });

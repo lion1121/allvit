@@ -27,4 +27,9 @@ class Cart extends Model
     {
         return $this->attributes['quantity'] = $value;
     }
+
+    public function setTotalAttribute($value)
+    {
+        return $this->attributes['total'] = $value;
+    }
 }
