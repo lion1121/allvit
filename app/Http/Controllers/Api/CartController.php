@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Cart;
 use App\Product;
 use App\User;
+use function foo\func;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,14 @@ class CartController extends Controller
             $user_id = Auth::id();
             //Get all products that contains in carts table by id
             $cartProducts = User::findOrFail($user_id)->cart()->get();
+            //Get only products that were not paid
+            $getNonPaidProducts = $cartProducts->filter(function($value, $key){
+                if($value['paid'] === 0){
+                    return $value;
+                }
+            });
             //Save all received products id in array
-            $cartProductsId = $cartProducts->pluck('product_id')->all();
+            $cartProductsId = $getNonPaidProducts->pluck('product_id')->all();
             //Save all received products id and quantity in array
             $cartQuantity = $cartProducts->pluck('quantity', 'product_id')->all();
             $products = Product::whereIn('id', $cartProductsId)->get();
