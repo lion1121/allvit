@@ -32,7 +32,7 @@
 
             </div>
             <div class="top-cart-action clearfix">
-                <span class="fleft top-checkout-price">$114.95</span>
+                <span class="fleft top-checkout-price">$ {{total}}</span>
                 <a class="button button-3d button-small nomargin  " href="/cart">View Cart</a>
 
             </div>
@@ -55,6 +55,9 @@
             },
             products() {
                 return this.$store.state.products || 0
+            },
+            total() {
+                return this.$store.getters.cartTotalPrice;
             }
         },
 

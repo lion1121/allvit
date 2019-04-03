@@ -80,7 +80,7 @@ const store = new Vuex.Store({
     state: {
         products: [],
         userId: null,
-        cartSumm: 0,
+        // cartSumm: 0,
     },
 
     getters: {
@@ -91,8 +91,12 @@ const store = new Vuex.Store({
             });
             return quantity;
         },
-        cartSummGetter: state => {
-            return parseFloat(state.cartSumm);
+        cartTotalPrice: state => {
+            let summ = 0;
+            state.products.map(function (item) {
+                summ += item.total;
+            });
+            return summ;
         }
     },
 
@@ -148,19 +152,6 @@ const store = new Vuex.Store({
             let products = state.products;
             products.map(function (item) {
                 if (item.id === data.product.id) {
-                    let k = item.quantity - data.quantity;
-                    switch (k !== null) {
-                        case  Math.sign(k) === -1:
-                            // state.cartSumm += Math.abs(k) * item.price;
-                            Object.assign(state.cartSumm,state.cartSumm += Math.abs(k) * item.price);
-                            break;
-                        case Math.sign(k) === 1:
-                            // state.cartSumm -= Math.abs(k) * item.price;
-                            Object.assign(state.cartSumm,state.cartSumm -= Math.abs(k) * item.price);
-                            break;
-                        default:
-                            break;
-                    }
                     item.quantity = data.quantity;
                     item.total = data.quantity * item.price;
                 }

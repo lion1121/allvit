@@ -369,7 +369,7 @@
                             </td>
 
                             <td class="cart-product-name">
-                                <span class="amount color lead"><strong>$ {{summ1}}</strong></span>
+                                <span class="amount color lead"><strong>$ {{total}}</strong></span>
                             </td>
                         </tr>
                         </tbody>
@@ -392,7 +392,6 @@
         },
         data() {
             return {
-                total: 0,
                 coupon: '',
                 currentDomain: '',
                 value: 0
@@ -402,9 +401,8 @@
             products() {
                 return this.$store.state.products;
             },
-            summ1() {
-                // console.log(this.$store.getters.cartSummGetter);
-                return this.$store.state.cartSumm;
+            total() {
+                return this.$store.getters.cartTotalPrice;
             }
         },
         methods: {
