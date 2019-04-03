@@ -447,6 +447,18 @@
                         this.$store.dispatch('updateQuantityProductLs', {product: product, quantity: value});
                     }
                 } else {
+                    if (value >= 1) {
+                        switch (operator !== null) {
+                            case operator === '+':
+                                this.flash(`Добавлена 1 позиция ${product.name}.`, 'info');
+                                break;
+                            case operator === '-':
+                                this.flash(`Удалена 1 позиция ${product.name}.`, 'info');
+                                break;
+                            case operator === '=':
+                                this.flash(`Колличество товара ${product.name}. изменено на ${value}`, 'info')
+                        }
+                    }
                     this.$store.dispatch('updateQuantityProductDb', {product: product, quantity: value});
                 }
             },

@@ -27,7 +27,7 @@ class Product extends Model
     }
 
     protected $appends = [
-        'prod_cat_url'
+        'prod_cat_url',
     ];
 
     /**

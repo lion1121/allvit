@@ -11,7 +11,7 @@ class Cart extends Model
         'user_id', 'product_id', 'quantity', 'total'
     ];
 
-    protected $appends = ['quantity'];
+    protected $appends = ['quantity','total'];
 
     public function users()
     {

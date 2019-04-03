@@ -80,7 +80,6 @@ const store = new Vuex.Store({
     state: {
         products: [],
         userId: null,
-        // cartSumm: 0,
     },
 
     getters: {
@@ -115,7 +114,6 @@ const store = new Vuex.Store({
             state.cartSumm = tempTotal.reduce(function (sum, item) {
                 return sum + item;
             })
-
         },
         ADD_PRODUCT_TO_LS(state, data) {
             state.products = data
@@ -131,9 +129,7 @@ const store = new Vuex.Store({
             products.splice(removeIndex, 1);
         },
         REMOVE_PRODUCT_FROM_LS(state, data) {
-            // let products = state.products;
             state.products = data;
-            // products.splice(products.indexOf(data), 1);
         },
         SET_USER_STATUS(state, data) {
             state.userId = data;
@@ -148,7 +144,6 @@ const store = new Vuex.Store({
             })
         },
         UPDATE_PRODUCT_LS(state, data) {
-            console.log(data);
             let products = state.products;
             products.map(function (item) {
                 if (item.id === data.product.id) {
@@ -178,9 +173,12 @@ const store = new Vuex.Store({
             commit('ADD_PRODUCT_TO_LS', JSON.parse(payload))
         },
         async addProductToDb({commit, dispatch}, payload) {
+            let total = 0;
+            total = payload.product.price * payload.quantity;
             return await axios.post('/api/cart/addProduct', {
                 product: payload.product,
-                quantity: payload.quantity
+                quantity: payload.quantity,
+                total: total,
             }).then((res) => {
                 commit('ADD_PRODUCT_TO_CART', res.data)
             }).catch(e => {
@@ -190,9 +188,9 @@ const store = new Vuex.Store({
         async updateQuantityProductDb({commit, dispatch}, payload) {
             return await axios.put('/api/cart/updateProduct', {
                 product: payload.product,
-                quantity: payload.quantity
+                quantity: payload.quantity,
             }).then((res) => {
-                commit('UPDATE_PRODUCT_DB', res.data, payload)
+                commit('UPDATE_PRODUCT_DB', payload)
             }).catch(e => {
                 console.log(e);
             });

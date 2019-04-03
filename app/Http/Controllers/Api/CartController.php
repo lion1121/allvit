@@ -16,14 +16,19 @@ class CartController extends Controller
     {
         if (Auth::user() !== null) {
             $user_id = Auth::id();
+            //Get all products that contains in carts table by id
             $cartProducts = User::findOrFail($user_id)->cart()->get();
+            //Save all received products id in array
             $cartProductsId = $cartProducts->pluck('product_id')->all();
+            //Save all received products id and quantity in array
             $cartQuantity = $cartProducts->pluck('quantity', 'product_id')->all();
             $products = Product::whereIn('id', $cartProductsId)->get();
             $products = $products->map(function ($item, $key) use ($cartQuantity) {
                 foreach ($cartQuantity as $key => $value) {
                     if ($item->id === $key) {
                         $item->quantity = $value;
+                        // Count and add total price to each product
+                        $item->total = $value * $item->price;
                     }
                 }
                 return $item;
@@ -45,14 +50,18 @@ class CartController extends Controller
     public function addProduct(Request $request)
     {
         if (Auth::user() !== null) {
+            // Get product from DB -> add total and quantity and response to client
+            $modifyProduct = Product::where('id', $request->product)->first();
+            $modifyProduct->quantity = $request->quantity;
+
             $input = [];
             $input['product_id'] = $request->product;
             $input['user_id'] = Auth::id();
             $product = Cart::firstOrNew(['product_id' => $request->product], $input);
             $product->quantity = ($product->quantity + $request->quantity);
+            $product->total = ($product->quantity) * $modifyProduct->price;
             $product->save();
-            $modifyProduct = Product::find($request->product)->first();
-            $modifyProduct->quantity = $request->quantity;
+
             return response()->json($modifyProduct);
         }
     }
@@ -74,13 +83,19 @@ class CartController extends Controller
         if (Auth::user() !== null) {
             $product = $request->product;
             $productId = $product['id'];
-            $quantity = $request->quantity;
+            $newQuantity = $request->quantity;
             $userId = Auth::id();
             $match = ['product_id' => $productId, 'user_id' => $userId];
             $cartProduct = Cart::where($match)->first();
-            $cartProduct->quantity = $quantity;
+            $currentQuantity = $cartProduct->quantity;
+            $cartProduct->quantity = $newQuantity;
+            if ($currentQuantity > $newQuantity) {
+                $cartProduct->total -= ($currentQuantity - $newQuantity) * $product['price'];
+            } else if ($currentQuantity < $newQuantity) {
+                $cartProduct->total += ($newQuantity - $currentQuantity) * $product['price'];
+            }
             $cartProduct->save();
-            return response()->json($quantity);
+            return response()->json($newQuantity);
         }
     }
 
