@@ -24,9 +24,9 @@
                                          alt="Blue Round-Neck Tshirt"/></a>
                     </div>
                     <div class="top-cart-item-desc">
-                        <a href="#">{{product.product_name}}</a>
-                        <span class="top-cart-item-price">$ {{product.product_price}}</span>
-                        <span class="top-cart-item-quantity">x 2</span>
+                        <a href="#">{{product.name}}</a>
+                        <span class="top-cart-item-price">$ {{product.price}}</span>
+                        <span class="top-cart-item-quantity">x {{product.quantity}}</span>
                     </div>
                 </div>
 

@@ -49,7 +49,7 @@
             <div class="promo_categories_wrapper d-inline-block">
                 Применить промокод к категориям
                 <div class="col-xs-12">
-                    <promo-category></promo-category>
+                    <promo-category :categories="categories"></promo-category>
                 </div>
             </div>
             <div class="promo_products_wrapper d-inline-block">
@@ -83,15 +83,20 @@
 
             if(this.promoId !== null){
                 axios.post('/ajax/getCategories', {id: this.promoId}).then(response => {
-                    this.form.name = response.data.name;
-                    this.form.quantity = response.data.quantity;
-                    this.form.started = response.data.started_at.split(' ')[0];
-                    this.form.finished = response.data.finished_at.split(' ')[0];
-                    this.form.status = response.data.status;
+                    this.form.name = response.data.promocode.name;
+                    this.form.quantity = response.data.promocode.quantity;
+                    this.form.started = response.data.promocode.started_at.split(' ')[0];
+                    this.form.finished = response.data.promocode.finished_at.split(' ')[0];
+                    this.form.status = response.data.promocode.status;
+                    let someArr = [{text:'Протеин',id: 20},{text:'Протеин2',id: 22}];
+                    // someArr.push(response.data.categories[0].name);
+                    // someArr.push(response.data.categories[0].id);
+                    this.categories = someArr;
+
                     if(response.data.summ !== ''){
                         this.promoRadioSum = true;
                         this.promoRadioPercent = true;
-                        this.form.sumValue = response.data.summ
+                        this.form.sumValue = response.data.promocode.summ
                     } else {
                         this.promoRadioPersent = true;
                     }

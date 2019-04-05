@@ -86,6 +86,7 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::get('getProduct/{name}', 'ProductController@getProductByName');
     Route::post('addPromocode', 'Voyager\PromocodeController@store');
     Route::post('getCategories', 'Voyager\PromocodeController@getProdCategories');
+    Route::post('promocode/delete/category', 'Voyager\PromocodeController@deletePromocodeCategory');
 });
 
 

@@ -128,7 +128,13 @@ class PromocodeController extends Controller
     public function getProdCategories(Request $request)
     {
         $promocode = Promocode::findOrFail($request->id);
+        $categories = $promocode->prodCategories()->get();
 
-        return response()->json($promocode);
+        return response()->json(['promocode' => $promocode, 'categories' => $categories]);
+    }
+
+    public function deletePromocodeCategory(Request $request)
+    {
+
     }
 }

@@ -1,8 +1,9 @@
 <template>
     <div>
+        <p>{{categories}}</p>
         <vue-tags-input
                 v-model="tag"
-                :tags="tags"
+                :tags="categories || tags"
                 :autocomplete-items="autocompleteItems"
                 :add-only-from-autocomplete="true"
                 @tags-changed="update"
@@ -31,12 +32,20 @@
                 debounce: null,
             };
         },
+        props:['categories'],
         methods: {
             update(newTags) {
-                this.autocompleteItems = [];
-                this.tags = newTags;
-                this.$root.$emit('addCategory', this.tags);
-                console.log(this.tags)
+                console.log(categories);
+               if(categories === undefined){
+                   this.autocompleteItems = [];
+                   this.tags = newTags;
+                   this.$root.$emit('addCategory', this.tags);
+                   console.log(this.tags)
+                   console.log(this.tags)
+
+               } else {
+                   console.log(this.tags)
+               }
             },
             initItems() {
                 if (this.tag.length === 0) return;
