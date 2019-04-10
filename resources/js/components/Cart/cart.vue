@@ -54,14 +54,14 @@
                         <div class="row clearfix">
                             <div class="col-lg-4 col-4 nopadding">
                                 <div class="row">
-                                    <div class="col-lg-8 col-7">
-                                        <input type="text" value="" class="sm-form-control"
-                                               placeholder="Введите код..."/>
-                                    </div>
-                                    <div class="col-lg-4 col-5">
-                                        <a href="#" class="button button-3d button-black nomargin">Использовать
-                                            купон</a>
-                                    </div>
+                                    <!--<div class="col-lg-8 col-7">-->
+                                        <!--<input type="text" value="" class="sm-form-control"-->
+                                               <!--placeholder="Введите код..."/>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-lg-4 col-5">-->
+                                        <!--<a href="#" class="button button-3d button-black nomargin">Использовать-->
+                                            <!--купон</a>-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                             <div class="col-lg-8 col-8 nopadding">
@@ -86,14 +86,15 @@
                             <a class="nav-link " :class="{active:customerTab.isActive, show: customerTab.isShow}"
                                id="home-tab" data-toggle="tab" href="#home"
                                role="tab" aria-controls="home" aria-selected="true">Контактные данные <i
-                                    class="tabs_icon">1</i></a>
+                                    class="tabs_icon" :class="{success_tabs_icon:customerTab.iconActive}">1</i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
                                :class="{disabled: deliveryTab.isDisabled,active: deliveryTab.isActive, show: deliveryTab.isShow}"
                                id="profile-tab"
                                data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                               aria-selected="false">Доставка</a>
+                               aria-selected="false">Доставка <i
+                                    class="tabs_icon" :class="{success_tabs_icon:deliveryTab.iconActive}">2</i></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -101,31 +102,14 @@
                         <div class="tab-pane fade  pt-3"
                              :class="{active: customerTab.isActive, show: customerTab.isShow}" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
+
                             <cart-customer-form @formValidated="toggleDeliverTab"></cart-customer-form>
                         </div>
                         <div class="tab-pane fade pt-3"
                              :class="{active: deliveryTab.isActive, show: deliveryTab.isShow}" id="profile"
                              role="tabpanel" aria-labelledby="profile-tab">
-                            <form>
-                                <div class="col_full">
-                                    <select class="sm-form-control">
-                                        <option value="AX">&#197;land Islands</option>
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AD">Andorra</option>
-                                        <option value="AO">Angola</option>
-                                    </select>
-                                </div>
-                                <div class="col_half">
-                                    <input type="text" class="sm-form-control" placeholder="State / Country"/>
-                                </div>
 
-                                <div class="col_half col_last">
-                                    <input type="text" class="sm-form-control" placeholder="PostCode / Zip"/>
-                                </div>
-                                <a href="#" class="button button-3d nomargin button-black">Update Totals</a>
-                            </form>
+                            <cart-delivery></cart-delivery>
                         </div>
                     </div>
 
@@ -170,6 +154,16 @@
 
                     </table>
                 </div>
+                <div class="row">
+                    <div class="col-lg-8 col-7">
+                        <input type="text" value="" class="sm-form-control"
+                               placeholder="Введите код..."/>
+                    </div>
+                    <div class="col-lg-4 col-5">
+                        <a href="#" class="button button-3d button-black nomargin">Использовать
+                            купон</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div>
@@ -180,6 +174,7 @@
 
 <script>
     import customerFrom from './cart-customer-form.vue';
+    import deliveryForm from './cart-delivery.vue';
 
     export default {
         name: "cart",
@@ -195,12 +190,22 @@
                     isActive: false,
                     isDisabled: true,
                     isShow: false,
+                    iconActive: false
                 },
                 customerTab: {
                     isActive: true,
                     isShow: true,
+                    iconActive: true
                 }
             }
+        },
+        created(){
+          this.$on('formNonFiled',() => {
+              console.log(22222);
+              this.deliveryTab.isActive = false;
+              this.deliveryTab.isDisabled = true;
+              this.deliveryTab.isShow = false;
+          })
         },
         computed: {
             products() {
@@ -209,7 +214,6 @@
             total() {
                 return this.$store.getters.cartTotalPrice;
             },
-
         },
         methods: {
             removeCartProduct(product) {
@@ -272,12 +276,14 @@
                 this.deliveryTab.isActive = true;
                 this.deliveryTab.isDisabled = false;
                 this.deliveryTab.isShow = true;
+                this.deliveryTab.iconActive = true;
                 this.customerTab.isActive = false;
                 this.customerTab.isShow = false;
             }
         },
         components: {
-            'cart-customer-form': customerFrom
+            'cart-customer-form': customerFrom,
+            'cart-delivery': deliveryForm
         }
 
     }
@@ -285,11 +291,17 @@
 
 <style scoped>
     .tabs_icon {
-        background: #007bff;
+        background: #9F9F9F;
         width: 20px;
         height: 20px;
         display: inline-block;
         text-align: center;
         border-radius: 50%;
+        font-size: 14px;
+        color: #fff;
+    }
+
+    .success_tabs_icon {
+        background: #0E4984 !important;
     }
 </style>
