@@ -64,7 +64,7 @@ class CartController extends Controller
             $input = [];
             $input['product_id'] = $request->product;
             $input['user_id'] = Auth::id();
-            $product = Cart::firstOrNew(['product_id' => $request->product], $input);
+            $product = Cart::firstOrNew(['product_id' => $request->product,'user_id' => Auth::id()], $input);
             $product->quantity = ($product->quantity + $request->quantity);
             $product->total = ($product->quantity) * $modifyProduct->price;
             $product->save();
@@ -104,6 +104,12 @@ class CartController extends Controller
             $cartProduct->save();
             return response()->json($newQuantity);
         }
+    }
+
+    public function getUser(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        return response()->json($user);
     }
 
 

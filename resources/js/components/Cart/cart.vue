@@ -199,14 +199,6 @@
                 }
             }
         },
-        created(){
-          this.$on('formNonFiled',() => {
-              console.log(22222);
-              this.deliveryTab.isActive = false;
-              this.deliveryTab.isDisabled = true;
-              this.deliveryTab.isShow = false;
-          })
-        },
         computed: {
             products() {
                 return this.$store.state.products;

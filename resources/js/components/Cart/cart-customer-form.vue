@@ -32,7 +32,7 @@
             <div class="col-sm-10">
                 <input v-model="form.email" type="email" class="form-control" id="inputEmail" placeholder="E-mail">
             </div>
-            <p ><b>{{form.errors.email}}</b></p>
+            <p><b>{{form.errors.email}}</b></p>
         </div>
         <div class="form-group">
             <label for="inputExtra">Дополнительно</label>
@@ -42,7 +42,7 @@
 
         <div class="form-group row">
             <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary" >Продолжить
+                <button type="submit" class="btn btn-primary">Продолжить
                 </button>
             </div>
         </div>
@@ -62,30 +62,35 @@
                     email: null,
                     extra: null,
                     errors: []
-                }
+                },
+                user: null
             }
         },
+
         methods: {
             checkForm(e) {
                 if (this.form.name && this.form.surname && this.form.phone && this.form.email) {
                     this.$emit('formValidated');
                 }
                 this.form.errors = [];
-                if(!this.form.name) this.form.errors.push('Введите Ваше имя');
-                if(!this.form.surname) this.form.errors.push('Введите Вашу фамилию');
-                if(!this.form.phone) this.form.errors.push('Введите Ваш телефон');
-                if(!this.form.email) this.form.errors.push('Введите Ваш email');
+                if (!this.form.name) this.form.errors.push('Введите Ваше имя');
+                if (!this.form.surname) this.form.errors.push('Введите Вашу фамилию');
+                if (!this.form.phone) this.form.errors.push('Введите Ваш телефон');
+                if (!this.form.email) this.form.errors.push('Введите Ваш email');
                 e.preventDefault();
             }
         },
-        computed:{
-             form: function () {
-                if (this.form.errors.length > 0){
-                    this.$emit('formNonFiled')
+        computed: {
+            userData(){
+                if (this.$store.state.userId !== null) {
+                    axios.post('/ajax/getUser', {
+                        id: this.$store.state.userId
+                    }).then((res) => {
+                        console.log(res)
+                    })
                 }
             }
         }
-
     }
 </script>
 
