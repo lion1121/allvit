@@ -66,7 +66,7 @@
                 user: null
             }
         },
-
+        // props:[userData],
         methods: {
             checkForm(e) {
                 if (this.form.name && this.form.surname && this.form.phone && this.form.email) {
@@ -81,15 +81,15 @@
             }
         },
         computed: {
-            userData(){
-                if (this.$store.state.userId !== null) {
-                    axios.post('/ajax/getUser', {
-                        id: this.$store.state.userId
-                    }).then((res) => {
-                        console.log(res)
-                    })
-                }
-            }
+            // userData(){
+            //     if (this.$store.state.userId !== null) {
+            //         axios.post('/ajax/getUser', {
+            //             id: this.$store.state.userId
+            //         }).then((res) => {
+            //             console.log(res)
+            //         })
+            //     }
+            // }
         }
     }
 </script>

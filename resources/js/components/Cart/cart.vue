@@ -103,7 +103,7 @@
                              :class="{active: customerTab.isActive, show: customerTab.isShow}" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
 
-                            <cart-customer-form @formValidated="toggleDeliverTab"></cart-customer-form>
+                            <cart-customer-form @formValidated="toggleDeliverTab" ></cart-customer-form>
                         </div>
                         <div class="tab-pane fade pt-3"
                              :class="{active: deliveryTab.isActive, show: deliveryTab.isShow}" id="profile"
